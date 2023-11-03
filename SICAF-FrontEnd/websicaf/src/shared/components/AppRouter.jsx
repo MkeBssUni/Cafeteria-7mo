@@ -9,6 +9,7 @@ const AppRouter = () => {
         <Routes>
             {/* Recuerda colocar las rutas aqui */}
             <Route path="/auth" elemnt={<LoginScreens/>} />
+            {/* Productos las rutas */}
         </Routes>
     </Router>
   )
