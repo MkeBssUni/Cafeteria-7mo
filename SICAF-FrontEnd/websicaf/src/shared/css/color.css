@@ -1,0 +1,13 @@
+:root {
+  --color-primary: #9b6b43;
+  --color-secondary: #f3e3d3;
+  --color-tertiary: #c98860;
+}
+/* var(--color-primary) */
+
+.logo-nav {
+  width: 70px;
+  height: 77px;
+  flex-shrink: 0;
+}
+
