@@ -1,0 +1,48 @@
+import { Row, Col, Image } from 'react-bootstrap';
+import Image1 from '../../assets/Products/galletas2.jpeg'
+import Image2 from '../../assets/Products/galletas2.png'
+
+function CookiesList() {
+    return <>
+        <Row className='d-flex justify-content-center'>
+            <Col xs={12} md={4} className='text-center mx-2 my-2'>
+                <div className='col-12 col-sm-6 col-md-12 col-lg-12 mt-3'>
+                    <Row>
+                        <Col xs={12} md={3}>
+                            <Image className='image_product_offers my-2 ms-3 shadow' src={Image2} roundedCircle />
+                        </Col>
+                        <Col xs={12} md={8} className='mx-2'>
+                            <div>
+                                <p className='info_products_offers mt-2' style={{ display: 'inline-block' }}>Galletas mosntruo.........</p>
+                                <p style={{ display: 'inline-block', marginLeft: '10px' }}>$150.00</p>
+                            </div>
+                            <div>
+                                <small className='info_products_offers'>Galletas tipo brownie con nutella (12pzs)</small>
+                            </div>
+                        </Col>
+                    </Row>
+                </div>
+            </Col>
+            <Col xs={12} md={4} className='text-center mx-2 my-2'>
+                <div className='col-12 col-sm-6 col-md-12 col-lg-12 mt-3'>
+                    <Row>
+                        <Col xs={12} md={3}>
+                            <Image className='image_product_offers my-2 ms-3 shadow' src={Image1} roundedCircle />
+                        </Col>
+                        <Col xs={12} md={8} className='mx-2'>
+                            <div>
+                                <p className='info_products_offers mt-2' style={{ display: 'inline-block' }}>Surtido de galletas .........</p>
+                                <p style={{ display: 'inline-block', marginLeft: '10px' }}>$150.00</p>
+                            </div>
+                            <div>
+                                <small className='info_products_offers'>6 tipos de galletas sorpresa(12pzs)</small>
+                            </div>
+                        </Col>
+                    </Row>
+                </div>
+            </Col>
+        </Row>
+    </>
+}
+
+export default CookiesList;
