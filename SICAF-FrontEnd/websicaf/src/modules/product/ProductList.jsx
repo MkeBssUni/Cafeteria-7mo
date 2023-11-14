@@ -12,16 +12,27 @@ import CupCakesList from './CupcakesList';
 const ProductList = () => {
   return (
     <Container fluid>
+
+
       <div className='image-top d-flex justify-content-center align-items-center' style={{ width: '100%', height: '300px' }}>
         <Form.Group as={Col} md="4">
           <InputGroup>
-            <Form.Control type="search" className='input-search text-center' placeholder="Buscar" required/>
+            <Form.Control type="search" className='input-search text-center' placeholder="Buscar" required />
             <Button className='input-search'>
-          <FeatherIcon icon="search" />
-        </Button>
+              <FeatherIcon icon="search" />
+            </Button>
           </InputGroup>
         </Form.Group>
       </div>
+
+      {/*
+      ejemplo de las imagenes con la oferta 
+      <div className="imagewithoffer mt-5 mx-5">
+        <Image className='image_product_offers shadow' src="https://images.pexels.com/photos/1055272/pexels-photo-1055272.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" roundedCircle />
+        <div className="notification-icon">50%</div>
+      </div> */}
+
+
       <section className='my-3 text-center'>
         <Container fluid >
           <h3 className='mb-0'>Galletas</h3>

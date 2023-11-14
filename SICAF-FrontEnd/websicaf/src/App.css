@@ -52,15 +52,43 @@
   margin-Top: 3px;
 }
 
-.image-top{
+.image-top {
   background: url('./assets/fondo1.jpeg') no-repeat center center fixed;
   background-size: cover;
 }
 
 /* Estilo para el input con transparencia */
 .input-search {
-  background: rgba(255, 255, 255, 0.5) !important; /* Color blanco con 50% de opacidad */
-  padding: 8px !important; /* Ajusta el relleno según tus preferencias */
+  background: rgba(255, 255, 255, 0.5) !important;
+  /* Color blanco con 50% de opacidad */
+  padding: 8px !important;
+  /* Ajusta el relleno según tus preferencias */
   outline: none !important;
   border: none !important;
+}
+
+.notification-icon {
+  position: absolute;
+  top: -25px;
+  /* Ajusta la posición vertical */
+  right: -25px;
+  /* Ajusta la posición horizontal */
+  background-color: #FBF2EA;
+  /* Puedes cambiar el color del fondo del icono de notificación */
+  color: rgb(202, 22, 22);
+  /* Puedes cambiar el color del texto del icono de notificación */
+  border: 3px solid #744C24;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+  font-style: italic;
+}
+
+.imagewithoffer {
+  position: relative;
+  display: inline-block;
 }
