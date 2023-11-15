@@ -3,13 +3,13 @@ import { Container, Row, Col, Image, Form, InputGroup, Button } from 'react-boot
 import FeatherIcon from 'feather-icons-react';
 
 import Separator from '../../assets/separator2.jpg'
-import CookiesList from './CookiesList';
-import CakesList from './CakesList';
-import CupCakesList from './CupcakesList';
+import CookiesList from './CookiesOffers';
+import CakesList from './CakesOffers';
+import CupCakesList from './CupcakesOffers';
 
 
 
-const ProductList = () => {
+const OffersList = () => {
   return (
     <Container fluid>
 
@@ -24,7 +24,15 @@ const ProductList = () => {
           </InputGroup>
         </Form.Group>
       </div>
-      
+
+      {/*
+      ejemplo de las imagenes con la oferta 
+      <div className="imagewithoffer mt-5 mx-5">
+        <Image className='image_product_offers shadow' src="https://images.pexels.com/photos/1055272/pexels-photo-1055272.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" roundedCircle />
+        <div className="notification-icon">50%</div>
+      </div> */}
+
+
       <section className='my-3 text-center'>
         <Container fluid >
           <h3 className='mb-0'>Galletas</h3>
@@ -63,4 +71,4 @@ const ProductList = () => {
   )
 }
 
-export default ProductList
+export default OffersList
