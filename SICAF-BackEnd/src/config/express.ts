@@ -1,8 +1,11 @@
+import * as dotenv from 'dotenv'
 import express, {Application, Request, Response} from 'express';
 import cors from 'cors';
 
-const API = "SICAF";
-const PORT= 3001;
+dotenv.config()
+
+const API = process.env.API;
+const PORT= process.env.PORT;
 
 const app:Application = express();
 app.set('port', PORT);
