@@ -2,11 +2,11 @@ import { Request, Response } from "express";
 import { validateError } from "../../../kernel/error_codes";
 import { CategoriesRepository } from "../use-cases/ports/categories-repository";
 import { CategoriesStorageGateway } from "./categories-storage-gateway";
-import { SaveCategoryInteractor } from "../use-cases/ports/save-category-interactor";
+import { SaveCategoryInteractor } from "../use-cases/save-category-interactor";
 import { ResponseApi } from "../../../kernel/types";
 import { Category } from "../entities/category";
 import { GetCategoriesByStatusInteractor } from "../use-cases/get-categories-by-status-interactor";
-import { GetCategoriesInteractor } from "../use-cases/ports/get-categories-interactor";
+import { GetCategoriesInteractor } from "../use-cases/get-categories-interactor";
 import { GetCategoryByIdInteractor } from "../use-cases/get-category-interactor";
 import { ChangeStatusInteractor } from "../use-cases/change-statuts-interactor";
 import { UpdateCategoryInteractor } from "../use-cases/update-category-interactor";
@@ -56,7 +56,7 @@ export class CategoriesController{
         try {
             const repo: CategoriesRepository = new CategoriesStorageGateway();
             const interactor: GetCategoriesByStatusInteractor = new GetCategoriesByStatusInteractor(repo);
-            const response = await interactor.execute(req.params.status);
+            const response = await interactor.execute(req.body.status);
             const body: ResponseApi<Category>={
                 code: 200,
                 error: false,
@@ -93,12 +93,8 @@ export class CategoriesController{
     static ChangeStatusCategory= async (req: Request, res:Response):Promise<Response>=>{
         try {
             const repo: CategoriesRepository = new CategoriesStorageGateway();
-            const payload = {
-                id: parseInt(req.params.id),
-                status: req.body.status
-            }
             const interactor: ChangeStatusInteractor = new ChangeStatusInteractor(repo);
-            const response = await interactor.execute(payload);
+            const response = await interactor.execute(parseInt(req.params.id));
             const body: ResponseApi<Category>={
                 code: 200,
                 error: false,

@@ -2,6 +2,7 @@ import * as dotenv from 'dotenv'
 import express, {Application, Request, Response} from 'express';
 import cors from 'cors';
 import categoriesRoutes from "../modules/categories/adapters/categories-routes"
+import productsRoutes from "../modules/products/adapters/products-routes"
 
 dotenv.config()
 
@@ -23,6 +24,7 @@ app.use(express.static('documents'));
 app.get(`/${API}/test`,(req: Request, res: Response)=>res.send("SICAF"))
 
 app.use(`/${API}/categories`,categoriesRoutes)
+app.use(`/${API}/products`,productsRoutes)
 
 app.get('*',(req: Request, res: Response)=>res.status(404).send('Not Found'))
 

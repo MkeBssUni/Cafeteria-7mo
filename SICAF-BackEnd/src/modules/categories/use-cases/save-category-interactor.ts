@@ -1,8 +1,8 @@
-import { UseCase } from "../../../../kernel/contracts";
-import { isValidName } from "../../../../kernel/validations";
-import { CreateCategoryDto } from "../../adapters/dto/create-category-dto";
-import { Category } from "../../entities/category";
-import { CategoriesRepository } from "./categories-repository";
+import { UseCase } from "../../../kernel/contracts";
+import { isValidName } from "../../../kernel/validations";
+import { CreateCategoryDto } from "../adapters/dto/create-category-dto";
+import { Category } from "../entities/category";
+import { CategoriesRepository } from "./ports/categories-repository";
 
 export class SaveCategoryInteractor implements UseCase<CreateCategoryDto, Category>{
     constructor (private readonly categoryRepository: CategoriesRepository){}
