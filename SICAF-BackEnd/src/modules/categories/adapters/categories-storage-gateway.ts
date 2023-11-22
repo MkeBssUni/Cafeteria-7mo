@@ -1,7 +1,6 @@
 import { pool } from "../../../config/bdconfig";
 import { Category } from "../entities/category";
 import { CategoriesRepository } from "../use-cases/ports/categories-repository";
-import { ChangeStatusCategoryDto } from "./dto/change-status-category-dto";
 import { CreateCategoryDto } from "./dto/create-category-dto";
 import { UpdateCategoryDto } from "./dto/update-category-dto";
 
@@ -25,7 +24,7 @@ export class CategoriesStorageGateway implements CategoriesRepository{
         }
     }
 
-    async getCategoriesByStatus(status: string): Promise<Category[]> {
+    async getCategoriesByStatus(status: boolean): Promise<Category[]> {
         try {
             const response = await pool.query("SELECT * FROM CATEGORIES WHERE status = $1;",[status])
             return response.rows;   
@@ -62,9 +61,10 @@ export class CategoriesStorageGateway implements CategoriesRepository{
         }
     }
 
-    async changeStatusCategory(payload: ChangeStatusCategoryDto): Promise<Category> {
+    async changeStatusCategory(id: number): Promise<Category> {
         try {
-            const response = await pool.query("UPDATE CATEGORIES SET status = $1 WHERE id = $2 RETURNING *;",[payload.status, payload.id])
+            const category = await this.getCategoryById(id);
+            const response = await pool.query("UPDATE CATEGORIES SET status = $1 WHERE id = $2 RETURNING *;",[!category.status, id])
             return response.rows[0];   
         } catch (error) {
             throw Error
