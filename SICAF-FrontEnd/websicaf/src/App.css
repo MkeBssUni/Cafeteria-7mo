@@ -39,21 +39,35 @@
 }
 
 .image_product_offers {
-  height: 120px;
-  width: 120px;
+  height: 100px;
+  width: 100px;
+}
+
+.product_info {
+  display: flex;
+  align-items: center;
 }
 
 .info_products_offers {
   font-style: italic;
 }
 
+.name-product {
+  display: "inline-block" !important;
+}
+
+.price_product {
+  display: "inline-block" !important;
+  margin-left: "10px";
+}
+
 .separator {
   width: 220px;
-  margin-Top: 3px;
+  margin-top: 3px;
 }
 
 .image-top {
-  background: url('./assets/fondo1.jpeg') no-repeat center center fixed;
+  background: url("./assets/fondo1.jpeg") no-repeat center fixed;
   background-size: cover;
 }
 
@@ -73,11 +87,11 @@
   /* Ajusta la posición vertical */
   right: -25px;
   /* Ajusta la posición horizontal */
-  background-color: #FBF2EA;
+  background-color: #fbf2ea;
   /* Puedes cambiar el color del fondo del icono de notificación */
   color: rgb(202, 22, 22);
   /* Puedes cambiar el color del texto del icono de notificación */
-  border: 3px solid #744C24;
+  border: 3px solid #744c24;
   width: 80px;
   height: 80px;
   border-radius: 50%;
@@ -86,12 +100,22 @@
   justify-content: center;
   font-size: 30px;
   font-style: italic;
-  z-index: 100;
 }
 
 .imagewithoffer {
   position: relative;
   display: inline-block;
-  overflow: visible;
-  z-index: 1;
+}
+
+.product:hover {
+  scale: 102%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  background-color: #F3E3D3;
+}
+
+
+.productBlack:hover {
+  scale: 102%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  background-color: #b3724a;
 }

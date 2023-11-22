@@ -2,7 +2,7 @@ import React from 'react'
 import { Container, Row, Col, Image, Form, InputGroup, Button } from 'react-bootstrap';
 import FeatherIcon from 'feather-icons-react';
 
-import Separator from '../../assets/separator2.jpg'
+import Separator from "../../assets/separator.png";
 import CookiesList from './CookiesList';
 import CakesList from './CakesList';
 import CupCakesList from './CupcakesList';
@@ -36,7 +36,7 @@ const ProductList = () => {
       <section className='my-3 text-center ' style={{ backgroundColor: "var(--color-secondary)" }}>
         <Container fluid className='p-3'>
           <h3 className='mb-0'>Pasteles</h3>
-          <Image className='separator mt-0' src={Separator} />
+         {/*  <Image className='separator mt-0' src={Separator} /> */}
           <CakesList />
         </Container>
       </section>
@@ -53,7 +53,7 @@ const ProductList = () => {
       <section className='my-3 text-center ' style={{ backgroundColor: "var(--color-secondary)" }}>
         <Container fluid className='p-3'>
           <h3 className='mb-0'>Panes</h3>
-          <Image className='separator mt-0' src={Separator} />
+          {/* <Image className='separator mt-0' src={Separator} /> */}
           <CakesList />
         </Container>
       </section>
