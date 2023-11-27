@@ -34,15 +34,15 @@ function ProductDashborad() {
         </div>
         <div className='product-list-admin'>
           <Row className=''>
-            <Col xs={12} sm={8} md={4} lg={4} xl={4} xxl={2} className='mx-2 mt-5'>
+            <Col xs={12} sm={2} md={2} lg={3} xl={3} xxl={2} className='mx-2 mt-5'>
               <Card className='productCard shadow'>
                 <Card.Body >
                   <Image className='mx-auto d-block image_product_offers_Admin text-center shadow' src={Image2} roundedCircle />
-                  <p className='info_products_offers mt-2'>Chocochips    175$</p>
+                  <p className='info_products_offers mt-3'>Chocochips    175$</p>
                   <p className='info_products_offers_admin '>Galletas de chispas de chocolate</p>
                   <p className='info_products_offers_admin '>Descuento: No aplica</p>
                   <p className='info_products_offers_admin '>stock: 12</p>
-                  <div style={{ marginTop: -19 }} className='text-center'>
+                  <div className='text-center'>
                     <Button className='py-0 productCardButtons' variant="outline-primary" onClick={() => setModalShow(true)}>
                       Editar <FeatherIcon icon="trash-2" />
                     </Button>

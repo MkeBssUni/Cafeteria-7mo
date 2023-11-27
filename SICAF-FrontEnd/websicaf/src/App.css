@@ -82,7 +82,7 @@
 }
 
 .image-top {
-  background: url("./assets/fondo1.jpeg") no-repeat;
+  background: url("./assets/fondo1.jpeg") fixed center no-repeat;
   background-size: cover;
 }
 
@@ -179,4 +179,8 @@
   background-color: var(--color-secondary);
   border-color: var(--color-primary);
   color:var(--color-font) !important;
-} 
+}
+
+.image-product-modal{
+  width:40%;
+}
