@@ -5,7 +5,7 @@ import { Discount } from "../entities/discount";
 import { ResponseApi } from "../../../kernel/types";
 import { validateError } from "../../../kernel/error_codes";
 import { SaveDiscountDto, UpdateDiscountDto } from "./dto";
-import { SaveDiscountInteractor, UpdateDiscountInteractor } from "../use-cases";
+import { ChangeStatusInteractor, SaveDiscountInteractor, UpdateDiscountInteractor } from "../use-cases";
 
 export class DiscountController {
     static saveDiscount = async (req: Request, res: Response) => {
@@ -37,6 +37,25 @@ export class DiscountController {
                 code: 200,
                 error: false,
                 message: 'Updated',
+                data: discount
+            }
+            return res.status(body.code).json(body);
+        } catch (e) {
+            const error = validateError(e as Error);
+            return res.status(error.code).json(error);
+        }
+    }
+
+    static changeStatus = async (req: Request, res: Response) => {
+        try {
+            const id: number = parseInt(req.params.id);
+            const repository: DiscountRepository = new DiscountStorageGateway();
+            const interactor: ChangeStatusInteractor = new ChangeStatusInteractor(repository);
+            const discount: boolean = await interactor.execute({id: id});
+            const body: ResponseApi<boolean> = {
+                code: 200,
+                error: false,
+                message: 'Status changed',
                 data: discount
             }
             return res.status(body.code).json(body);
