@@ -4,6 +4,7 @@ import { Product } from "../entities/product";
 import { ProductsRepository } from "../use-cases/ports/products-repository";
 import { GetProductWithCategoryDto } from "./dto/get-product-dto";
 import { UpdateProductDto } from "./dto/update-product-dto";
+import { addDiscountDto } from "./dto/addDiscountDto";
 
 export class ProductsStorageGateway implements ProductsRepository{
     async createProduct(payload: CreateProductDto): Promise<Product> {
@@ -66,6 +67,15 @@ export class ProductsStorageGateway implements ProductsRepository{
             return products;
         } catch (error) {
          throw Error   
+        }
+    }
+
+    async getProductsIdByCategory(category_id: number): Promise<number[]> {
+        try {
+            const response = await pool.query("select id from products where category_id = $1;", [category_id]);
+            return response.rows.map((row) => row.id);
+        } catch (error) {
+            throw Error
         }
     }
 
@@ -193,5 +203,15 @@ export class ProductsStorageGateway implements ProductsRepository{
             
         }
     }
-    
+
+    async addDiscount(payload: addDiscountDto): Promise<boolean> {
+        const { product_id, discount_id } = payload;
+        try {
+            const response = await pool.query("update products set discount_id = $2 where id = $1", [product_id, discount_id]);
+            return true;
+        } catch (error) {
+            throw Error
+        }
+    }
+
 }
