@@ -2,6 +2,11 @@
   --color-primary: #9b6b43;
   --color-secondary: #f3e3d3;
   --color-tertiary: #c98860;
+  --color-font: #744C24;
+  --color-productBlack: #b3724a;
+  --color-productCard-hover: #dbc7b4;
+  --color-background-modal-card: #f0e2d4;
+  --color-inputs-top: rgba(243, 227, 211, 0.81);
 }
 /* var(--color-primary) */
 

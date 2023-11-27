@@ -1,3 +1,16 @@
+ :root {
+  --color-primary: #9b6b43;
+  --color-secondary: #f3e3d3;
+  --color-tertiary: #c98860;
+  --color-font: #744C24;
+  --color-productBlack:#b3724a;
+  --color-productCard-hover:#dbc7b4;
+  --color-background-modal-card:#f0e2d4;
+  --color-inputs-top: rgba(243, 227, 211, 0.81);
+}
+
+
+
 .App {
   text-align: center;
 }
@@ -38,6 +51,8 @@
   }
 }
 
+/* Estilos de la vista de productos y ofertas para el cliente*/
+
 .image_product_offers {
   height: 100px;
   width: 100px;
@@ -67,31 +82,25 @@
 }
 
 .image-top {
-  background: url("./assets/fondo1.jpeg") no-repeat center fixed;
+  background: url("./assets/fondo1.jpeg") no-repeat;
   background-size: cover;
 }
 
-/* Estilo para el input con transparencia */
 .input-search {
-  background: rgba(255, 255, 255, 0.5) !important;
-  /* Color blanco con 50% de opacidad */
+  background: var(--color-inputs-top) !important;
   padding: 8px !important;
-  /* Ajusta el relleno según tus preferencias */
-  outline: none !important;
-  border: none !important;
+  border-color: var(--color-font) !important;
+  color: var(--color-font) !important;
+ 
 }
 
 .notification-icon {
   position: absolute;
   top: -25px;
-  /* Ajusta la posición vertical */
   right: -25px;
-  /* Ajusta la posición horizontal */
-  background-color: #fbf2ea;
-  /* Puedes cambiar el color del fondo del icono de notificación */
+  background-color: var(--color-background-modal-card);
   color: rgb(202, 22, 22);
-  /* Puedes cambiar el color del texto del icono de notificación */
-  border: 3px solid #744c24;
+  border: 3px solid  var(--color-font);
   width: 80px;
   height: 80px;
   border-radius: 50%;
@@ -110,12 +119,64 @@
 .product:hover {
   scale: 102%;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  background-color: #F3E3D3;
+  background-color: var(--color-background-modal-card);
 }
 
 
 .productBlack:hover {
   scale: 102%;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  background-color: #b3724a;
+  background-color:   var(--color-productBlack);
 }
+
+/* Estilos de las card de productos*/
+.productCard {
+  background-color: var(--color-background-modal-card) !important;
+  border-color: var(--color-background-modal-card)!important;
+}
+
+.productCard:hover {
+  scale: 102%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  background-color:  var(--color-productCard-hover) 
+}
+
+.productCardButtons {
+  font-size: 18px !important;
+  border-radius: 20px !important;
+}
+
+.image_product_offers_Admin {
+  height: 150px;
+  width: 150px;
+}
+
+.info_products_offers_admin {
+  font-style: italic;
+  font-size: 18px !important;
+  margin-top: -6%;
+}
+
+.product-list-admin{
+  margin-top: -8%;
+}
+
+.productModal {
+  background-color: var(--color-background-modal-card) !important;
+  border-color:  var(--color-font) !important;
+  color: var(--color-font);
+}
+
+.buttonsModal{
+  border-radius: 28px !important;
+}
+
+.modalTitle{
+  font-weight: lighter
+}
+
+.input-modal{
+  background-color: var(--color-secondary);
+  border-color: var(--color-primary);
+  color:var(--color-font) !important;
+} 
