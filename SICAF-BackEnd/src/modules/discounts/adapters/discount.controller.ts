@@ -1,11 +1,11 @@
 import { Request, Response } from "express";
-import { SaveDiscountDto } from "./dto/SaveDiscountDto";
 import { DiscountRepository } from "../use-cases/ports/discount.repository";
 import { DiscountStorageGateway } from "./discount.storage.gateway";
-import { SaveDiscountInteractor } from "../use-cases/SaveDiscountInteractor";
 import { Discount } from "../entities/discount";
 import { ResponseApi } from "../../../kernel/types";
 import { validateError } from "../../../kernel/error_codes";
+import { SaveDiscountDto, UpdateDiscountDto } from "./dto";
+import { ChangeStatusInteractor, SaveDiscountInteractor, UpdateDiscountInteractor } from "../use-cases";
 
 export class DiscountController {
     static saveDiscount = async (req: Request, res: Response) => {
@@ -22,7 +22,44 @@ export class DiscountController {
             }
             return res.status(body.code).json(body);
         } catch (e) {
-            console.log(e)
+            const error = validateError(e as Error);
+            return res.status(error.code).json(error);
+        }
+    }
+
+    static updateDiscount = async (req: Request, res: Response) => {
+        try {
+            const payload: UpdateDiscountDto = {...req.body};
+            const repository: DiscountRepository = new DiscountStorageGateway();
+            const interactor: UpdateDiscountInteractor = new UpdateDiscountInteractor(repository);
+            const discount: Discount = await interactor.execute(payload);
+            const body: ResponseApi<Discount> = {
+                code: 200,
+                error: false,
+                message: 'Updated',
+                data: discount
+            }
+            return res.status(body.code).json(body);
+        } catch (e) {
+            const error = validateError(e as Error);
+            return res.status(error.code).json(error);
+        }
+    }
+
+    static changeStatus = async (req: Request, res: Response) => {
+        try {
+            const id: number = parseInt(req.params.id);
+            const repository: DiscountRepository = new DiscountStorageGateway();
+            const interactor: ChangeStatusInteractor = new ChangeStatusInteractor(repository);
+            const discount: boolean = await interactor.execute({id: id});
+            const body: ResponseApi<boolean> = {
+                code: 200,
+                error: false,
+                message: 'Status changed',
+                data: discount
+            }
+            return res.status(body.code).json(body);
+        } catch (e) {
             const error = validateError(e as Error);
             return res.status(error.code).json(error);
         }
