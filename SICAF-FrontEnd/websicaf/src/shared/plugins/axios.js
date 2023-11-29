@@ -1,7 +1,7 @@
 import instance from 'axios';
 
 const AxiosClient = instance.create({
-    baseURL: 'http//localhost:8080/sicaf'
+    baseURL: 'http://localhost:3001/sicaf'
 });
 
 const requestHandler = (request) => {

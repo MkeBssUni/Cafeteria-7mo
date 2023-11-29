@@ -36,7 +36,7 @@ const ProductList = () => {
       <section className='my-3 text-center ' style={{ backgroundColor: "var(--color-secondary)" }}>
         <Container fluid className='p-3'>
           <h3 className='mb-0'>Pasteles</h3>
-         {/*  <Image className='separator mt-0' src={Separator} /> */}
+         { <Image className='separator mt-0' src={Separator} />}
           <CakesList />
         </Container>
       </section>
@@ -45,7 +45,7 @@ const ProductList = () => {
         <Container fluid>
           <h3 className='mb-0'>Cupcakes</h3>
           <Image className='separator mt-0' src={Separator} />
-          <CupCakesList />
+          <CookiesList />
         </Container>
 
       </section>
@@ -53,7 +53,7 @@ const ProductList = () => {
       <section className='my-3 text-center ' style={{ backgroundColor: "var(--color-secondary)" }}>
         <Container fluid className='p-3'>
           <h3 className='mb-0'>Panes</h3>
-          {/* <Image className='separator mt-0' src={Separator} /> */}
+          {<Image className='separator mt-0' src={Separator} />}
           <CakesList />
         </Container>
       </section>
