@@ -4,6 +4,8 @@ import { Product } from "../entities/product";
 import { ProductsRepository } from "../use-cases/ports/products-repository";
 import { GetProductWithCategoryDto } from "./dto/get-product-dto";
 import { UpdateProductDto } from "./dto/update-product-dto";
+import { addDiscountDto } from "./dto/addDiscountDto";
+import { GetProductsByCategoryAndStatusDto } from "./dto/get-products-by-category-and-status-dto";
 
 export class ProductsStorageGateway implements ProductsRepository{
     async createProduct(payload: CreateProductDto): Promise<Product> {
@@ -66,6 +68,15 @@ export class ProductsStorageGateway implements ProductsRepository{
             return products;
         } catch (error) {
          throw Error   
+        }
+    }
+
+    async getProductsIdByCategory(category_id: number): Promise<number[]> {
+        try {
+            const response = await pool.query("select id from products where category_id = $1;", [category_id]);
+            return response.rows.map((row) => row.id);
+        } catch (error) {
+            throw Error
         }
     }
 
@@ -193,5 +204,42 @@ export class ProductsStorageGateway implements ProductsRepository{
             
         }
     }
-    
+
+    async addDiscount(payload: addDiscountDto): Promise<boolean> {
+        const { product_id, discount_id } = payload;
+        try {
+            const response = await pool.query("update products set discount_id = $2 where id = $1", [product_id, discount_id]);
+            return true;
+        } catch (error) {
+            throw Error
+        }
+    }
+
+    async getProductsByCategoryAndStatus(payload: GetProductsByCategoryAndStatusDto): Promise<GetProductWithCategoryDto[]> {
+        try {
+            const response = await pool.query("select p.*, c.name as category_name from products p inner join categories c on p.category_id = c.id where category_id = $1 and p.status = $2;", [payload.category_id, payload.status]);
+            const products: GetProductWithCategoryDto[] = response.rows.map((product: any) => {
+                return {
+                    id: product.id,
+                    name: product.name,
+                    status: product.status,
+                    description: product.description,
+                    image: product.image,
+                    price: product.price,
+                    stock: product.stock,
+                    category:{
+                        category_id: product.category_id,
+                        category_name: product.category_name
+                    },
+                    provider_id: product.provider_id,
+                    discount_id: product.discount_id,
+                    created_at: product.created_at,
+                }
+            })
+            return products;
+        } catch (error) {
+            throw Error
+        }
+    }
+
 }

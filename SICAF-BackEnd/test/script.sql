@@ -17,6 +17,7 @@ create table if not exists discounts(
     order_total numeric,
     products_number int,
     status boolean not null default true,
+    image text,
     created_at timestamp not null default now()
 );
 

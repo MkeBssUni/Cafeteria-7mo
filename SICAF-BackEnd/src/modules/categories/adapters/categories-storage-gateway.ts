@@ -29,7 +29,6 @@ export class CategoriesStorageGateway implements CategoriesRepository{
             const response = await pool.query("SELECT * FROM CATEGORIES WHERE status = $1;",[status])
             return response.rows;   
         } catch (error) {
-            console.log("error: ", error)
             throw Error
         }
     }
