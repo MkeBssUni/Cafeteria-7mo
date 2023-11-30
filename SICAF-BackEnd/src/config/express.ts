@@ -3,6 +3,7 @@ import express, {Application, Request, Response} from 'express';
 import cors from 'cors';
 import categoriesRoutes from "../modules/categories/adapters/categories-routes"
 import productsRoutes from "../modules/products/adapters/products-routes"
+import discountsRoutes from "../modules/discounts/adapters/discount.routes"
 
 dotenv.config()
 
@@ -25,6 +26,7 @@ app.get(`/${API}/test`,(req: Request, res: Response)=>res.send("SICAF"))
 
 app.use(`/${API}/categories`,categoriesRoutes)
 app.use(`/${API}/products`,productsRoutes)
+app.use(`/${API}/discounts`,discountsRoutes)
 
 app.get('*',(req: Request, res: Response)=>res.status(404).send('Not Found'))
 

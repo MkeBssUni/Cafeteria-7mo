@@ -432,6 +432,40 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Get Products by Category and Status",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"category_id\": 1,\r\n    \"status\": false\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/SICAF/products/getByStatusAndCategory/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"SICAF",
+								"products",
+								"getByStatusAndCategory",
+								""
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		}
