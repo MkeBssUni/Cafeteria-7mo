@@ -7,6 +7,16 @@ import { UpdateProductDto } from "./dto/update-product-dto";
 import { addDiscountDto } from "./dto/addDiscountDto";
 
 export class ProductsStorageGateway implements ProductsRepository{
+
+    async findById(id: number): Promise<Product> {
+        try {
+            const response = await pool.query("select * from products where id = $1", [id]);
+            return response.rows[0] as Product;
+        } catch (error) {
+            throw Error
+        }
+    }
+
     async createProduct(payload: CreateProductDto): Promise<Product> {
         try {
             const response = await pool.query("INSERT INTO PRODUCTS (name, description, image, price, stock, category_id) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *", [payload.name, payload.description, payload.image, payload.price, payload.stock, payload.category_id]);

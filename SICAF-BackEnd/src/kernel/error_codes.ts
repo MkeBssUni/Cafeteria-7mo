@@ -12,6 +12,7 @@ const errors:{[x: string]: ResponseApi<undefined>}={
     'Invalid discount type': {code: 400, error: true, message: 'Invalid discount type'},
     'Invalid description': {code: 400, error: true, message: 'Invalid description'},
     'Invalid percentage': {code: 400, error: true, message: 'Invalid percentage'},
+    'Invalid quantity': {code: 400, error: true, message: 'Invalid quantity'},
     'Invalid date': {code: 400, error: true, message: 'Invalid date'},
     'Invalid dates': {code: 400, error: true, message: 'Invalid dates'},
     'Description too short': {code: 400, error: true, message: 'Description too short'},
