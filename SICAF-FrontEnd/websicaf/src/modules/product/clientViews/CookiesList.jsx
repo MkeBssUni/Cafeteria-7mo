@@ -1,15 +1,17 @@
 import { useEffect, useState } from "react";
 import { Row, Col, Image, Carousel } from "react-bootstrap";
 
-import { getProducts } from "./productsFunctions";
+import { getProducts } from "./../productsFunctions";
 
-import logo from "../../assets/logo-sicaf.png";
-import Image1 from "../../assets/Products/galletas2.jpeg";
-import Image2 from "../../assets/Products/galletas2.png";
+import logo from "../../../assets/logo-sicaf.png";
+import Image1 from "../../../assets/Products/galletas2.jpeg";
+import Image2 from "../../../assets/Products/galletas2.png";
 
 function CookiesList() {
+ /*  El consumo es igual, importas la funcion, y dentro del useEffect haces la peticion y lo seteas */
   const [products, setProducts] = useState([]);
   useEffect(() => {
+    /*Exactmente como la linea de aqui abajo */
     getProducts().then((products) => setProducts(products));
   }, []);
   return (
