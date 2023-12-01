@@ -1,6 +1,7 @@
 import { addDiscountDto } from "../../adapters/dto/addDiscountDto";
 import { CreateProductDto } from "../../adapters/dto/create-product.dto";
 import { GetProductWithCategoryDto } from "../../adapters/dto/get-product-dto";
+import { GetProductsByCategoryAndStatusDto } from "../../adapters/dto/get-products-by-category-and-status-dto";
 import { UpdateProductDto } from "../../adapters/dto/update-product-dto";
 import { Product } from "../../entities/product";
 
@@ -10,6 +11,7 @@ export interface ProductsRepository {
     getProducts: () => Promise<GetProductWithCategoryDto[]>
     getProductsByStatus: (status: boolean) => Promise<GetProductWithCategoryDto[]>
     getProductsByCategory: (category_id: number) => Promise<GetProductWithCategoryDto[]>
+    getProductsByCategoryAndStatus: (payload: GetProductsByCategoryAndStatusDto) => Promise<GetProductWithCategoryDto[]>
     getProductsIdByCategory: (category_id: number) => Promise<number[]>
     updateProduct: (payload: UpdateProductDto) => Promise<Product>
     existsProductById: (id: number) => Promise<boolean>

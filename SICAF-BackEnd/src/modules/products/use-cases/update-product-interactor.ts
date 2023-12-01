@@ -2,8 +2,8 @@ import { UseCase } from "../../../kernel/contracts";
 import { isValidName } from "../../../kernel/validations";
 import { existsCategoryById } from "../boundary";
 import { Product } from "../entities/product";
-import { ProductsRepository } from "../use-cases/ports/products-repository";
-import { UpdateProductDto } from "./dto/update-product-dto";
+import { ProductsRepository } from "./ports/products-repository";
+import { UpdateProductDto } from "../adapters/dto/update-product-dto";
 
 export class UpdateProductInteractor implements UseCase<UpdateProductDto, Product>{
     constructor(private readonly productsRepository: ProductsRepository){}

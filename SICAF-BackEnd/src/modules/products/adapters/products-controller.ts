@@ -8,11 +8,12 @@ import { Product } from "../entities/product";
 import { GetProductsInteractor } from "../use-cases/get-products-interactor";
 import { GetProductWithCategoryDto } from "./dto/get-product-dto";
 import { GetProductsByCategoryInteractor } from "../use-cases/get-products-by-category-interactor";
-import { UpdateProductInteractor } from "./update-product-interactor";
+import { UpdateProductInteractor } from "../use-cases/update-product-interactor";
 import { GetProductsByStatusInteractor } from "../use-cases/get-products-by-status-interactor";
 import { GetProductInteractor } from "../use-cases/get-product-interactor";
 import { ChangeStatusInteractor } from "../use-cases/change-status-interactor";
 import { SearchByNameInteractor } from "../use-cases/search-by-name-itneractor";
+import { GetProductsByStatusAndCategoryInteractor } from "../use-cases/get-products-by-status-and-category";
 
 export class ProductsController{
     static CreateProduct = async (req: Request, res: Response): Promise<Response>=>{
@@ -167,6 +168,25 @@ export class ProductsController{
         } catch (e) {
             const error = validateError(e as Error);
             return res.status(error.code).json(error);
+        }
+    }
+
+    static GetProductsByCategoryAndStatus = async (req: Request, res: Response): Promise<Response>=>{
+        try {
+            const repo: ProductsRepository = new ProductsStorageGateway();
+            const interactor: GetProductsByStatusAndCategoryInteractor = new GetProductsByStatusAndCategoryInteractor(repo)
+            const response = await interactor.execute(req.body)
+
+            const body: ResponseApi<GetProductWithCategoryDto[]>={
+                code: 200,
+                error: false,
+                message: "Ok",
+                data: response
+            }
+            return res.status(body.code).json(body);
+        } catch (e) {
+            const error = validateError(e as Error);
+            return res.status(error.code).json(error)
         }
     }
 }
