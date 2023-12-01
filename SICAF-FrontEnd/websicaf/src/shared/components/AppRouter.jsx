@@ -1,7 +1,7 @@
 import React from 'react'
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import LoginScreens from '../../modules/auth/LoginScreens';
-import ProductList from '../../modules/product/ProductList';
+import ProductList from '../../modules/product/clientViews/ProductList';
 import OffersList from '../../modules/offers/OffersList'
 import  ProductDashborad from '../../modules/product/adminViews/ProductDashbBoard'
 

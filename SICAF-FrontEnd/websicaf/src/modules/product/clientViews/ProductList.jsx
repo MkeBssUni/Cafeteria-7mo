@@ -2,7 +2,7 @@ import React from 'react'
 import { Container, Row, Col, Image, Form, InputGroup, Button } from 'react-bootstrap';
 import FeatherIcon from 'feather-icons-react';
 
-import Separator from "../../assets/separator.png";
+import Separator from "../../../assets/separator.png";
 import CookiesList from './CookiesList';
 import CakesList from './CakesList';
 import CupCakesList from './CupcakesList';

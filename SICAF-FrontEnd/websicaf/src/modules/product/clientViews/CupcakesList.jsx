@@ -1,6 +1,8 @@
 import { Container, Row, Col, Image, Carousel } from "react-bootstrap";
-import Image1 from "../../assets/Products/cupcakes1.jpeg";
-import Image2 from "../../assets/Products/cupcakes2.jpeg";
+
+
+import Image1 from "../../../assets/Products/cupcakes1.jpeg";
+import Image2 from "../../../assets/Products/cupcakes2.jpeg";
 
 function CakesList() {
   return (
