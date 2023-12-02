@@ -4,10 +4,29 @@ import { DiscountStorageGateway } from "./discount.storage.gateway";
 import { Discount } from "../entities/discount";
 import { ResponseApi } from "../../../kernel/types";
 import { validateError } from "../../../kernel/error_codes";
-import { SaveDiscountDto, UpdateDiscountDto } from "./dto";
-import { ChangeStatusInteractor, SaveDiscountInteractor, UpdateDiscountInteractor } from "../use-cases";
+import { OrderDto, SaveDiscountDto, UpdateDiscountDto } from "./dto";
+import { ChangeStatusInteractor, GetByOrderInteractor, SaveDiscountInteractor, UpdateDiscountInteractor } from "../use-cases";
 
 export class DiscountController {
+    static findDiscountsByOrder = async (req: Request, res: Response) => {
+        try {
+            const payload: OrderDto = {...req.body};
+            const repository: DiscountRepository = new DiscountStorageGateway();
+            const interactor: GetByOrderInteractor = new GetByOrderInteractor(repository);
+            const discounts: Discount[] = await interactor.execute(payload);
+            const body: ResponseApi<Discount[]> = {
+                code: 200,
+                error: false,
+                message: 'OK',
+                data: discounts
+            }
+            return res.status(body.code).json(body);
+        } catch (e) {
+            const error = validateError(e as Error);
+            return res.status(error.code).json(error);
+        }
+    }
+
     static saveDiscount = async (req: Request, res: Response) => {
         try {
             const payload: SaveDiscountDto = {...req.body};
