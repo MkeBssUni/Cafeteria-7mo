@@ -8,4 +8,5 @@ export interface ProvidersRepository {
     changeStatus(id: number): Promise<Provider>
     existsByName(name: String): Promise<boolean>
     existsByEmail(email: String): Promise<boolean>
+    existsById(id: number): Promise<boolean>
 }

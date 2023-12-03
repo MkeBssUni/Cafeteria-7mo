@@ -3,6 +3,16 @@ import { Provider } from "../entities/provider";
 import { ProvidersRepository } from "../use-cases/ports/providers-repository";
 
 export class ProvidersStorageGateway implements ProvidersRepository{
+    
+    async existsById(id: number): Promise<boolean> {
+        try {
+            const response = await pool.query("SELECT EXISTS(SELECT 1 FROM PROVIDERS WHERE id = $1);;",[id])
+            return response.rows[0].exists;
+        } catch (error) {
+            throw Error
+        }
+    }
+
     async existsByName(name: String): Promise<boolean> {
         try {
             const response = await pool.query("SELECT EXISTS(SELECT 1 FROM PROVIDERS WHERE UPPER(name) = $1);;",[name.toUpperCase()])
@@ -61,11 +71,73 @@ export class ProvidersStorageGateway implements ProvidersRepository{
     getAll(): Promise<Provider[]> {
         throw new Error("Method not implemented.");
     }
-    findById(id: number): Promise<Provider> {
-        throw new Error("Method not implemented.");
+
+    async findById(id: number): Promise<Provider> {
+        try {
+            const response = await pool.query(`select p.*, a.* from providers p inner join addresses a on p.address_id = a.id where p.id = $1;`, [id])
+            const provider: Provider ={
+                id: response.rows[0].id,
+                name: response.rows[0].name,
+                contact_name: response.rows[0].contact_name,
+                contact_lastname: response.rows[0].contact_lastname,
+                phone_number1: response.rows[0].phone_number1,
+                phone_number2: response.rows[0].phone_number2,
+                email: response.rows[0].email,
+                address: {
+                    id: response.rows[0].address_id,
+                    street: response.rows[0].street,
+                    settlement: response.rows[0].settlement,
+                    external_number: response.rows[0].external_number,
+                    internal_number: response.rows[0].internal_number,
+                    city: response.rows[0].city,
+                    state: response.rows[0].state,
+                    postal_code: response.rows[0].postal_code,
+                    country: response.rows[0].country,
+                    created_at: response.rows[0].created_at
+                },
+                ingredient: response.rows[0].ingredient,
+                notes: response.rows[0].notes,
+                status: response.rows[0].status
+            }
+
+            return provider;
+        } catch (error) {
+            throw Error
+        }
     }
-    changeStatus(id: number): Promise<Provider> {
-        throw new Error("Method not implemented.");
+
+    async changeStatus(id: number): Promise<Provider> {
+        try {
+            const response = await pool.query(`UPDATE providers SET status = NOT status WHERE id = $1;`, [id])
+            const provider = await pool.query(`select p.*, a.* from providers p inner join addresses a on p.address_id = a.id where p.id = $1;`, [id])
+            const providerResponse: Provider ={
+                id: provider.rows[0].id,
+                name: provider.rows[0].name,
+                contact_name: provider.rows[0].contact_name,
+                contact_lastname: provider.rows[0].contact_lastname,
+                phone_number1: provider.rows[0].phone_number1,
+                phone_number2: provider.rows[0].phone_number2,
+                email: provider.rows[0].email,
+                address: {
+                    id: provider.rows[0].address_id,
+                    street: provider.rows[0].street,
+                    settlement: provider.rows[0].settlement,
+                    external_number: provider.rows[0].external_number,
+                    internal_number: provider.rows[0].internal_number,
+                    city: provider.rows[0].city,
+                    state: provider.rows[0].state,
+                    postal_code: provider.rows[0].postal_code,
+                    country: provider.rows[0].country,
+                    created_at: provider.rows[0].created_at
+                },
+                ingredient: provider.rows[0].ingredient,
+                notes: provider.rows[0].notes,
+                status: provider.rows[0].status
+            }
+            return providerResponse;
+        } catch (error) {
+            throw Error
+        }
     }
 
 }
