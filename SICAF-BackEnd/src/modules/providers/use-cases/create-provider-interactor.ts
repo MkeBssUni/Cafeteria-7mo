@@ -41,17 +41,11 @@ export class CreateProviderInteractor implements UseCase<Provider, Provider>{
         if(!payload.email) throw new Error("Missing fields")
         if(await this.repository.existsByEmail(payload.email)) throw new Error("Already exists")
         if(!isValidEmail(payload.email)) throw new Error("Invalid email")
-        if(!payload.address) throw new Error("Missing fields")
-        if(!payload.address.street) throw new Error("Missing fields")
-        if(!payload.address.settlement) throw new Error("Missing fields")
-        if(!payload.address.city) throw new Error("Missing fields")
-        if(!payload.address.state) throw new Error("Missing fields")
-        if(!payload.address.postal_code) throw new Error("Missing fields")
-        if(!payload.address.country) throw new Error("Missing fields")
-        if(!isValidPostalCode(payload.address.postal_code)) throw new Error("Invalid postal code")
-
-
-
+        
+        if(payload.address){
+            if(!payload.address.street || !payload.address.settlement || !payload.address.city || !payload.address.state || !payload.address.postal_code || !payload.address.country) throw new Error("Missing fields")
+            if(!isValidPostalCode(payload.address.postal_code)) throw new Error("Invalid postal code")
+        }
         return this.repository.create(payload)
     }
 }

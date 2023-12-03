@@ -6,6 +6,8 @@ import { CreateProviderInteractor } from "../use-cases/create-provider-interacto
 import { ResponseApi } from "../../../kernel/types";
 import { Provider } from "../entities/provider";
 import { ChangeStatusProviderInteractor } from "../use-cases/change-status-interactor";
+import { UpdateProviderInteractor } from "../use-cases/update-provider-interactor";
+import { GetProviderByIdInteractor } from "../use-cases/get-provider-by-id-interactor";
 
 export class ProvidersController{
     static CreateProvider= async (req: Request, res: Response): Promise<Response>=>{
@@ -58,6 +60,47 @@ export class ProvidersController{
                 error: false,
                 message: "Providers",
                 data: providers
+            }
+
+            return res.status(body.code).json(body)
+        } catch (e) {
+            const error = validateError(e as Error)
+            return res.status(error.code).json(error)
+        }
+    }
+
+    static UpdateProvider= async (req: Request, res: Response): Promise<Response>=>{
+        try {
+            const repo: ProvidersRepository = new ProvidersStorageGateway();
+            const interactor: UpdateProviderInteractor = new UpdateProviderInteractor(repo);
+            const id = parseInt(req.params.id)
+            const response= await interactor.execute({...req.body, id})
+            
+            const body: ResponseApi<Provider>={
+                code: 200,
+                error: false,
+                message: "Provider updated",
+                data: response
+            }
+
+            return res.status(body.code).json(body)
+        } catch (e) {
+            const error = validateError(e as Error)
+            return res.status(error.code).json(error)
+        }
+    }
+
+    static GetProviderById= async (req: Request, res: Response): Promise<Response>=>{
+        try {
+            const repo: ProvidersRepository = new ProvidersStorageGateway();
+            const interactor: GetProviderByIdInteractor = new GetProviderByIdInteractor(repo);
+            const response= await interactor.execute(parseInt(req.params.id))
+
+            const body: ResponseApi<Provider>={
+                code: 200,
+                error: false,
+                message: "Provider",
+                data: response
             }
 
             return res.status(body.code).json(body)

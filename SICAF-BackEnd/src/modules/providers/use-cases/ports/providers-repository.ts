@@ -1,8 +1,9 @@
+import { UpdateProviderDto } from "../../adapters/dto/upadte-provider-dto"
 import { Provider } from "../../entities/provider"
 
 export interface ProvidersRepository {
     create(provider: Provider): Promise<Provider>
-    update(provider: Provider): Promise<Provider>
+    update(provider: UpdateProviderDto): Promise<Provider>
     getAll(): Promise<Provider[]>
     findById(id: number): Promise<Provider>
     changeStatus(id: number): Promise<Provider>

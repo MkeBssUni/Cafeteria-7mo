@@ -1,6 +1,7 @@
 import { pool } from "../../../config/bdconfig";
 import { Provider } from "../entities/provider";
 import { ProvidersRepository } from "../use-cases/ports/providers-repository";
+import { UpdateProviderDto } from "./dto/upadte-provider-dto";
 
 export class ProvidersStorageGateway implements ProvidersRepository{
     
@@ -65,8 +66,21 @@ export class ProvidersStorageGateway implements ProvidersRepository{
             throw Error
         }
     }
-    update(provider: Provider): Promise<Provider> {
-        throw new Error("Method not implemented.");
+    
+    async update(payload: UpdateProviderDto): Promise<Provider> {
+        try {
+            if(payload.address){
+                const address_id = await pool.query(`SELECT address_id FROM providers WHERE id = $1;`, [payload.id])
+                await pool.query(`UPDATE addresses SET street = $1, settlement = $2, external_number = $3, internal_number = $4, city = $5, state = $6, postal_code = $7, country = $8 WHERE id = $9;`, [payload.address.street, payload.address.settlement, payload.address.external_number, payload.address.internal_number, payload.address.city, payload.address.state, payload.address.postal_code, payload.address.country, address_id.rows[0].address_id])
+            }
+            await pool.query(`UPDATE providers SET name = $1, contact_name = $2, contact_lastname = $3, phone_number1 = $4, phone_number2 = $5, email = $6, ingredient = $7, notes = $8 WHERE id = $9 RETURNING *;`, [payload.name, payload.contact_name, payload.contact_lastname, payload.phone_number1, payload.phone_number2, payload.email, payload.ingredient, payload.notes, payload.id])
+            
+            const provider = await this.findById(payload.id!);
+
+            return provider;
+        } catch (error) {
+            throw Error
+        }
     }
 
     async getAll(): Promise<Provider[]> {
