@@ -5,5 +5,6 @@ const router = Router();
 
 router.post("/", ProvidersController.CreateProvider);
 router.patch("/:id", ProvidersController.ChangeStatusProvider);
+router.get("/", ProvidersController.GetAllProviders);
 
 export default router;

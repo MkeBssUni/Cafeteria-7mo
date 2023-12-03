@@ -68,8 +68,40 @@ export class ProvidersStorageGateway implements ProvidersRepository{
     update(provider: Provider): Promise<Provider> {
         throw new Error("Method not implemented.");
     }
-    getAll(): Promise<Provider[]> {
-        throw new Error("Method not implemented.");
+
+    async getAll(): Promise<Provider[]> {
+        try {
+            const response = await pool.query(`select p.*, a.* from providers p inner join addresses a on p.address_id = a.id;`)
+            const providers: Provider[] = response.rows.map((provider: any) => {
+                return {
+                    id: provider.id,
+                    name: provider.name,
+                    contact_name: provider.contact_name,
+                    contact_lastname: provider.contact_lastname,
+                    phone_number1: provider.phone_number1,
+                    phone_number2: provider.phone_number2,
+                    email: provider.email,
+                    address: {
+                        id: provider.address_id,
+                        street: provider.street,
+                        settlement: provider.settlement,
+                        external_number: provider.external_number,
+                        internal_number: provider.internal_number,
+                        city: provider.city,
+                        state: provider.state,
+                        postal_code: provider.postal_code,
+                        country: provider.country,
+                        created_at: provider.created_at
+                    },
+                    ingredient: provider.ingredient,
+                    notes: provider.notes,
+                    status: provider.status
+                }
+            })
+            return providers;
+        } catch (error) {
+            throw Error
+        }
     }
 
     async findById(id: number): Promise<Provider> {

@@ -47,4 +47,23 @@ export class ProvidersController{
             return res.status(error.code).json(error)
         }
     }
+
+    static GetAllProviders= async (req: Request, res: Response): Promise<Response>=>{
+        try {
+            const repo: ProvidersRepository = new ProvidersStorageGateway();
+            const providers = await repo.getAll()
+
+            const body: ResponseApi<Provider>={
+                code: 200,
+                error: false,
+                message: "Providers",
+                data: providers
+            }
+
+            return res.status(body.code).json(body)
+        } catch (e) {
+            const error = validateError(e as Error)
+            return res.status(error.code).json(error)
+        }
+    }
 }
