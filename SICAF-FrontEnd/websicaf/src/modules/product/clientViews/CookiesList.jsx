@@ -2,18 +2,14 @@ import { useEffect, useState } from "react";
 import { Row, Col, Image, Carousel } from "react-bootstrap";
 
 import { getProducts } from "./../productsFunctions";
+import ProductDetail from "./ProductDetail";
 
 import logo from "../../../assets/logo-sicaf.png";
 import Image1 from "../../../assets/Products/galletas2.jpeg";
 import Image2 from "../../../assets/Products/galletas2.png";
 
-function CookiesList() {
- /*  El consumo es igual, importas la funcion, y dentro del useEffect haces la peticion y lo seteas */
-  const [products, setProducts] = useState([]);
-  useEffect(() => {
-    /*Exactmente como la linea de aqui abajo */
-    getProducts().then((products) => setProducts(products));
-  }, []);
+function CookiesList({products}) {
+  const [modalShow, setModalShow] = useState(false);
   return (
     <>
       <Carousel>
@@ -29,7 +25,7 @@ function CookiesList() {
                       className="text-center mx-2 mt-2 mb-4"
                       key={products[cardIndex].id}
                     >
-                      <div className="product col-12 col-sm-6 col-md-12 col-lg-12 mb-4">
+                      <div className="product col-12 col-sm-6 col-md-12 col-lg-12 mb-4" onClick={() => setModalShow(true)}>
                         {/* Utiliza products[cardIndex] para acceder a los datos */}
                         <Row>
                           <Col xs={12} md={3}>
@@ -72,16 +68,18 @@ function CookiesList() {
                             </div>
                           </Col>
                         </Row>
+                        <ProductDetail show={modalShow} product={products[cardIndex]}/>
                       </div>
                     </Col>
                   ))}
                 </Row>
+                
               </Carousel.Item>
             )
           )}
       </Carousel>
     </>
-  );
+    );
 }
 
 export default CookiesList;

@@ -2,17 +2,13 @@ import { useEffect, useState } from "react";
 import { Container, Row, Col, Image, Carousel } from "react-bootstrap";
 
 import { getProducts } from "./../productsFunctions";
+import { getProductsByCategoryAndstatus } from '../productsFunctions';
 
 import logo from "../../../assets/logo-sicaf.png"
 import Image1 from "../../../assets/Products/pastel1.jpeg";
 import Image2 from "../../../assets/Products/pastel2.jpeg";
 
-function CupCakesList() {
-  const [products, setProducts] = useState([]);
- 
-  useEffect(() => {
-    getProducts().then((products) => setProducts(products));
-  }, []);
+function CupCakesList({products}) {
   return (
     <>
       <Carousel>
