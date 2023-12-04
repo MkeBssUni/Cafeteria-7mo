@@ -3,9 +3,9 @@ import FondoH from '../../assets/FondoH.jpg'
 import '../../shared/css/color.css'
 import { Figure } from 'react-bootstrap';
 
+
 const HistoryScreens = () => {
     return (
-
         <div>
             <div className="card" style={{ position: 'relative', border: 'none' }}>
                 <Figure.Image className="fondo-user" alt="fondo-user" src={FondoH} />

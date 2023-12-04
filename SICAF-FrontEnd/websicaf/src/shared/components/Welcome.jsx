@@ -1,5 +1,4 @@
 import React from "react";
-import Navbarsicaf from "./Navbar";
 import { Carousel, Figure,Button,Row,Col,Card  } from "react-bootstrap";
 import SvgIcon from '@mui/material/SvgIcon';
 import foto1 from "../../assets/taza-1.jpeg";
@@ -13,8 +12,6 @@ import FacebookIcon from '@mui/icons-material/Facebook';
 const Welcome = () => {
   return (
     <>
-      <Navbarsicaf />
-      <br/>
       <div className="carrusel-foto">
         <Carousel>
           <Carousel.Item>
