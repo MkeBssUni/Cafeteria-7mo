@@ -1,6 +1,6 @@
-import AxiosClient from "../../shared/plugins/axios";
+import AxiosClient from "../../../shared/plugins/axios";
 
-export const getProducts = async () => {
+ const getProducts = async () => {
     try {
       const response = await AxiosClient({ url: "/products/getAll" });
       if (!response.error) return response.data;
@@ -8,3 +8,5 @@ export const getProducts = async () => {
       console.log(error);
     }
   };
+
+export default getProducts
