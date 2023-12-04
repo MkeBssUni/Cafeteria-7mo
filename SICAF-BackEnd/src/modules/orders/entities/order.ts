@@ -7,7 +7,7 @@ export type Order = Entity<number> & {
     products_sold: number,
     amount: number,
     payment_method: string,
-    discount?: number,
+    discount_id?: number,
     final_amount: number,
     status: string,
     send_receipt: boolean,

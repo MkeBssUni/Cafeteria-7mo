@@ -1,5 +1,5 @@
 import { UseCase } from "../../../kernel/contracts";
-import { DiscountTypes } from "../../../kernel/enums";
+import { generateReceipt } from "../../../kernel/generate_receipt";
 import { Discount } from "../../discounts/entities/discount";
 import { Product } from "../../products/entities/product";
 import { GetReceiptDto, ReceiptDto, ReceiptProductsDto } from "../adapters/dto";
@@ -15,7 +15,6 @@ export class GetReceiptInteractor implements UseCase<GetReceiptDto, ReceiptDto> 
         //validar que el cliente exista
 
         let subtotal: number = 0;
-        let total: number = 0;
         let discount: Discount | null = null;
         let products: ReceiptProductsDto[] = [];
 
@@ -47,82 +46,7 @@ export class GetReceiptInteractor implements UseCase<GetReceiptDto, ReceiptDto> 
             });
         }
         
-        switch (discount?.type) {
-            case DiscountTypes.discountByRol:
-                //validar que payload.client_id tenga el rol correspondiente
-                console.log("Descuento por rol");
-                throw new Error("Not implemented");
-            case DiscountTypes.discountByOrderTotal:
-                if (discount.order_total! > subtotal) throw new Error("Discount not applicable");
-                const appliedDiscount = Math.round(subtotal * (discount.percentage / 100) * 100) / 100;
-                for (let i = 0; i < products.length; i++) {
-                    products[i].discount = 0;
-                    products[i].total = products[i].subtotal;
-                }
-                return {
-                    subtotal: subtotal,
-                    discount: appliedDiscount * (-1),
-                    total: subtotal - appliedDiscount,
-                    products: products
-                } as ReceiptDto;
-            case DiscountTypes.discountByCategory:
-                for (let i = 0; i < products.length; i++) {
-                    if (products[i].discount === discount.id) {
-                        products[i].discount = Math.round(products[i].subtotal * (discount.percentage / 100) * 100) / 100;
-                        products[i].total = products[i].subtotal - products[i].discount!;
-                    } else {
-                        products[i].discount = 0;
-                        products[i].total = products[i].subtotal;
-                    }
-                    total += products[i].total;
-                }
-                return {
-                    subtotal: subtotal,
-                    discount: total - subtotal,
-                    total: total,
-                    products: products
-                } as ReceiptDto;
-            case DiscountTypes.discountByProduct:
-                for (let i = 0; i < products.length; i++) {
-                    if (products[i].discount === discount.id) {
-                        products[i].discount = Math.round(products[i].subtotal * (discount.percentage / 100) * 100) / 100;
-                        products[i].total = products[i].subtotal - products[i].discount!;
-                    } else {
-                        products[i].discount = 0;
-                        products[i].total = products[i].subtotal;
-                    }
-                    total += products[i].total;
-                }
-                return {
-                    subtotal: subtotal,
-                    discount: total - subtotal,
-                    total: total,
-                    products: products
-                } as ReceiptDto;
-            case DiscountTypes.discountByProductsTotal:
-                for (let i = 0; i < products.length; i++) {
-                    if (products[i].discount === discount.id && products[i].quantity === discount.products_number!) {
-                        products[i].discount = Math.round(products[i].subtotal * (discount.percentage / 100) * 100) / 100;
-                        products[i].total = products[i].subtotal - products[i].discount!;
-                    } else {
-                        products[i].discount = 0;
-                        products[i].total = products[i].subtotal;
-                    }
-                    total += products[i].total;
-                }
-                return {
-                    subtotal: subtotal,
-                    discount: total - subtotal,
-                    total: total,
-                    products: products
-                } as ReceiptDto;
-            default:
-                return {
-                    subtotal: subtotal,
-                    discount: 0,
-                    total: subtotal,
-                    products: products
-                } as ReceiptDto;
-        }
+        const receipt = generateReceipt(discount!, subtotal, products) as ReceiptDto;
+        return receipt;
     }
 }
