@@ -207,7 +207,7 @@ export class UserController {
 }
 
 UserRouter.post('/', UserController.saveUser);
-UserRouter.post('/', UserController.findByEmailRoute);
+UserRouter.get('/', UserController.findByEmailRoute);
 UserRouter.get('/', UserController.getUsers);
 UserRouter.put('/changePassword', UserController.changePassword);
 UserRouter.post('/comparePassword', UserController.comparePassword);
