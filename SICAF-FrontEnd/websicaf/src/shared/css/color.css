@@ -11,5 +11,15 @@
   flex-shrink: 0;
 }
 
+.bakground-things{
+  background-color: var(--color-primary)!important;
+  color: #fff!important;
+}
+
+.sidebar-size{
+  width: 30% !important;
+  max-width: 300px !important;
+}
+
 
 
