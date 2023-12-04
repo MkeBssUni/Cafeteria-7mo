@@ -16,6 +16,7 @@ const errors:{[x: string]: ResponseApi<undefined>}={
     'Invalid date': {code: 400, error: true, message: 'Invalid date'},
     'Invalid dates': {code: 400, error: true, message: 'Invalid dates'},
     'Description too short': {code: 400, error: true, message: 'Description too short'},
+    'Discount not applicable': {code: 400, error: true, message: 'Discount not applicable'},
     'Expired Token': {code: 401, error: true, message: 'Expired Token'},
     'Unauthorized': {code: 401, error: true, message: 'Unauthorized'},
     'Forbidden': {code: 403, error: true, message: 'Forbidden'},
