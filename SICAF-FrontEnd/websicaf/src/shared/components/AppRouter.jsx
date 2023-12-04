@@ -9,6 +9,9 @@ import Navbarsicaf from "./Navbar";
 import UserEdt from "../../modules/users/components/UserEdt";
 import HistoryScreens from "../../modules/History/HistoryScreens";
 import Welcome from "./Welcome";
+import ProductList from '../../modules/product/clientViews/ProductList';
+import OffersList from '../../modules/offers/OffersList'
+import  ProductDashborad from '../../modules/product/adminViews/ProductDashbBoard'
 
 const AppRouter = () => {
   return (
@@ -27,6 +30,9 @@ const AppRouter = () => {
                 <Route path="/userform" element={<UserForm/>}/>
                 <Route path="/useredt" element={<UserEdt/>}/>
                 <Route path="/history" element={<HistoryScreens/>}/>
+                <Route path="/products" element={<ProductList/>}/>
+                <Route path="/offers" element={<OffersList/>}/>
+                <Route path="/productAdmin" element={<ProductDashborad/>}/>
               </Routes>
             </>
           }
@@ -34,6 +40,7 @@ const AppRouter = () => {
         <Route path="/login" element={<LoginScreens />} />
         <Route path="/recoveryPassword" element={<RecoryPassword />} />
       </Routes>
+
     </Router>
   );
 };
