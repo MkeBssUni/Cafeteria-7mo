@@ -1,12 +1,13 @@
 import express, {Application, Request, Response} from 'express';
 import cors from 'cors';
-import categoriesRoutes from "../modules/categories/adapters/categories-routes"
-import productsRoutes from "../modules/products/adapters/products-routes"
+import categoriesRoutes from "../modules/categories/adapters/categories.routes"
+import productsRoutes from "../modules/products/adapters/products.routes"
 import discountsRoutes from "../modules/discounts/adapters/discount.routes"
 import RoleRouter from '../modules/roles/adapters/role.controller';
 import AuthRouter from '../auth/adapters/auth.controller';
 import UserRouter from '../modules/user/adapters/user.controller';
 import * as dotenv from 'dotenv';
+import providersRoutes from "../modules/providers/adapters/providers.routes"
 
 dotenv.config()
 
@@ -33,6 +34,8 @@ app.use(`/${API}/discounts`,discountsRoutes)
 app.use(`/${API}/roles`,RoleRouter)
 app.use(`/${API}/auth`, AuthRouter)
 app.use(`/${API}/users`,UserRouter)
+app.use(`/${API}/providers`,providersRoutes)
+
 
 app.get('*',(req: Request, res: Response)=>res.status(404).send('Not Found'))
 
