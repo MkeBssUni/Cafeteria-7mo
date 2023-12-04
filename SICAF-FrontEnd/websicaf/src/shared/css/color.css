@@ -2,6 +2,12 @@
   --color-primary: #9b6b43;
   --color-secondary: #f3e3d3;
   --color-tertiary: #c98860;
+  --color-search: #F3E3D3CF;
+  --color-ordes: #F5E8DB;
+  --color-title: #563411;
+  --color-textR: #FF2424;
+  --color-BotonV: #9ABFA2B2;
+  --color-BotonR: #E44545B2;
 }
 /* var(--color-primary) */
 
@@ -10,6 +16,43 @@
   height: 77px;
   flex-shrink: 0;
 }
+
+.tabla-personalizada {
+  max-width: 95%; 
+  width: 100%;
+  margin: 0 auto; 
+  background-color: var(--color-secondary);
+}
+
+.tabla-personalizada td {
+  text-align: center;
+}
+
+.overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color:var(--color-search); 
+  border-radius: 30px; 
+  padding: 10px 20px;
+  width: 45%;
+}
+
+.text-box {
+  color: var(--color-title); 
+  text-align: center; 
+}
+
+.custom-input {
+  border: none;
+  border-bottom: 2px solid brown;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+
+
 
 
 
