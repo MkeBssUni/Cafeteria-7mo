@@ -15,6 +15,8 @@ const errors:{[x: string]: ResponseApi<undefined>}={
     'Invalid quantity': {code: 400, error: true, message: 'Invalid quantity'},
     'Invalid date': {code: 400, error: true, message: 'Invalid date'},
     'Invalid dates': {code: 400, error: true, message: 'Invalid dates'},
+    'Invalid payment method': {code: 400, error: true, message: 'Invalid payment method'},
+    'Invalid comment': {code: 400, error: true, message: 'Invalid comment'},
     'Description too short': {code: 400, error: true, message: 'Description too short'},
     'Discount not applicable': {code: 400, error: true, message: 'Discount not applicable'},
     'Expired Token': {code: 401, error: true, message: 'Expired Token'},
@@ -24,6 +26,7 @@ const errors:{[x: string]: ResponseApi<undefined>}={
     'Category not found': {code: 404, error: true, message: 'Category not found'},
     'Product not found': {code: 404, error: true, message: 'Product not found'},
     'Discount not found': {code: 500, error: true, message: 'Discount not found'},
+    'Error generating receipt': {code: 500, error: true, message: 'Error generating receipt'},
     'Server Error': {code: 500, error: true, message: 'Internal Server Error'},
     'Default': {code: 500, error: true, message: 'Internal Server Error'}
 }

@@ -1,4 +1,6 @@
-import { GetReceiptDto, ReceiptDto } from "../../adapters/dto";
+import { SaveOnlineOrderDto } from "../../adapters/dto";
+import { Order } from "../../entities/order";
 
 export interface OrderRepository {
+    saveOnlineOrder(order: SaveOnlineOrderDto): Promise<Order>;    
 }
