@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "e3522e0b-ff04-4813-a47a-82cb5ce1cc8c",
+		"_postman_id": "6bd71ee5-c3dd-4637-a6ba-c2d1c6df8888",
 		"name": "SICAF",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "27939903"
+		"_exporter_id": "28539745"
 	},
 	"item": [
 		{
@@ -347,7 +347,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"client_id\": 1,\r\n    \"products\": [\r\n        {\r\n            \"id\": 2,\r\n            \"quantity\": 2\r\n        },\r\n        {\r\n            \"id\": 3,\r\n            \"quantity\": 3\r\n        }\r\n    ]\r\n}",
+							"raw": "{\r\n    \"client_id\": 1,\r\n    \"products\": [\r\n        {\r\n            \"id\": 3,\r\n            \"quantity\": 2\r\n        },\r\n        {\r\n            \"id\": 4,\r\n            \"quantity\": 3\r\n        }\r\n    ]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -802,16 +802,16 @@
 			]
 		},
 		{
-			"name": "providers",
+			"name": "orders",
 			"item": [
 				{
-					"name": "Create",
+					"name": "get-receipt-for-confirmation",
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"name\": \"Las molcajetesss\",\r\n  \"contact_name\":\"Rogelio\",\r\n  \"contact_lastname\":\"Pérez\",\r\n  \"phone_number1\":\"7771534567\",\r\n  \"phone_number2\":\"7771254567\",\r\n  \"email\": \"lavigsa@example.com\",\r\n  \"address\": {\r\n    \"street\": \"Main Street\",\r\n    \"settlement\": \"Downtown\",\r\n    \"external_number\": \"34\",\r\n    \"city\": \"New York\",\r\n    \"state\": \"NY\",\r\n    \"postal_code\": \"10001\",\r\n    \"country\": \"USA\"\r\n  },\r\n  \"ingrdedient\": \"Mariscos\",\r\n  \"notes\": \"asodnhoasindoasndo\"\r\n}\r\n",
+							"raw": "{\r\n    \"client_id\": 1,\r\n    \"discount_id\": 5,\r\n    \"products\": [\r\n        {\r\n            \"id\": 5,\r\n            \"quantity\": 3\r\n        },\r\n        {\r\n            \"id\": 3,\r\n            \"quantity\": 3\r\n        },\r\n        {\r\n            \"id\": 1,\r\n            \"quantity\": 1\r\n        }\r\n    ]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -819,70 +819,29 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3001/SICAF/providers",
+							"raw": "http://localhost:3000/SICAF/orders/confirmationReceipt",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "3001",
+							"port": "3000",
 							"path": [
 								"SICAF",
-								"providers"
+								"orders",
+								"confirmationReceipt"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "Change status provider",
+					"name": "save-online-order",
 					"request": {
-						"method": "PATCH",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:3001/SICAF/providers/1",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3001",
-							"path": [
-								"SICAF",
-								"providers",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get all",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:3001/SICAF/providers/",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3001",
-							"path": [
-								"SICAF",
-								"providers",
-								""
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Update",
-					"request": {
-						"method": "PUT",
+						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"name\": \"Las oaisd\",\r\n  \"contact_name\":\"Rogelio\",\r\n  \"contact_lastname\":\"Pérez\",\r\n  \"phone_number1\":\"7771534567\",\r\n  \"phone_number2\":\"7771254567\",\r\n  \"email\": \"asdasdasd@example.com\",\r\n  \"address\": {\r\n    \"street\": \"dev Street\",\r\n    \"settlement\": \"Downtown\",\r\n    \"external_number\": \"34\",\r\n    \"city\": \"New York\",\r\n    \"state\": \"NY\",\r\n    \"postal_code\": \"10001\",\r\n    \"country\": \"USA\"\r\n  },\r\n  \"ingrdedient\": \"Mariscos\",\r\n  \"notes\": \"asodnhoasindoasndo\"\r\n}\r\n",
+							"raw": "{\r\n    \"client_id\": 1,\r\n    \"payment_method\": \"Tarjeta de credito\", //Tarjeta de credito o Tarjeta de debito\r\n    //\"discount_id\": 5,\r\n    //\"comments\": \"Se aplicó un descuento\",\r\n    \"products\": [\r\n        {\r\n            \"id\": 5,\r\n            \"quantity\": 3\r\n        },\r\n        {\r\n            \"id\": 3,\r\n            \"quantity\": 3\r\n        },\r\n        {\r\n            \"id\": 1,\r\n            \"quantity\": 1\r\n        }\r\n    ]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -890,37 +849,16 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3001/SICAF/providers/1",
+							"raw": "http://localhost:3000/SICAF/orders/saveOnlineOrder",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "3001",
+							"port": "3000",
 							"path": [
 								"SICAF",
-								"providers",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get one",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:3001/SICAF/providers/25",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3001",
-							"path": [
-								"SICAF",
-								"providers",
-								"25"
+								"orders",
+								"saveOnlineOrder"
 							]
 						}
 					},

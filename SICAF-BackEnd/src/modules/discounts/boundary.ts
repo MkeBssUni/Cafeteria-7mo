@@ -6,12 +6,14 @@ const ProductStorage = new ProductsStorageGateway();
 
 const existsCategoryById= CategoriesStorage.existsCategoryById;
 const existsProductById = ProductStorage.existsProductById;
-const getProductsIdByCategory = ProductStorage.getProductsIdByCategory;
+const findProductById = ProductStorage.findById;
+const findProductsIdByCategory = ProductStorage.getProductsIdByCategory;
 const addDiscountToProduct = ProductStorage.addDiscount;
 
 export {
     existsCategoryById,
     existsProductById,
-    getProductsIdByCategory,
+    findProductById,
+    findProductsIdByCategory,
     addDiscountToProduct
 }

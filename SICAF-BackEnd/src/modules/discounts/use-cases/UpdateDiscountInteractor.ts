@@ -2,7 +2,7 @@ import { UseCase } from "../../../kernel/contracts";
 import { DiscountTypes } from "../../../kernel/enums";
 import { validateStringLength } from "../../../kernel/validations";
 import { UpdateDiscountDto } from "../adapters/dto";
-import { addDiscountToProduct, existsCategoryById, existsProductById, getProductsIdByCategory } from "../boundary";
+import { addDiscountToProduct, existsCategoryById, existsProductById, findProductsIdByCategory } from "../boundary";
 import { Discount } from "../entities/discount";
 import { DiscountRepository } from "./ports/discount.repository";
 
@@ -37,7 +37,7 @@ export class UpdateDiscountInteractor implements UseCase<UpdateDiscountDto, Disc
                 if (!payload.category_id) throw new Error('Missing fields');
                 if (isNaN(payload.category_id)) throw new Error('Invalid id');
                 if (!await existsCategoryById(payload.category_id)) throw new Error('Category not found');
-                const products: number[] = await getProductsIdByCategory(payload.category_id);
+                const products: number[] = await findProductsIdByCategory(payload.category_id);
                 payload.products_id = products;
                 break;
             case DiscountTypes.discountByProduct:
