@@ -1,0 +1,22 @@
+export type UpdateProviderDto = {
+    id: number,
+    name: string,
+    contact_name?: string,
+    contact_lastname?: string,
+    phone_number1: string,
+    phone_number2?: string,
+    email: string,
+    address?: {
+        id: number,
+        street: string,
+        settlement: string,
+        external_number?: string,
+        internal_number?: string,
+        city: string,
+        state: string,
+        postal_code: string,
+        country: string,
+    },
+    ingredient?: string,
+    notes?: string,
+}
