@@ -8,8 +8,9 @@ import logo from "../../../assets/logo-sicaf.png";
 import Image1 from "../../../assets/Products/galletas2.jpeg";
 import Image2 from "../../../assets/Products/galletas2.png";
 
-function CookiesList({products}) {
+function CookiesList({ products }) {
   const [modalShow, setModalShow] = useState(false);
+
   return (
     <>
       <Carousel>
@@ -25,7 +26,7 @@ function CookiesList({products}) {
                       className="text-center mx-2 mt-2 mb-4"
                       key={products[cardIndex].id}
                     >
-                      <div className="product col-12 col-sm-6 col-md-12 col-lg-12 mb-4" onClick={() => setModalShow(true)}>
+                      <div className="product col-12 col-sm-6 col-md-12 col-lg-12 mb-4" onClick={() => { setModalShow(true); console.log("Modal abierto"); }}>
                         {/* Utiliza products[cardIndex] para acceder a los datos */}
                         <Row>
                           <Col xs={12} md={3}>
@@ -61,25 +62,25 @@ function CookiesList({products}) {
                                 {products[cardIndex].description.length < 60
                                   ? products[cardIndex].description
                                   : products[cardIndex].description.substring(
-                                      0,
-                                      60
-                                    ) + "..."}
+                                    0,
+                                    60
+                                  ) + "..."}
                               </small>
                             </div>
                           </Col>
                         </Row>
-                        <ProductDetail show={modalShow} product={products[cardIndex]}/>
+                        <ProductDetail show={modalShow} onClose={() => setModalShow(false)} product={products[cardIndex]} />
                       </div>
                     </Col>
                   ))}
                 </Row>
-                
+
               </Carousel.Item>
             )
           )}
       </Carousel>
     </>
-    );
+  );
 }
 
 export default CookiesList;
