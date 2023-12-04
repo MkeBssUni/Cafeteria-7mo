@@ -116,13 +116,13 @@ create table if not exists products(
 create table if not exists orders(
     id serial primary key,
     type order_types not null,
-    employee_id int not null,
+    employee_id int,
     client_id int not null,
     products_sold int not null,
-    amount numeric not null,
+    subtotal numeric not null,
     payment_method payment_methods not null,
     discount_id int,
-    final_amount numeric not null,
+    total numeric not null,
     status order_status not null,
     send_receipt boolean not null,
     comments varchar(150),
@@ -137,13 +137,11 @@ create table if not exists order_details(
     order_id int not null,
     product_id int not null,
     products_sold int not null,
-    discount_id int not null,
-    amount numeric not null,
-    final_amount numeric not null,
+    discount_id int,
+    subtotal numeric not null,
+    total numeric not null,
     created_at timestamp not null default now(),
     constraint fk_orderDetail_order foreign key (order_id) references orders(id),
     constraint fk_orderDetail_product foreign key (product_id) references products(id),
     constraint fk_orderDetail_discount foreign key (discount_id) references discounts(id)
 );
-
--- 20/11/2023
