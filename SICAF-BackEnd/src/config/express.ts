@@ -33,6 +33,9 @@ app.use(`/${API}/categories`,categoriesRoutes)
 app.use(`/${API}/products`,productsRoutes)
 app.use(`/${API}/discounts`,discountsRoutes)
 app.use(`/${API}/providers`,providersRoutes)
+app.use(`/${API}/auth`,AuthRouter)
+app.use(`/${API}/role`,UserRouter)
+app.use(`/${API}/users`,RoleRouter)
 
 app.get('*',(req: Request, res: Response)=>res.status(404).send('Not Found'))
 
