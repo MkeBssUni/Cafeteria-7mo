@@ -21,3 +21,13 @@ export const isValidPostalCode = (input: String): boolean => {
     const regex = new RegExp(`^[0-9]{5}$`);
     return regex.test(input.trim());
 }
+
+export const validateDates = (start_date: Date, end_date: Date): boolean => {
+    const today = new Date();
+    return today >= start_date && today <= end_date;
+}
+
+export const validateDate = (start_date: Date): boolean => {
+    const today = new Date();
+    return today >= start_date;
+}
