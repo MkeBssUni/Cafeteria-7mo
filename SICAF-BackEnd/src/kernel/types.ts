@@ -5,10 +5,9 @@ export type Entity<Tidentifier extends number | string>={
 }
 
 export type ResponseApi<T> = {
-    status: number,
+    code: number,
     error?: boolean,
     message?: string,
-    entity?: T,
-    entities?: T[],
+    data: T | T[]
     count?: number
 }
