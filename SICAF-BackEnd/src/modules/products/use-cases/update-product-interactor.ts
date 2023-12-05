@@ -10,7 +10,7 @@ export class UpdateProductInteractor implements UseCase<UpdateProductDto, Produc
     async execute(payload: UpdateProductDto): Promise<Product> {
         payload.name = payload.name.trim();
         payload.description = payload.description.trim();
-        if(!payload.name || !payload.description || !payload.image || !payload.price || !payload.stock || !payload.category_id) throw Error ('Missing fields')
+        if(!payload.name || !payload.description || !payload.image || !payload.price || !payload.category_id) throw Error ('Missing fields')
         if(!isValidName(payload.name)) throw Error ('Invalid name')
         if(payload.description.length < 10) throw Error ('Description too short')
         if(payload.price < 0) throw Error ('Invalid price')
