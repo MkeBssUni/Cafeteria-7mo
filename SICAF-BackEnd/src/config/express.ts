@@ -7,6 +7,7 @@ import RoleRouter from '../modules/roles/adapters/role.controller';
 import AuthRouter from '../auth/adapters/auth.controller';
 import UserRouter from '../modules/user/adapters/user.controller';
 import * as dotenv from 'dotenv';
+import orderRoutes from "../modules/orders/adapters/order.routes"
 import providersRoutes from "../modules/providers/adapters/providers.routes"
 
 dotenv.config()
@@ -31,11 +32,7 @@ app.get(`/${API}/test`,(req: Request, res: Response)=>res.send("SICAF"))
 app.use(`/${API}/categories`,categoriesRoutes)
 app.use(`/${API}/products`,productsRoutes)
 app.use(`/${API}/discounts`,discountsRoutes)
-app.use(`/${API}/roles`,RoleRouter)
-app.use(`/${API}/auth`, AuthRouter)
-app.use(`/${API}/users`,UserRouter)
 app.use(`/${API}/providers`,providersRoutes)
-
 
 app.get('*',(req: Request, res: Response)=>res.status(404).send('Not Found'))
 

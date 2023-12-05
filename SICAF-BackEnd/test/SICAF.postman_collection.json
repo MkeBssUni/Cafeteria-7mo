@@ -347,7 +347,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"client_id\": 1,\r\n    \"products\": [\r\n        {\r\n            \"id\": 2,\r\n            \"quantity\": 2\r\n        },\r\n        {\r\n            \"id\": 3,\r\n            \"quantity\": 3\r\n        }\r\n    ]\r\n}",
+							"raw": "{\r\n    \"client_id\": 1,\r\n    \"products\": [\r\n        {\r\n            \"id\": 3,\r\n            \"quantity\": 2\r\n        },\r\n        {\r\n            \"id\": 4,\r\n            \"quantity\": 3\r\n        }\r\n    ]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -794,6 +794,71 @@
 								"products",
 								"search",
 								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "orders",
+			"item": [
+				{
+					"name": "get-receipt-for-confirmation",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"client_id\": 1,\r\n    \"discount_id\": 5,\r\n    \"products\": [\r\n        {\r\n            \"id\": 5,\r\n            \"quantity\": 3\r\n        },\r\n        {\r\n            \"id\": 3,\r\n            \"quantity\": 3\r\n        },\r\n        {\r\n            \"id\": 1,\r\n            \"quantity\": 1\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/SICAF/orders/confirmationReceipt",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"SICAF",
+								"orders",
+								"confirmationReceipt"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "save-online-order",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"client_id\": 1,\r\n    \"payment_method\": \"Tarjeta de credito\", //Tarjeta de credito o Tarjeta de debito\r\n    //\"discount_id\": 5,\r\n    //\"comments\": \"Se aplicó un descuento\",\r\n    \"products\": [\r\n        {\r\n            \"id\": 5,\r\n            \"quantity\": 3\r\n        },\r\n        {\r\n            \"id\": 3,\r\n            \"quantity\": 3\r\n        },\r\n        {\r\n            \"id\": 1,\r\n            \"quantity\": 1\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/SICAF/orders/saveOnlineOrder",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"SICAF",
+								"orders",
+								"saveOnlineOrder"
 							]
 						}
 					},
