@@ -6,7 +6,8 @@ import Navbarsicaf from '../../shared/components/Navbar'
 
 const OrdersScreens = () => {
     return (
-        <div className="container">
+        <body>
+            <div className="container">
             <Navbarsicaf/>
             <div className="row my-5">
                 <div className="col-sm-6 mb-3">
@@ -93,6 +94,7 @@ const OrdersScreens = () => {
                 </div>
             </div>
         </div>
+        </body>
     )
 }
 

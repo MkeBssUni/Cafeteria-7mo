@@ -7,6 +7,11 @@
   pointer-events: none;
 }
 
+body {
+  background: var(--background-color)!important;
+  color: var(--color-font)!important;
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
@@ -280,3 +285,16 @@
 .image-product-modal{
   width:300px;
 }
+
+html[letter-size='Grande'] {
+  font-size: 20px;
+}
+
+html[letter-size='Mediana'] {
+  font-size: 15px;
+}
+
+html[letter-size='Pequeña'] {
+  font-size: 13px;
+}
+
