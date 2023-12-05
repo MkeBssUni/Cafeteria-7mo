@@ -145,3 +145,31 @@ create table if not exists order_details(
     constraint fk_orderDetail_product foreign key (product_id) references products(id),
     constraint fk_orderDetail_discount foreign key (discount_id) references discounts(id)
 );
+
+---- Agregar ---- 05/12/2023
+
+insert into categories(name) values ('Galletas'),('Pasteles'),('Cupcakes'),('Panes'), ('Bebidas calientes'),('Bebidas frias');
+
+alter table products alter column stock drop not null;
+
+
+CREATE OR REPLACE FUNCTION update_product_status() returns trigger as $$
+DECLARE
+    product_id integer;
+BEGIN
+  product_id := new.id;
+
+  if new.stock != old.stock then
+        if new.stock = 0 then
+            update products set status = false where id = product_id;
+        end if;
+        if new.stock > 0 then
+            update products set status = true where id = product_id;
+        end if;
+  end if;
+
+  RETURN new;
+END;
+$$ LANGUAGE plpgsql;
+
+create trigger update_product_status after insert or update on products for each row execute procedure update_product_status();

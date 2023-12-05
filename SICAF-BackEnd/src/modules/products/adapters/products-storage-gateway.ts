@@ -20,9 +20,10 @@ export class ProductsStorageGateway implements ProductsRepository{
 
     async createProduct(payload: CreateProductDto): Promise<Product> {
         try {
-            const response = await pool.query("INSERT INTO PRODUCTS (name, description, image, price, stock, category_id) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *", [payload.name, payload.description, payload.image, payload.price, payload.stock, payload.category_id]);
+            const response = await pool.query("INSERT INTO PRODUCTS (name, description, image, price, stock, status, category_id) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *", [payload.name, payload.description, payload.image, payload.price, payload.stock, payload.status ,payload.category_id]);
             return response.rows[0];
         } catch (error) {
+            console.log("error: ", error)
             throw Error
         }
     }
