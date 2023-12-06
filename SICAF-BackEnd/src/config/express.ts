@@ -4,7 +4,7 @@ import categoriesRoutes from "../modules/categories/adapters/categories.routes"
 import productsRoutes from "../modules/products/adapters/products.routes"
 import discountsRoutes from "../modules/discounts/adapters/discount.routes"
 import RoleRouter from '../modules/roles/adapters/role.controller';
-import AuthRouter from '../auth/adapters/auth.controller';
+import authRoutes from '../modules/auth/adapters/auth.routes';
 import UserRouter from '../modules/user/adapters/user.controller';
 import * as dotenv from 'dotenv';
 import orderRoutes from "../modules/orders/adapters/order.routes"
@@ -34,7 +34,7 @@ app.use(`/${API}/products`,productsRoutes)
 app.use(`/${API}/discounts`,discountsRoutes)
 app.use(`/${API}/providers`,providersRoutes)
 app.use(`/${API}/orders`,orderRoutes)
-app.use(`/${API}/auth`,AuthRouter)
+app.use(`/${API}/auth`,authRoutes)
 app.use(`/${API}/role`,UserRouter)
 app.use(`/${API}/users`,RoleRouter)
 

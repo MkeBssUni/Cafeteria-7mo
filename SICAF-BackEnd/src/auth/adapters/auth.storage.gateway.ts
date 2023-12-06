@@ -1,15 +1,15 @@
-import { Authenticated } from './dtos/authenticated.dto';
+/*import { Authenticated } from './dtos/authenticated.dto';
 import { UserAuth } from '../entities/user.auth';
 import { AuthRepository } from '../uses-cases/port/auth.repository';
 import { pool } from '../../config/bdconfig';
-import { generateToken } from '../../config/jwt';
+//import { generateToken } from '../../kernel/jwt';
 import { compare } from '../../utils/bcrypt';
 import { UserToAuth } from './dtos/user.auth.dto';
 import { User } from '../../modules/user/entities/user';
 
-export class AuthGateway implements AuthRepository {
+/* export class AuthGateway implements AuthRepository {
     //metodo para loguear un usuario
-    async login(payload: UserToAuth): Promise<Authenticated & User> {
+    /* async login(payload: UserToAuth): Promise<Authenticated & User> {
         const client = await pool.connect();
         try {
             const query = await client.query(`SELECT * FROM users WHERE email = $1`, [payload.email]);
@@ -39,5 +39,4 @@ export class AuthGateway implements AuthRepository {
         } finally {
             client.release();
         }
-    }
-}
+    } */
