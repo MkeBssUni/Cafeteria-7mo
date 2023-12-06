@@ -173,3 +173,8 @@ END;
 $$ LANGUAGE plpgsql;
 
 create trigger update_product_status after insert or update on products for each row execute procedure update_product_status();
+
+
+alter table people drop column notification_preference;
+
+insert into roles (name) values ('Administrador'),('Empleado'),('Cliente');
