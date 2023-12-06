@@ -5,7 +5,7 @@ import { LoginDto, GetUserDto, ResetPwdDto } from "./dto";
 export class AuthStorageGateway implements AuthRepository {
     async login(payload: LoginDto): Promise<GetUserDto> {
         try {
-            const response = await pool.query('select u.id, u.email, u.password, r.name as role, u.dark_theme, u.letter_size, u.status from users u inner join roles r on u.role_id = r.id where u.email = $1', [payload.email]);
+            const response = await pool.query('select u.id, u.email, u.password, p.name, p.lastname, r.name as role, u.dark_theme, u.letter_size, u.status, p.shopping_cart from users u inner join people p on u.id = p.user_id inner join roles r on u.role_id = r.id where u.email = $1', [payload.email]);
             return response.rows[0];
         } catch (e) {
             throw Error;
