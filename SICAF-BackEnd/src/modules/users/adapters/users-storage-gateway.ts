@@ -14,42 +14,9 @@ export class UsersStorageGateway implements UsersRepository{
             const responsePerson = await pool.query('INSERT INTO people (user_id, name, lastname, gender, birthday, phone_number1, phone_number2, address_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *',[
                 user.id, payload.person.name, payload.person.lastname, payload.person.gender, payload.person.birthday, payload.person.phone_number1, payload.person.phone_number2, address.id
             ]);
-            const person = responsePerson.rows[0];
-
-            const finalUser: User ={
-                user_id: user.id,
-                email: user.email,
-                password: user.password,
-                role_id: user.role_id,
-                dark_theme: user.dark_theme,
-                letter_size: user.letter_size,
-                reset_token: user.reset_token,
-                status: user.status,
-                created_at: user.created_at,
-                person:{
-                    person_id: person.id,
-                    user_id: person.user_id,
-                    name: person.name,
-                    lastname: person.lastname,
-                    gender: person.gender,
-                    birthday: person.birthday,
-                    phone_number1: person.phone_number1,
-                    phone_number2: person.phone_number2,
-                    address:{
-                        id: address.id,
-                        street: address.street,
-                        settlement: address.settlement,
-                        external_number: address.external_number,
-                        internal_number: address.internal_number,
-                        city: address.city,
-                        state: address.state,
-                        postal_code: address.postal_code,
-                        country: address.country,
-                    }
-                }
-            }
+            
             await pool.query('COMMIT')
-            return finalUser;
+            return this.findById(user.id);
         } catch (error) {
             await pool.query('ROLLBACK')
             console.log("Error: ", error)
@@ -66,15 +33,30 @@ export class UsersStorageGateway implements UsersRepository{
     }
 
     async findById(id: number): Promise<User> {
-        throw new Error("Method not implemented.");
+        try {
+            const user = await pool.query('select u.*, p.*, a.* from users u inner join people p on u.id = p.user_id inner join addresses a on p.address_id = a.id where u.id = $1', [id]);
+            return user.rows[0];
+        } catch (error) {
+            throw new Error
+        }
     }
 
     async existsByEmail(email: string): Promise<boolean> {
-        return false
+        try {
+            const response = await pool.query('SELECT EXISTS(SELECT 1 FROM users WHERE email = $1)', [email]);
+            return response.rows[0].exists;
+        } catch (error) {
+            throw Error
+        }
     }
 
     async existsById(id: number): Promise<boolean> {
-        throw new Error("Method not implemented.");
+        try {
+            const response = await pool.query('SELECT EXISTS(SELECT 1 FROM users WHERE id = $1)', [id]);
+            return response.rows[0].exists;
+        } catch (error) {
+            throw Error
+        }
     }
     
     async update(payload: UpdateUserDto): Promise<User> {
@@ -82,7 +64,13 @@ export class UsersStorageGateway implements UsersRepository{
     }
 
     async changeStatus(id: number): Promise<User> {
-        throw new Error("Method not implemented.");
+        try {
+            const response = await pool.query('UPDATE users SET status = NOT status WHERE id = $1 RETURNING *', [id]);
+            
+            return this.findById(response.rows[0].id);
+        } catch (error) {
+            throw new Error
+        }
     }
 
 }
