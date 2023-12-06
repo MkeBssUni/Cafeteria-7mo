@@ -1,4 +1,5 @@
 import { pool } from "../../../config/bdconfig";
+import { encodeString } from "../../../kernel/jwt";
 import { User } from "../entity/user";
 import { UsersRepository } from "../use-cases/ports/users-repository";
 import { UpdateUserDto } from "./dto/update-user-dto";
@@ -7,7 +8,7 @@ export class UsersStorageGateway implements UsersRepository{
     async create(payload: User): Promise<User> {
         try {
             await pool.query('BEGIN')
-            const responseUser = await pool.query('INSERT INTO users (email, password, role_id) VALUES ($1, $2, $3) RETURNING *', [payload.email, payload.password, payload.role_id]);
+            const responseUser = await pool.query('INSERT INTO users (email, password, role_id) VALUES ($1, $2, $3) RETURNING *', [payload.email, await encodeString(payload.password), payload.role_id]);
             const user = responseUser.rows[0];
             const responseAddress = await pool.query('INSERT INTO addresses (street, settlement, external_number, internal_number, city, state, postal_code, country) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *', [payload.person.address.street, payload.person.address.settlement, payload.person.address.external_number, payload.person.address.internal_number, payload.person.address.city, payload.person.address.state, payload.person.address.postal_code, payload.person.address.country]);
             const address = responseAddress.rows[0];
@@ -35,6 +36,15 @@ export class UsersStorageGateway implements UsersRepository{
     async findById(id: number): Promise<User> {
         try {
             const user = await pool.query('select u.*, p.*, a.* from users u inner join people p on u.id = p.user_id inner join addresses a on p.address_id = a.id where u.id = $1', [id]);
+            return user.rows[0];
+        } catch (error) {
+            throw new Error
+        }
+    }
+
+    async findByEmail(email: string): Promise<User> {
+        try {
+            const user = await pool.query('select u.*, p.*, a.* from users u inner join people p on u.id = p.user_id inner join addresses a on p.address_id = a.id where u.email = $1', [email]);
             return user.rows[0];
         } catch (error) {
             throw new Error
