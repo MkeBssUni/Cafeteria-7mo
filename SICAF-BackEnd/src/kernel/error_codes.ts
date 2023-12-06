@@ -7,6 +7,7 @@ const errors:{[x: string]: ResponseApi<undefined>}={
     'Invalid name': {code: 400, error: true, message: 'Invalid name'},
     'Invalid lastname': {code: 400, error: true, message: 'Invalid lastname'},
     'Invalid gender': {code: 400, error: true, message: 'Invalid gender'},
+    'Invalid role': {code: 400, error: true, message: 'Invalid role'},
     'Invalid phone number': {code: 400, error: true, message: 'Invalid phone number'},
     'Invalid email': {code: 400, error: true, message: 'Invalid email'},
     'Email already exists': {code: 400, error: true, message: 'Email already exists'},

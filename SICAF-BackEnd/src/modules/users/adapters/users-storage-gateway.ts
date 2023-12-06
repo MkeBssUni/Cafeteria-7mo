@@ -1,8 +1,14 @@
+import { json } from "express";
 import { pool } from "../../../config/bdconfig";
 import { encodeString } from "../../../kernel/jwt";
+import { findProductById } from "../boundary";
+import { ShoppingCart } from "../entity/shopping-cart";
 import { User } from "../entity/user";
 import { UsersRepository } from "../use-cases/ports/users-repository";
+import { UpdateCartDto } from "./dto/update-cart-dto";
 import { UpdateUserDto } from "./dto/update-user-dto";
+import { Product } from "../../products/entities/product";
+import { ProductInCartDto } from "./dto/products-in-cart-dto";
 
 export class UsersStorageGateway implements UsersRepository{
     async create(payload: User): Promise<User> {
@@ -12,8 +18,9 @@ export class UsersStorageGateway implements UsersRepository{
             const user = responseUser.rows[0];
             const responseAddress = await pool.query('INSERT INTO addresses (street, settlement, external_number, internal_number, city, state, postal_code, country) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *', [payload.person.address.street, payload.person.address.settlement, payload.person.address.external_number, payload.person.address.internal_number, payload.person.address.city, payload.person.address.state, payload.person.address.postal_code, payload.person.address.country]);
             const address = responseAddress.rows[0];
-            const responsePerson = await pool.query('INSERT INTO people (user_id, name, lastname, gender, birthday, phone_number1, phone_number2, address_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *',[
-                user.id, payload.person.name, payload.person.lastname, payload.person.gender, payload.person.birthday, payload.person.phone_number1, payload.person.phone_number2, address.id
+            payload.person.shopping_cart = '[]'
+            const responsePerson = await pool.query('INSERT INTO people (user_id, name, lastname, gender, birthday, phone_number1, phone_number2, address_id, shopping_cart) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *',[
+                user.id, payload.person.name, payload.person.lastname, payload.person.gender, payload.person.birthday, payload.person.phone_number1, payload.person.phone_number2, address.id, payload.person.shopping_cart
             ]);
             
             await pool.query('COMMIT')
@@ -82,5 +89,44 @@ export class UsersStorageGateway implements UsersRepository{
             throw new Error
         }
     }
+
+    /* async updateCart(payload: UpdateCartDto): Promise<ShoppingCart> {
+        try {
+            
+        } catch (error) {
+            throw new Error
+        }
+    } */
+
+    async getCartById(id: number): Promise<ShoppingCart> {
+        try {
+            const response = await pool.query('SELECT shopping_cart FROM people WHERE user_id = $1', [id]);
+            const jsonCart = response.rows[0].shopping_cart;
+
+            let cartProducts = []
+            for (let index = 0; index < jsonCart.length; index++) {
+                const product: Product = await findProductById(jsonCart[index].product_id);
+                if (!product) throw new Error('Product not found');
+                cartProducts.push({
+                    product_id: jsonCart[index].product_id,
+                    name: product.name,
+                    price: product.price,
+                    quantity: jsonCart[index].quantity,
+                    pre_totalProduct: product.price * jsonCart[index].quantity,
+                    image: product.image,
+                })
+            }
+
+            return {
+                user_id: id,
+                cart: {
+                    product: cartProducts as ProductInCartDto[],
+                    pre_total_cart: cartProducts.reduce((acc: number, product: any) => acc + product.pre_totalProduct, 0)
+                }
+            }
+        } catch (error) {
+            throw new Error
+        }
+    }  
 
 }
