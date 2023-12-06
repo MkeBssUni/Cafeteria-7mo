@@ -16,6 +16,7 @@ const errors:{[x: string]: ResponseApi<undefined>}={
     'Invalid address number': {code: 400, error: true, message: 'Invalid address number'},
     'Invalid status': {code: 400, error: true, message: 'Invalid status'},
     'Invalid id': {code: 400, error: true, message: 'Invalid id'},
+    'Invalid role id': {code: 400, error: true, message: 'Invalid role id'},
     'Invalid image': {code: 400, error: true, message: 'Invalid image'},
     'Invalid price': {code: 400, error: true, message: 'Invalid price, the price must be greater than 0'},
     'Invalid discount type': {code: 400, error: true, message: 'Invalid discount type'},

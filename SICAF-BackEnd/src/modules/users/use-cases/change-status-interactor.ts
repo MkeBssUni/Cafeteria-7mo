@@ -1,14 +1,14 @@
 import { UseCase } from "../../../kernel/contracts";
-import { ShoppingCart } from "../entity/shopping-cart";
+import { User } from "../entity/user";
 import { UsersRepository } from "./ports/users-repository";
 
-export class GetCartByUserIdInteractor implements UseCase<number,ShoppingCart>{
+export class ChangeStatusUserInteractor implements UseCase<number,User>{
     constructor(private readonly usersRepository: UsersRepository) {}
 
-    async execute(payload: number): Promise<ShoppingCart> {
+    async execute(payload: number): Promise<User> {
         if(!payload) throw new Error('Missing fields');
         if(!await this.usersRepository.existsById(payload)) throw new Error('Not found');
         
-        return this.usersRepository.getCartById(payload);
+        return await this.usersRepository.changeStatus(payload);
     }
 }
