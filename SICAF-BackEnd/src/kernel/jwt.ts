@@ -18,3 +18,7 @@ export const encodeString = async (data: string): Promise<string> => {
     const salt = await bcryptjs.genSalt(10);
     return bcryptjs.hash(data, salt);
 }
+
+export const generateToken = (payload: object) => {
+    return jwt.sign(payload, process.env.SECRET_KEY || 'secret');
+}
