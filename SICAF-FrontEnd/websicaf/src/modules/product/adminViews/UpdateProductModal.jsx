@@ -16,25 +16,7 @@ import Image1 from "../../../assets/Products/pastel1.jpeg";
 
 function ProductRegister(props) {
   const [validated, setValidated] = useState(false);
-  const [imageBase64, setImageBase64] = useState(null)
   const { Formik } = formik;
-
-  ;
-
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        const base64String = reader.result.split(',')[1];
-        setImageBase64(base64String);
-        console.log(base64String); // Aquí obtienes la representación base64
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
 
   const handleSubmit = (event) => {
     const form = event.currentTarget;
@@ -46,19 +28,15 @@ function ProductRegister(props) {
     setValidated(true);
   };
 
-  const handleFormSubmit = (formData) => {
-    // Aquí puedes realizar acciones como enviar formData a tu servidor
-    console.log("Datos del formulario:", formData);
-    // También puedes incluir lógica adicional aquí según tus necesidades
-  };
-
   const schema = yup.object().shape({
-    name: yup.string().required("Nombre es requerido"),
-    description: yup.string().required("Campo obligatorio"),
-    image: yup.string().required("Campo obligatorio"),
-    price: yup.number().required("Campo obligatorio"),
-    stock: yup.number().required("Campo obligatorio"),
-    category_id: yup.number().required("Campo obligatorio"),
+    firstName: yup.string().required(),
+    lastName: yup.string().required(),
+    username: yup.string().required(),
+    city: yup.string().required(),
+    state: yup.string().required(),
+    zip: yup.string().required(),
+    file: yup.mixed().required(),
+    terms: yup.bool().required().oneOf([true], "terms must be accepted"),
   });
 
   return (
@@ -75,32 +53,31 @@ function ProductRegister(props) {
         <Modal.Body className="productModal">
           <Formik
             validationSchema={schema}
-            onSubmit={handleFormSubmit}
+            onSubmit={console.log}
             initialValues={{
-              name: '',
-              description: '',
-              image: '',
-              price: '',
-              stock: '',
-              category_id: 1,
+              firstName: "chocochips",
+              lastName: "galletas de chispas de chocolate",
+              username: "",
+              city: "",
+              state: "",
+              zip: "",
+              file: null,
+              terms: false,
             }}
           >
             {({ handleSubmit, handleChange, values, touched, errors }) => (
-              <Form noValidate validated={validated} onSubmit={(values) => handleFormSubmit(values)}>
+              <Form noValidate validated={validated} onSubmit={handleSubmit}>
                 <Row>
                   <Form.Group as={Col} md="5" controlId="validationCustom01">
                     <Form.Label className="mb">Nombre</Form.Label>
                     <Form.Control
                       required
                       type="text"
-                      name="name"
-                      placeholder="Galletas de chocolate..."
+                      name="firstName"
+                      placeholder="First name"
                       className="input-modal"
                     />
                     <Form.Control.Feedback>Correcto!</Form.Control.Feedback>
-                    <Form.Control.Feedback type="invalid" tooltip>
-                      {errors.file}
-                    </Form.Control.Feedback>
                   </Form.Group>
                   <Form.Group
                     as={Col}
@@ -113,11 +90,11 @@ function ProductRegister(props) {
                       required
                       className="input-modal"
                       name="file"
-                      onChange={handleImageChange}
-                      isInvalid={!!errors.image}
+                      onChange={handleChange}
+                      isInvalid={!!errors.file}
                     />
                     <Form.Control.Feedback type="invalid" tooltip>
-                      {errors.image}
+                      {errors.file}
                     </Form.Control.Feedback>
                   </Form.Group>
                 </Row>
@@ -129,8 +106,8 @@ function ProductRegister(props) {
                         <Form.Control
                           required
                           type="number"
-                          name="price"
-                          placeholder="150.50"
+                          name="firstName"
+                          placeholder="First name"
                           className="input-modal"
                         />
                         <Form.Control.Feedback>Correcto!</Form.Control.Feedback>
@@ -142,8 +119,8 @@ function ProductRegister(props) {
                         <Form.Control
                           required
                           type="number"
-                          name="stock"
-                          placeholder="10"
+                          name="firstName"
+                          placeholder="First name"
                           className="input-modal"
                         />
                         <Form.Control.Feedback>Correcto!</Form.Control.Feedback>
@@ -151,12 +128,11 @@ function ProductRegister(props) {
                     </Row>
                   </Col>
                   <Col md={7} className="text-center">
-                    {imageBase64 &&
-                      <Image
+                    <Image
                       src={Image1}
                       className="mt-4 image-product-modal"
                       rounded
-                    />}
+                    />
                   </Col>
                 </Row>
                 <Row>

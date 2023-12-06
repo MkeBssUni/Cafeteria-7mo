@@ -82,7 +82,7 @@
 }
 
 .image-top {
-  background: url("./assets/fondo1.jpeg") fixed center no-repeat;
+  background: url("./assets/fondo1.jpeg") center no-repeat;
   background-size: cover;
 }
 
@@ -158,7 +158,7 @@
 }
 
 .product-list-admin{
-  margin-top: -8%;
+  margin-top: -6%;
 }
 
 .productModal {

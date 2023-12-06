@@ -84,7 +84,7 @@ const ProductList = () => {
 
       <section className='my-3 text-center'>
         <Container fluid >
-          <h3 className='mb-0'>Pays</h3>
+          <h3 className='mb-0'>Bebidas Calientes</h3>
           <Image className='separator mt-0' src={Separator} />
           { HotDrinkds.length >0 ? <CookiesList products={HotDrinkds} /> : <WithOutProducts/>}
         </Container>
@@ -92,7 +92,7 @@ const ProductList = () => {
 
       <section className='my-3 text-center ' style={{ backgroundColor: "var(--color-secondary)" }}>
         <Container fluid className='p-3'>
-          <h3 className='mb-0'>Cupcakes</h3>
+          <h3 className='mb-0'>Bebidas frias</h3>
           {<Image className='separator mt-0' src={Separator} />}
           {ColdDrinkds.length > 0 ? <CakesList products={ColdDrinkds} /> : <WithOutProducts/>}
         </Container>
