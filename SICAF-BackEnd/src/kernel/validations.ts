@@ -42,3 +42,8 @@ export const validateDate = (start_date: Date): boolean => {
     const today = new Date();
     return today >= start_date;
 }
+
+export const validateEmail = (email: string): boolean => {
+    const regex = new RegExp(`^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$`);
+    return regex.test(email.trim());
+}
