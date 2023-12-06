@@ -23,6 +23,7 @@ const errors:{[x: string]: ResponseApi<undefined>}={
     'Invalid comment': {code: 400, error: true, message: 'Invalid comment'},
     'Description too short': {code: 400, error: true, message: 'Description too short'},
     'Discount not applicable': {code: 400, error: true, message: 'Discount not applicable'},
+    'Invalid token': {code: 401, error: true, message: 'Invalid token'},
     'Expired Token': {code: 401, error: true, message: 'Expired Token'},
     'Unauthorized': {code: 401, error: true, message: 'Unauthorized'},
     'Incorrect credentials': {code: 401, error: true, message: 'Incorrect credentials'},
