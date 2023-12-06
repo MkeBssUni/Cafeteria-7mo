@@ -13,7 +13,7 @@ export class LoginInteractor implements UseCase<LoginDto, GetUserDto> {
         payload.email = payload.email.trim().toLowerCase();
         const user: GetUserDto = await this.authRepository.login(payload);
         if (!user) throw new Error("Incorrect credentials");
-        //if (!await compareEncrypt(payload.password, user.password!)) throw new Error("Incorrect credentials");
+        if (!await compareEncrypt(payload.password, user.password!)) throw new Error("Incorrect credentials");
         if (!user.status) throw new Error("Forbidden");
         return { ...user, password: undefined } as GetUserDto;
     }

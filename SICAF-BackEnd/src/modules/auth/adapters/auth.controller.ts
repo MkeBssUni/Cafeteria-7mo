@@ -5,6 +5,7 @@ import { AuthRepository } from "../use-cases/ports/auth.repository";
 import { AuthStorageGateway } from "./auth.storage.gateway";
 import { LoginInteractor, ResetPwdInteractor, ResetTokenInteractor } from "../use-cases";
 import { ResponseApi } from "../../../kernel/types";
+import { generateToken } from "../../../kernel/jwt";
 
 export class AuthController {
     static login = async (req: Request, res: Response): Promise<Response> => {
@@ -19,7 +20,11 @@ export class AuthController {
                 message: 'OK',
                 data: user
             }
-            return res.status(body.code).json(body);
+            const token = generateToken(user);
+            return res.header('Authorization', `Bearer ${token}`).status(body.code).json({
+                ...body,
+                token: token
+            });
         } catch (e) {
             const error = validateError(e as Error);
             return res.status(error.code).json(error);
