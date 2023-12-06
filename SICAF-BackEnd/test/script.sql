@@ -116,13 +116,13 @@ create table if not exists products(
 create table if not exists orders(
     id serial primary key,
     type order_types not null,
-    employee_id int not null,
+    employee_id int,
     client_id int not null,
     products_sold int not null,
-    amount numeric not null,
+    subtotal numeric not null,
     payment_method payment_methods not null,
     discount_id int,
-    final_amount numeric not null,
+    total numeric not null,
     status order_status not null,
     send_receipt boolean not null,
     comments varchar(150),
@@ -137,13 +137,44 @@ create table if not exists order_details(
     order_id int not null,
     product_id int not null,
     products_sold int not null,
-    discount_id int not null,
-    amount numeric not null,
-    final_amount numeric not null,
+    discount_id int,
+    subtotal numeric not null,
+    total numeric not null,
     created_at timestamp not null default now(),
     constraint fk_orderDetail_order foreign key (order_id) references orders(id),
     constraint fk_orderDetail_product foreign key (product_id) references products(id),
     constraint fk_orderDetail_discount foreign key (discount_id) references discounts(id)
 );
 
--- 20/11/2023
+---- Agregar ---- 05/12/2023
+
+insert into categories(name) values ('Galletas'),('Pasteles'),('Cupcakes'),('Panes'), ('Bebidas calientes'),('Bebidas frias');
+
+alter table products alter column stock drop not null;
+
+
+CREATE OR REPLACE FUNCTION update_product_status() returns trigger as $$
+DECLARE
+    product_id integer;
+BEGIN
+  product_id := new.id;
+
+  if new.stock != old.stock then
+        if new.stock = 0 then
+            update products set status = false where id = product_id;
+        end if;
+        if new.stock > 0 then
+            update products set status = true where id = product_id;
+        end if;
+  end if;
+
+  RETURN new;
+END;
+$$ LANGUAGE plpgsql;
+
+create trigger update_product_status after insert or update on products for each row execute procedure update_product_status();
+
+
+alter table people drop column notification_preference;
+
+insert into roles (name) values ('Administrador'),('Empleado'),('Cliente');
