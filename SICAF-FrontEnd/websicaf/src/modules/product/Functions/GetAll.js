@@ -1,4 +1,4 @@
-import AxiosClient from "../../shared/plugins/axios";
+import AxiosClient from "../../../shared/plugins/axios";
 
 /*Aqui he declarado todas mis funciones, muy probablemente el sweetalert tambein lo implemente desde aqui, pero eso lo revisare tomorrow */
 const productNull={
@@ -8,7 +8,7 @@ const productNull={
   description:""
 }
 
-export const getProductsByCategoryAndstatus = async (request) => {
+ const getProductsByCategoryAndstatus = async (request) => {
   try {
     const response = await AxiosClient({
       url: `products/getByStatusAndCategory/${request.status}/${request.category}`,
@@ -22,19 +22,8 @@ export const getProductsByCategoryAndstatus = async (request) => {
   }
 };
 
-export const enableOrDisableProduct = async (request) =>{
-  try {
-    const response = await AxiosClient({
-      url:`/products/changeStatus/${request.id}`,
-      method:'PUT',
-      data:JSON.stringify(request)
-    })
-    if(!response.error) return response
-  } catch (error) {
-    console.log(error)
-  }
-}
 
+export default getProductsByCategoryAndstatus;
 
 
 

@@ -1,7 +1,10 @@
 import { useState, useEffect } from 'react'
 
-import { Container, Row, Col, Image, Form, InputGroup, Button, Card } from 'react-bootstrap';
+import { Container, Row, Col, Image, Form, InputGroup, Button, Card, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import FeatherIcon from 'feather-icons-react';
+import Alert, {
+  confirmMsg, confirmTitle, errorMsg, errorTitle, successMsg, successTitle
+} from '../../../shared/plugins/Alert'
 
 
 import Image1 from '../../../assets/Products/pastel1.jpeg'
@@ -12,6 +15,7 @@ import getProducts from '../Functions/GetProduct';
 import getByCategory from '../Functions/GetByCategory';
 import getCategories from '../../categories/functions/GetAllCategories';
 import ProductRegister from '../adminViews/RegisterProductModal'
+import enableOrDisableProduct from '../Functions/ChangeStatus';
 
 
 
@@ -38,6 +42,55 @@ function ProductDashborad() {
     }
   };
 
+
+  const changeStatus = async (id) => {
+    Alert.fire({
+      title: confirmTitle,
+      text: confirmMsg,
+      icon: 'warning',
+      confirmButtonColor: '#009574',
+      confirmButtonText: 'Aceptar',
+      cancelButtonColor: '#DD6B55',
+      cancelButtonText: 'Cancelar',
+      reverseButtons: true,
+      backdrop: true,
+      showCancelButton: true,
+      showLoaderOnConfirm: true,
+      preConfirm: async () => {
+        try {
+          const response = await enableOrDisableProduct(id);
+          if (!response.error) {
+            Alert.fire({
+              title: successTitle,
+              text: successMsg,
+              icon: 'success',
+              confirmButtonColor: '#3085d6',
+              confirmButtonText: 'Aceptar'
+            })
+          }
+          console.log('response', response);
+          return response
+        } catch (error) {
+          Alert.fire({
+            title: errorTitle,
+            text: errorMsg,
+            icon: 'error',
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'Aceptar'
+          })
+        } finally {
+          getProducts().then((products) => setProducts(products));
+          console.log(products);
+        }
+      }
+    })
+  }
+
+  const renderTooltip = (props) => (
+    <Tooltip id="button-top" {...props}>
+      {props.status ? "El producto es visible para los usuarios" : "El producto no es visible para los usuarios"}
+    </Tooltip>
+  );
 
   useEffect(() => {
     getProducts().then((products) => setProducts(products));
@@ -93,9 +146,15 @@ function ProductDashborad() {
                       <Button className='py-0 productCardButtons' variant="outline-primary" onClick={() => setModalShow(true)}>
                         Editar  <FeatherIcon icon="edit-3" />
                       </Button>
-                      <Button className='py-0 px-1 productCardButtons ms-2' variant="outline-success">
-                        Activo <FeatherIcon icon="check" />
-                      </Button>
+                      <OverlayTrigger
+                        placement="top"
+                        delay={{ show: 250, hide: 200 }}
+                        overlay={(props) => renderTooltip({ ...props, status: product.status })}
+                      >
+                        <Button className='py-0 px-1 productCardButtons ms-2' variant={product.status ? "outline-success" : "outline-danger"}  onClick={() => changeStatus(product.id)}>
+                          {product.status ? (<>Activo <FeatherIcon icon="check" /></>) : (<>Inactivo <FeatherIcon icon="x" /></>)}
+                        </Button>
+                      </OverlayTrigger>
                     </div>
                   </Card.Body>
                 </Card>

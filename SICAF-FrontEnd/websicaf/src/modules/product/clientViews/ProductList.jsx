@@ -3,7 +3,7 @@ import { Container, Row, Col, Image, Form, InputGroup, Button } from 'react-boot
 import FeatherIcon from 'feather-icons-react';
 
 
-import { getProductsByCategoryAndstatus } from '../productsFunctions';
+import getProductsByCategoryAndstatus from '../Functions/GetAll';
 import Separator from "../../../assets/separator.png";
 import CookiesList from './CookiesList';
 import CakesList from './CakesList';

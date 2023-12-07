@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { Row, Col, Image, Carousel } from "react-bootstrap";
 
-import { getProducts } from "./../productsFunctions";
 import ProductDetail from "./ProductDetail";
 
 import logo from "../../../assets/logo-sicaf.png";
