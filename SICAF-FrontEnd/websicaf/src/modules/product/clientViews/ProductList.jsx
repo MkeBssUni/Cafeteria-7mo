@@ -3,7 +3,7 @@ import { Container, Row, Col, Image, Form, InputGroup, Button } from 'react-boot
 import FeatherIcon from 'feather-icons-react';
 
 
-import { getProductsByCategoryAndstatus } from '../productsFunctions';
+import getProductsByCategoryAndstatus from '../Functions/GetAll';
 import Separator from "../../../assets/separator.png";
 import CookiesList from './CookiesList';
 import CakesList from './CakesList';
@@ -84,7 +84,7 @@ const ProductList = () => {
 
       <section className='my-3 text-center'>
         <Container fluid >
-          <h3 className='mb-0'>Pays</h3>
+          <h3 className='mb-0'>Bebidas Calientes</h3>
           <Image className='separator mt-0' src={Separator} />
           { HotDrinkds.length >0 ? <CookiesList products={HotDrinkds} /> : <WithOutProducts/>}
         </Container>
@@ -92,7 +92,7 @@ const ProductList = () => {
 
       <section className='my-3 text-center ' style={{ backgroundColor: "var(--color-secondary)" }}>
         <Container fluid className='p-3'>
-          <h3 className='mb-0'>Cupcakes</h3>
+          <h3 className='mb-0'>Bebidas frias</h3>
           {<Image className='separator mt-0' src={Separator} />}
           {ColdDrinkds.length > 0 ? <CakesList products={ColdDrinkds} /> : <WithOutProducts/>}
         </Container>
