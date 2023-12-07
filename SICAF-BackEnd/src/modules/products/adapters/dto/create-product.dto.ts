@@ -7,4 +7,5 @@ export type CreateProductDto = {
     category_id: number,
     discount_id?: number,
     provider_id?: number,
+    status?: boolean
 }

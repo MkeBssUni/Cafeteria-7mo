@@ -1,5 +1,6 @@
 import { UseCase } from "../../../kernel/contracts";
 import { DiscountTypes } from "../../../kernel/enums";
+import { validateDate, validateDates } from "../../../kernel/validations";
 import { Product } from "../../products/entities/product";
 import { OrderDto } from "../adapters/dto";
 import { findProductById } from "../boundary";
@@ -20,7 +21,7 @@ export class GetByOrderInteractor implements UseCase<OrderDto, Discount[]> {
         if (isNaN(payload.client_id)) throw new Error("Invalid id");
 
         //verificar que el cliente exista
-        //verificar si el cliente tiene descuento por rol y asinarlo a discountByRole
+        //verificar si el cliente tiene descuento por rol y agregarlo a la lista de descuentos
 
         for (let i = 0; i < payload.products.length; i++) {
             if (!payload.products[i].id || !payload.products[i].quantity) throw new Error("Missing fields");
@@ -43,6 +44,16 @@ export class GetByOrderInteractor implements UseCase<OrderDto, Discount[]> {
         }
 
         discountsByTotal = await this.discountRepository.findByOrderTotal(amount);
+        discounts.push(...discountsByTotal);
+
+        for (let i = 0; i < discounts.length; i++) {
+            if (discounts[i].start_date && !discounts[i].end_date && !validateDate(discounts[i].start_date!)) discounts.splice(i, 1);
+            if (discounts[i].start_date && discounts[i].end_date && !validateDates(discounts[i].start_date!, discounts[i].end_date!)) discounts.splice(i, 1);
+            if (!discounts[i].status) discounts.splice(i, 1);
+            for (let j = 0; j < discounts.length; j++) {
+                if (discounts[i].id === discounts[j].id && i !== j) discounts.splice(j, 1);
+            }
+        }
 
         return [...discountsByTotal, ...discounts];
     }

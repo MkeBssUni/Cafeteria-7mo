@@ -1,15 +1,30 @@
 import AxiosClient from "../../../shared/plugins/axios";
-
-export const enableOrDisableProduct = async (request) =>{
+import Alert, {errorMsg,errorTitle,successMsg,successTitle,} from "../../../shared/plugins/Alert";
+export const enableOrDisableProduct = async (id) =>{
+  
     try {
       const response = await AxiosClient({
-        url:`/products/changeStatus/${request.id}`,
+        url:`/products/changeStatus/${id}`,
         method:'PUT',
-        data:JSON.stringify(request)
       })
-      if(!response.error) return response
+      if (!response.error) {
+        Alert.fire({
+          title: successTitle,
+          text: successMsg,
+          icon: 'success',
+          confirmButtonColor: '#3085d6',
+          confirmButtonText: 'Aceptar'
+        })
+      }
+      return response
     } catch (error) {
-      console.log(error)
+      Alert.fire({
+        title: errorTitle,
+        text: errorMsg,
+        icon: 'error',
+        confirmButtonColor: '#3085d6',
+        confirmButtonText: 'Aceptar'
+      })
     }
   }
 
