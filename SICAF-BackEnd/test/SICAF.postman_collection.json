@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "6bd71ee5-c3dd-4637-a6ba-c2d1c6df8888",
+		"_postman_id": "cdcebf6c-c2a0-4635-8cf4-f294857ac90a",
 		"name": "SICAF",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "28539745"
+		"_exporter_id": "27939903"
 	},
 	"item": [
 		{
@@ -867,169 +867,6 @@
 			]
 		},
 		{
-			"name": "User",
-			"item": [
-				{
-					"name": "Get Users",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "http://localhost:3001/SICAF/users/",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3001",
-							"path": [
-								"SICAF",
-								"users",
-								""
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get User By Email",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"type": "default"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"email\":\"alealvamore@gmail.com\"\r\n}"
-						},
-						"url": {
-							"raw": "http://localhost:3001/SICAF/users/",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3001",
-							"path": [
-								"SICAF",
-								"users",
-								""
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "New User",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"type": "default"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"email\": \"a@a.com\",\r\n    \"password\": \"a\",\r\n    \"role_id\": 11,\r\n    \"dark_theme\": true,\r\n    \"letter_size\": \"Pequeña\",\r\n    \"status\": true,\r\n    \"created_at\": \"2023-12-02\"\r\n}"
-						},
-						"url": {
-							"raw": "http://localhost:3001/SICAF/users/",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3001",
-							"path": [
-								"SICAF",
-								"users",
-								""
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Update User",
-					"protocolProfileBehavior": {
-						"disabledSystemHeaders": {}
-					},
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"type": "default"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"id\":6,\r\n    \"email\": \"avadas@a.com\",\r\n    \"password\": \"a\",\r\n    \"role_id\": 11,\r\n    \"dark_theme\": false,\r\n    \"letter_size\": \"Mediana\",\r\n    \"status\": true,\r\n    \"created_at\": \"2023-12-02\"\r\n}"
-						},
-						"url": {
-							"raw": "http://localhost:3001/SICAF/users/updateUser",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3001",
-							"path": [
-								"SICAF",
-								"users",
-								"updateUser"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "changeStatus",
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"type": "default"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"id\": 6,\r\n    \"status\":true\r\n}"
-						},
-						"url": {
-							"raw": "http://localhost:3001/SICAF/users/changeUserStatus",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3001",
-							"path": [
-								"SICAF",
-								"users",
-								"changeUserStatus"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
 			"name": "Roles",
 			"item": [
 				{
@@ -1121,6 +958,203 @@
 								"SICAF",
 								"auth",
 								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "users",
+			"item": [
+				{
+					"name": "Create Copy",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"jda5ssd@gmail.com\",\r\n    \"password\":\"Mamorcito4\",\r\n    \"role_id\": 2 ,\r\n    \"person\":{\r\n        \"name\": \"asdd\",\r\n        \"lastname\": \"Aguario\",\r\n        \"gender\": \"M\",\r\n        \"phone_number1\":\"7771568481\",\r\n        \"address\":{\r\n            \"street\":\"Emiliano Zapata\",\r\n            \"settlement\": \"Ahuehuetitla\",\r\n            \"city\": \"Cuernavaca\",\r\n            \"state\": \"Morelos\",\r\n            \"postal_code\":\"62294\",\r\n            \"country\": \"Mexico\"\r\n        }\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/SICAF/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"SICAF",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get cart Copy",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/SICAF/users/cart/13",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"SICAF",
+								"users",
+								"cart",
+								"13"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get one Copy",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3001/SICAF/users/13",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"SICAF",
+								"users",
+								"13"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change status Copy",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3001/SICAF/users/changeStatus/6",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"SICAF",
+								"users",
+								"changeStatus",
+								"6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all Copy",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3001/SICAF/users/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"SICAF",
+								"users",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get by status Copy",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"status\": false\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/SICAF/users/status/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"SICAF",
+								"users",
+								"status",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update cart Copy",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"user_id\":13,\r\n    \"cart\":[\r\n        {\r\n        \"product_id\":10,\r\n        \"quantity\": 2\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/SICAF/users/cart/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"SICAF",
+								"users",
+								"cart",
+								""
 							]
 						}
 					},
