@@ -1,14 +1,3 @@
-:root {
-  --color-primary: #9b6b43;
-  --color-secondary: #f3e3d3;
-  --color-tertiary: #c98860;
-  --color-font: #744C24;
-  --color-productBlack: #b3724a;
-  --color-productCard-hover: #dbc7b4;
-  --color-background-modal-card: #f0e2d4;
-  --color-inputs-top: rgba(243, 227, 211, 0.81);
-}
-/* var(--color-primary) */
 
 .logo-nav {
   width: 70px;
@@ -16,5 +5,52 @@
   flex-shrink: 0;
 }
 
+.bakground-things{
+  background-color: var(--color-primary)!important;
+  color: #fff!important;
+}
+
+.sidebar-size{
+  width: 30% !important;
+  max-width: 300px !important;
+}
+
+.tabla-personalizada {
+  max-width: 95%; 
+  width: 100%;
+  margin: 0 auto; 
+  background-color: var(--color-secondary);
+}
+
+.tabla-personalizada td {
+  text-align: center;
+}
+
+.overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color:var(--color-search); 
+  border-radius: 30px; 
+  padding: 10px 20px;
+  width: 45%;
+}
+
+.text-box {
+  color: var(--color-title); 
+  text-align: center; 
+}
+
+.custom-input {
+  border: none;
+  border-bottom: 2px solid brown;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.centered-text {
+  text-align: center;
+}
 
 

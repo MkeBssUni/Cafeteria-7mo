@@ -1,5 +1,6 @@
 import { UseCase } from "../../../kernel/contracts";
 import { encodeString } from "../../../kernel/jwt";
+import { isValidPassword } from "../../../kernel/validations";
 import { GetUserDto, ResetPwdDto } from "../adapters/dto";
 import { AuthRepository } from "./ports/auth.repository";
 
@@ -12,7 +13,8 @@ export class ResetPwdInteractor implements UseCase<ResetPwdDto, GetUserDto> {
 
         const resetToken: number = await this.authRepository.validateResetToken(payload.token);
         if (!resetToken) throw new Error('Invalid token');
-        //validar contraseña
+        
+        if (!isValidPassword(payload.password)) throw new Error('Invalid password');
 
         return await this.authRepository.resetPassword({
             id: resetToken,

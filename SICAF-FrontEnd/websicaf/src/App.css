@@ -1,16 +1,3 @@
- :root {
-  --color-primary: #9b6b43;
-  --color-secondary: #f3e3d3;
-  --color-tertiary: #c98860;
-  --color-font: #744C24;
-  --color-productBlack:#b3724a;
-  --color-productCard-hover:#dbc7b4;
-  --color-background-modal-card:#f0e2d4;
-  --color-inputs-top: rgba(243, 227, 211, 0.81);
-}
-
-
-
 .App {
   text-align: center;
 }
@@ -18,6 +5,11 @@
 .App-logo {
   height: 40vmin;
   pointer-events: none;
+}
+
+body {
+  background: var(--background-color)!important;
+  color: var(--color-font)!important;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -45,13 +37,122 @@
   from {
     transform: rotate(0deg);
   }
-
   to {
     transform: rotate(360deg);
   }
 }
 
-/* Estilos de la vista de productos y ofertas para el cliente*/
+.carrusel-foto {
+  max-width: 100%; /* o el porcentaje que desees */
+  margin: auto; /* Para centrar el carrusel */
+}
+
+.foto {
+  max-height: 100%; /* o el porcentaje que desees */
+  width: auto;
+  object-fit: cover;
+}
+
+.fuente-bienvenida {
+  font-family: 'Oregano', sans-serif;
+}
+
+.foto-bienvenida {
+  width: 80%;
+
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.fondo-container {
+  /* Ajustar la imagen de fondo */
+  background-image: url('./assets/login-fondo.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  /* Estilo del contenido dentro del contenedor */
+  color: #fff;
+  text-align: center;
+  padding: 20px;
+
+  /* Establecer altura mínima para asegurar visibilidad del contenido */
+  min-height: 100vh; /* 100% del alto de la ventana */
+  margin: 0; /* Eliminar márgenes por defecto en el cuerpo del documento */
+
+  /* Agregar estilos adicionales según sea necesario */
+}
+
+/* Estilos adicionales para hacer que el texto sea más legible en el fondo */
+.fondo-pantalla-completa h1 {
+  font-size: 2em;
+  margin: 0;
+}
+
+
+.fondo-cardlogin{
+  background-color: var(--color-secondary)!important;
+  opacity: 95%;
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+}
+
+.botone{
+  display: flex;
+  align-items: center;
+  border-radius: 50px;
+}
+
+.fondo-cardlogin {
+  /* Estilos para el Card, ajusta según sea necesario */
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 500px;
+  margin: 70px;
+  width: 50%;
+  height: 80%;
+  z-index: 1000; /* Asegura que esté por encima del contenido */
+}
+
+.login-link {
+  text-decoration: underline; /* Subrayado */
+  font-style: italic; /* Cursiva */
+  color: var(--color-primary)!important; /* Color del texto del enlace (puedes cambiarlo) */
+}
+
+.input-redondo,
+.boton-redondo {
+  /* Estilos para hacer los inputs y el botón redondos, ajusta según sea necesario */
+  border-radius: 50px !important;
+  width: 70% !important; /* Ajusta el valor según tu preferencia */
+}
+
+.boton-login{
+  width: 50%!important;
+}
+
+.color-titleLogin{
+  color: var(--color-primary);
+  font-size: 300%;
+}
+
+.logo-login {
+  margin-right: 10px;
+  width: 20%; /* Ajusta el valor según tu preferencia */
+}
+
+.form-label {
+  text-align: right;
+}
+
+.nota-advert {
+  color: red;
+}
 
 .image_product_offers {
   height: 100px;
@@ -189,3 +290,16 @@
 .image-product-modal{
   width:300px;
 }
+
+html[letter-size='Grande'] {
+  font-size: 20px;
+}
+
+html[letter-size='Mediana'] {
+  font-size: 15px;
+}
+
+html[letter-size='Pequeña'] {
+  font-size: 13px;
+}
+

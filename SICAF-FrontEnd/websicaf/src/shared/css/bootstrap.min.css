@@ -1,10 +1,4 @@
 @charset "UTF-8";
-
-/*!
- * Bootstrap  v5.3.0 (https://getbootstrap.com/)
- * Copyright 2011-2023 The Bootstrap Authors
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
- */
 :root {
   --color-primary: #9B6B43;
   --color-secondary: #F3E3D3;
@@ -12,10 +6,65 @@
   --color-tertiary: #C98860;
   --color-font: #744C24;
   --color-productBlack: #b3724a;
+  --color-search: #F3E3D3CF;
+  --color-ordes: #F5E8DB;
+  --color-title: #563411;
+  --color-textR: #FF2424;
+  --color-BotonV: #9ABFA2B2;
+  --color-BotonR: #E44545B2;
   --color-productCard-hover: #dbc7b4;
   --color-background-modal-card: #f0e2d4;
   --color-inputs-top: rgba(243, 227, 211, 0.81);
+  --bs-primary-rgb: 13, 110, 253;
+  --bs-secondary-rgb: 155, 107, 67;
+  --bs-success-rgb: 25, 135, 84;
+  --background-color: #fff;
 }
+
+html[theme='light'] {
+  --color-primary: #9B6B43;
+  --color-secondary: #F3E3D3;
+  --color-product-info: #EFCEAD;
+  --color-tertiary: #C98860;
+  --color-font: #ffffff;
+  --color-productBlack: #b3724a;
+  --color-search: #F3E3D3CF;
+  --color-ordes: #F5E8DB;
+  --color-title: #563411;
+  --color-textR: #FF2424;
+  --color-BotonV: #9ABFA2B2;
+  --color-BotonR: #E44545B2;
+  --color-productCard-hover: #dbc7b4;
+  --color-background-modal-card: #f0e2d4;
+  --color-inputs-top: rgba(243, 227, 211, 0.81);
+  --bs-primary-rgb: 13, 110, 253;
+  --bs-secondary-rgb: 155, 107, 67;
+  --bs-success-rgb: 25, 135, 84;
+  --background-color: #fff;
+}
+
+html[theme='dark'] {
+  --color-primary: #7A4828;       
+  --color-secondary: #D9CBBB;     
+  --color-product-info: #CEAD8D;  
+  --color-tertiary: #705136;      
+  --color-font: #ffffff;          
+  --color-productBlack: #8F6141;   
+  --color-search: #D9CBBBCF;      
+  --color-ordes: #d4ac75;         
+  --color-title: #070707;         
+  --color-textR: #FF0000;          
+  --color-BotonV: #779B78;        
+  --color-BotonR: #B82C2C;        
+  --color-productCard-hover: #B0A090;
+  --color-background-modal-card: #D8CABD;
+  --color-inputs-top: rgba(243, 227, 211, 0.81); 
+  --bs-primary-rgb: 13, 110, 253;
+  --bs-secondary-rgb: 117, 80, 50; 
+  --bs-success-rgb: 25, 135, 84;
+  --background-color: #515151;
+}
+
 
 :root,
 [data-bs-theme="light"] {
@@ -51,9 +100,9 @@
   --bs-light: #f8f9fa;
   --bs-dark: #212529;
   --bs-primary-rgb: 13, 110, 253;
-  --bs-secondary-rgb: 108, 117, 125;
+  --bs-secondary-rgb: 155, 107, 67;
   --bs-success-rgb: 25, 135, 84;
-  --bs-info-rgb: 184, 126, 90;
+  --bs-info-rgb: 201, 136, 96;
   --bs-warning-rgb: 255, 193, 7;
   --bs-danger-rgb: 220, 53, 69;
   --bs-light-rgb: 248, 249, 250;
@@ -66,8 +115,8 @@
   --bs-danger-text-emphasis: #58151c;
   --bs-light-text-emphasis: #495057;
   --bs-dark-text-emphasis: #495057;
-  --bs-primary-bg-subtle: #cfe2ff;
-  --bs-secondary-bg-subtle: #e2e3e5;
+  --bs-primary-bg-subtle: #9B6B43;
+  --bs-secondary-bg-subtle:#C98860;
   --bs-success-bg-subtle: #d1e7dd;
   --bs-info-bg-subtle: #F7C7AA;
   --bs-warning-bg-subtle: #fff3cd;
@@ -2171,8 +2220,8 @@ progress {
   --bs-table-border-color: var(--bs-border-color);
   --bs-table-accent-bg: transparent;
   --bs-table-striped-color: var(--bs-body-color);
-  --bs-table-striped-bg: rgba(0, 0, 0, 0.05);
-  --bs-table-active-color: var(--bs-body-color);
+  --bs-table-striped-bg:#F3E3D3CF;
+  --bs-table-active-color: var( --color-search);
   --bs-table-active-bg: rgba(0, 0, 0, 0.1);
   --bs-table-hover-color: var(--bs-body-color);
   --bs-table-hover-bg: rgba(0, 0, 0, 0.075);
