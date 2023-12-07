@@ -10,4 +10,6 @@ export const successMsg =
 export const successTitle = 'Acción realizada exitosamente';
 export const errorMsg = 'No se ha realizado la acción solicitada';
 export const errorTitle = 'Error al realizar la acción';
+export const changeStatusTrue="El producto volvera a ser visible para los usuarios";
+export const changeStatusFalse="El producto dejara de ser visible para los usuarios";
 export default Alert;

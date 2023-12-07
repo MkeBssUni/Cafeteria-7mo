@@ -82,7 +82,11 @@
 }
 
 .image-top {
-  background: url("./assets/fondo1.jpeg") center no-repeat;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100vh; /* Esto asegura que ocupe el 100% de la altura de la ventana */
+  background: url("./assets/galletasWallpaper.jpeg") center no-repeat;
   background-size: cover;
 }
 
@@ -142,8 +146,9 @@
 }
 
 .productCardButtons {
-  font-size: 18px !important;
+  font-size: 13px !important;
   border-radius: 20px !important;
+  padding-top: 5.9rem !important;
 }
 
 .image_product_offers_Admin {
