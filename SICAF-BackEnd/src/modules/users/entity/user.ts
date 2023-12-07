@@ -1,9 +1,10 @@
 import { Entity } from "../../../kernel/types";
+import { ShoppingCart } from "./shopping-cart";
 
 export type User = {
     user_id?: number,
     email: string,
-    password: string,
+    password?: string,
     role_id: number,
     dark_theme?: boolean,
     letter_size?: number,
@@ -19,7 +20,7 @@ export type User = {
         birthday?: Date,
         phone_number1: string,
         phone_number2?: string,
-        shopping_cart?:{},
+        shopping_cart?:ShoppingCart,
         created_at?: Date,
         address:{
             id?: number,

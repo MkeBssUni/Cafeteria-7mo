@@ -13,7 +13,7 @@ export interface UsersRepository {
     existsById(id: number): Promise<boolean>;
     update(payload: UpdateUserDto): Promise<User>;
     changeStatus(id: number): Promise<User>;
-    //updateCart(payload: UpdateCartDto): Promise<ShoppingCart>;
+    updateCart(payload: UpdateCartDto): Promise<ShoppingCart>;
     getCartById(id: number): Promise<ShoppingCart>;
     //pendiente changePassword
 

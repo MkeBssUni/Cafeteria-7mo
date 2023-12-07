@@ -21,7 +21,6 @@ export class CreateUserInteractor implements UseCase<User,User>{
         if(!isValidPostalCode(payload.person.address.postal_code)) throw new Error('Invalid postal code');
         if(payload.role_id==1) throw new Error('Invalid role id');
         
-        
         return await this.usersRepository.create(payload);
     }
 }

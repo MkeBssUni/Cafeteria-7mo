@@ -7,6 +7,10 @@ import { ResponseApi } from "../../../kernel/types";
 import { User } from "../entity/user";
 import { GetCartByUserIdInteractor } from "../use-cases/get-cart-interactor";
 import { ShoppingCart } from "../entity/shopping-cart";
+import { GetUserInteractor } from "../use-cases/get-user-interactor";
+import { ChangeStatusUserInteractor } from "../use-cases/change-status-interactor";
+import { GetUsersByStatusInteractor } from "../use-cases/get-by-status-interactor";
+import { UpdateCartInteractor } from "../use-cases/update-cart-interactor";
 
 export class UsersController{
     static Create = async (req: Request, res: Response) => {
@@ -28,6 +32,25 @@ export class UsersController{
         }
     }
 
+    static GetById = async (req: Request, res: Response) => {
+        try {
+            const repo: UsersRepository = new UsersStorageGateway();
+            const interactor: GetUserInteractor = new GetUserInteractor(repo);
+            const cart = await interactor.execute(parseInt(req.params.id));
+
+            const body: ResponseApi<User>={
+                code: 200,
+                error: false,
+                message: 'OK',
+                data: cart
+            }
+            res.status(body.code).json(body);
+        } catch (e) {
+            const error = validateError(e as Error);
+            res.status(error.code).json(error);
+        }
+    }
+
     static GetCartById = async (req: Request, res: Response) => {
         try {
             const repo: UsersRepository = new UsersStorageGateway();
@@ -38,6 +61,83 @@ export class UsersController{
                 code: 200,
                 error: false,
                 message: 'OK',
+                data: cart
+            }
+            res.status(body.code).json(body);
+        } catch (e) {
+            const error = validateError(e as Error);
+            res.status(error.code).json(error);
+        }
+    }
+
+    static ChangeStatus = async (req: Request, res: Response) => {
+        try {
+            const repo: UsersRepository = new UsersStorageGateway();
+            const interactor: ChangeStatusUserInteractor = new ChangeStatusUserInteractor(repo);
+            const user = await interactor.execute(parseInt(req.params.id));
+
+            const body: ResponseApi<User>={
+                code: 200,
+                error: false,
+                message: 'OK',
+                data: user
+            }
+            res.status(body.code).json(body);
+        } catch (e) {
+            const error = validateError(e as Error);
+            res.status(error.code).json(error);
+        }
+    }
+
+    static FindAll = async (req: Request, res: Response) => {
+        try {
+            const repo: UsersRepository = new UsersStorageGateway();
+            const users = await repo.findAll();
+
+            const body: ResponseApi<User[]>={
+                code: 200,
+                error: false,
+                message: 'OK',
+                data: users
+            }
+            res.status(body.code).json(body);
+        } catch (e) {
+            const error = validateError(e as Error);
+            res.status(error.code).json(error);
+        }
+    }
+
+    static FindByStatus = async (req: Request, res: Response) => {
+        try {
+            console.log("#kajndkjnaskdjnaskdjnaskdnj")
+            console.log("adasdasdas",req.body.status)
+            const repo: UsersRepository = new UsersStorageGateway();
+            const interactor: GetUsersByStatusInteractor = new GetUsersByStatusInteractor(repo);
+            const users = await interactor.execute(req.body.status);
+
+            const body: ResponseApi<User[]>={
+                code: 200,
+                error: false,
+                message: 'OK',
+                data: users
+            }
+            res.status(body.code).json(body);
+        } catch (e) {
+            const error = validateError(e as Error);
+            res.status(error.code).json(error);
+        }
+    }
+
+    static UpdateShoppingCart = async (req: Request, res: Response) => {
+        try {
+            const repo: UsersRepository = new UsersStorageGateway();
+            const interactor: UpdateCartInteractor = new UpdateCartInteractor(repo);
+            const cart = await interactor.execute(req.body);
+
+            const body: ResponseApi<ShoppingCart>={
+                code: 201,
+                error: false,
+                message: 'Updated',
                 data: cart
             }
             res.status(body.code).json(body);

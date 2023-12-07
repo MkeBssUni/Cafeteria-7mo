@@ -1,3 +1,5 @@
+import { ShoppingCart } from "../../../users/entity/shopping-cart"
+
 export type GetUserDto = {
     id: number,
     name: string,
@@ -8,5 +10,5 @@ export type GetUserDto = {
     dark_theme: boolean,
     letter_size: number,
     status: boolean,
-    shopping_cart?: string
+    shopping_cart?: ShoppingCart
 }

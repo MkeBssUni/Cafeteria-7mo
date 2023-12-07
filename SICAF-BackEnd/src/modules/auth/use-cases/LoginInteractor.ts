@@ -2,6 +2,7 @@ import { UseCase } from "../../../kernel/contracts";
 import { compareEncrypt } from "../../../kernel/jwt";
 import { validateEmail } from "../../../kernel/validations";
 import { GetUserDto, LoginDto } from "../adapters/dto";
+import { findUserCartById } from "../boundary";
 import { AuthRepository } from "./ports/auth.repository";
 
 export class LoginInteractor implements UseCase<LoginDto, GetUserDto> {
@@ -15,6 +16,9 @@ export class LoginInteractor implements UseCase<LoginDto, GetUserDto> {
         if (!user) throw new Error("Incorrect credentials");
         if (!await compareEncrypt(payload.password, user.password!)) throw new Error("Incorrect credentials");
         if (!user.status) throw new Error("Forbidden");
-        return { ...user, password: undefined } as GetUserDto;
+        const shoppingCart = await findUserCartById(user.id);
+        user.shopping_cart = shoppingCart;
+        user.password = undefined;
+        return user;
     }
 }
