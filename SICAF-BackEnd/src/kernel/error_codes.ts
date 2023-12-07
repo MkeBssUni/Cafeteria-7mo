@@ -39,6 +39,7 @@ const errors:{[x: string]: ResponseApi<undefined>}={
     'Product not found': {code: 404, error: true, message: 'Product not found'},
     'Discount not found': {code: 500, error: true, message: 'Discount not found'},
     'Error generating receipt': {code: 500, error: true, message: 'Error generating receipt'},
+    'Error sending email': {code: 500, error: true, message: 'Error sending email'},
     'Server Error': {code: 500, error: true, message: 'Internal Server Error'},
     'Default': {code: 500, error: true, message: 'Internal Server Error'}
 }

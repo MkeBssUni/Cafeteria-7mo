@@ -11,3 +11,11 @@ export type ResponseApi<T> = {
     data?: T | T[]
     count?: number
 }
+
+export type ResponseEmail<T> = {
+    email: string,
+    password?: string,
+    url?: string,
+    data?: T
+    emails?: string[]
+}
