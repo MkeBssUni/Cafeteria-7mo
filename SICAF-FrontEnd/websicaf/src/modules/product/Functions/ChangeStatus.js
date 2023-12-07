@@ -1,7 +1,8 @@
 import AxiosClient from "../../../shared/plugins/axios";
 import Alert, {errorMsg,errorTitle,successMsg,successTitle,} from "../../../shared/plugins/Alert";
+
+
 export const enableOrDisableProduct = async (id) =>{
-  
     try {
       const response = await AxiosClient({
         url:`/products/changeStatus/${id}`,

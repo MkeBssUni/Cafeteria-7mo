@@ -1,40 +1,17 @@
-import {useState} from 'react'
-import { Container, Row, Col, Image, Form, InputGroup, Button, Card } from 'react-bootstrap';
-import FeatherIcon from 'feather-icons-react';
+import React,{useState,useEffect} from 'react'
 import ProductRegister from '../adminViews/RegisterProductModal'
-import Image1 from '../../../assets/Products/pastel1.jpeg'
-import Image2 from '../../../assets/Products/pastel2.jpeg'
 import ImageDefault from '../../../assets/logo-sicaf.png'
 import getProducts from '../Functions/GetProduct';
 import getByCategory from '../Functions/GetByCategory';
 import getCategories from '../../categories/functions/GetAllCategories';
-import ProductRegister from '../adminViews/RegisterProductModal'
 import enableOrDisableProduct from '../Functions/ChangeStatus';
-import { useState, useEffect } from "react";
-
-import {
-  Container,
-  Row,
-  Col,
-  Image,
-  Form,
-  InputGroup,
-  Button,
-  Card,
-  OverlayTrigger,
-  Tooltip,
-} from "react-bootstrap";
+import {Container,Row,Col,Image,Form,InputGroup,Button,Card,OverlayTrigger,Tooltip} from "react-bootstrap";
 import FeatherIcon from "feather-icons-react";
 import Alert, {confirmTitle,changeStatusFalse,changeStatusTrue,} from "../../../shared/plugins/Alert";
 import Image1 from "../../../assets/Products/pastel1.jpeg";
 import Image2 from "../../../assets/Products/pastel2.jpeg";
-import ImageDefault from "../../../assets/logo-sicaf.png";
 
-import getProducts from "../Functions/GetProduct";
-import getByCategory from "../Functions/GetByCategory";
-import getCategories from "../../categories/functions/GetAllCategories";
-import ProductRegister from "../adminViews/RegisterProductModal";
-import enableOrDisableProduct from "../Functions/ChangeStatus";
+
 
 function ProductDashborad() {
   const [modalShow, setModalShow] = useState(false);
