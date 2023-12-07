@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "cdcebf6c-c2a0-4635-8cf4-f294857ac90a",
+		"_postman_id": "6bd71ee5-c3dd-4637-a6ba-c2d1c6df8888",
 		"name": "SICAF",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "27939903"
+		"_exporter_id": "28539745"
 	},
 	"item": [
 		{
@@ -325,12 +325,12 @@
 						"method": "PATCH",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/SICAF/discounts/6",
+							"raw": "http://localhost:3001/SICAF/discounts/6",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "3000",
+							"port": "3001",
 							"path": [
 								"SICAF",
 								"discounts",
@@ -347,7 +347,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"client_id\": 1,\r\n    \"products\": [\r\n        {\r\n            \"id\": 3,\r\n            \"quantity\": 2\r\n        },\r\n        {\r\n            \"id\": 4,\r\n            \"quantity\": 3\r\n        }\r\n    ]\r\n}",
+							"raw": "{\r\n    \"client_id\": 1,\r\n    \"products\": [\r\n        {\r\n            \"id\": 6,\r\n            \"quantity\": 2\r\n        },\r\n        {\r\n            \"id\": 7,\r\n            \"quantity\": 2\r\n        }\r\n    ]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -811,7 +811,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"client_id\": 1,\r\n    \"discount_id\": 5,\r\n    \"products\": [\r\n        {\r\n            \"id\": 5,\r\n            \"quantity\": 3\r\n        },\r\n        {\r\n            \"id\": 3,\r\n            \"quantity\": 3\r\n        },\r\n        {\r\n            \"id\": 1,\r\n            \"quantity\": 1\r\n        }\r\n    ]\r\n}",
+							"raw": "{\r\n    \"client_id\": 1,\r\n    \"discount_id\": 5, //opcional\r\n    \"products\": [\r\n        {\r\n            \"id\": 5,\r\n            \"quantity\": 3\r\n        },\r\n        {\r\n            \"id\": 3,\r\n            \"quantity\": 3\r\n        },\r\n        {\r\n            \"id\": 1,\r\n            \"quantity\": 1\r\n        }\r\n    ]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -819,12 +819,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/SICAF/orders/confirmationReceipt",
+							"raw": "http://localhost:3001/SICAF/orders/confirmationReceipt",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "3000",
+							"port": "3001",
 							"path": [
 								"SICAF",
 								"orders",
@@ -841,7 +841,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"client_id\": 1,\r\n    \"payment_method\": \"Tarjeta de credito\", //Tarjeta de credito o Tarjeta de debito\r\n    //\"discount_id\": 5,\r\n    //\"comments\": \"Se aplicó un descuento\",\r\n    \"products\": [\r\n        {\r\n            \"id\": 5,\r\n            \"quantity\": 3\r\n        },\r\n        {\r\n            \"id\": 3,\r\n            \"quantity\": 3\r\n        },\r\n        {\r\n            \"id\": 1,\r\n            \"quantity\": 1\r\n        }\r\n    ]\r\n}",
+							"raw": "{\r\n    \"client_id\": 1,\r\n    \"payment_method\": \"Tarjeta de credito\", //Tarjeta de credito o Tarjeta de debito\r\n    \"discount_id\": 5, //opcional\r\n    \"comments\": \"Se aplicó un descuento\", //opcional, máximo 150 caracteres\r\n    \"products\": [\r\n        {\r\n            \"id\": 5,\r\n            \"quantity\": 3\r\n        },\r\n        {\r\n            \"id\": 3,\r\n            \"quantity\": 3\r\n        },\r\n        {\r\n            \"id\": 1,\r\n            \"quantity\": 1\r\n        }\r\n    ]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -867,85 +867,21 @@
 			]
 		},
 		{
-			"name": "Roles",
+			"name": "auth",
 			"item": [
 				{
-					"name": "New Role",
+					"name": "login",
 					"request": {
 						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"type": "default"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"cliente\",\r\n    \"status\": true,\r\n    \"created_at\": \"2023-12-02\"\r\n}"
-						},
-						"url": {
-							"raw": "http://localhost:3001/SICAF/roles/",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3001",
-							"path": [
-								"SICAF",
-								"roles",
-								""
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get Roles",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"type": "default"
+							"raw": "{\r\n    \"email\": \"marianne@test.com\",\r\n    \"password\": \"Ma123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
 							}
-						],
-						"url": {
-							"raw": "http://localhost:3001/SICAF/roles/",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3001",
-							"path": [
-								"SICAF",
-								"roles",
-								""
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Auth",
-			"item": [
-				{
-					"name": "Login",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"type": "default"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"email\":\"corre@correo.com\",\r\n    \"password\":\"micontra\"\r\n}"
 						},
 						"url": {
 							"raw": "http://localhost:3001/SICAF/auth/login",
@@ -958,6 +894,72 @@
 								"SICAF",
 								"auth",
 								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "forgot-password (generate-reset-token)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"ejemplo@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/SICAF/auth/forgotPassword",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"SICAF",
+								"auth",
+								"forgotPassword"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "recover-password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"password\": \"password\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/SICAF/auth/recoverPassword?token=x9EqDPcPUaSctsv",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"SICAF",
+								"auth",
+								"recoverPassword"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "x9EqDPcPUaSctsv"
+								}
 							]
 						}
 					},
