@@ -9,5 +9,6 @@ export type Discount = Entity<number> & {
     order_total?: number,
     products_number?: number,
     status: boolean,
-    image?: string
+    image?: string,
+    created_by: Date
 }
