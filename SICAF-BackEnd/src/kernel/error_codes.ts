@@ -7,6 +7,7 @@ const errors:{[x: string]: ResponseApi<undefined>}={
     'Invalid name': {code: 400, error: true, message: 'Invalid name'},
     'Invalid lastname': {code: 400, error: true, message: 'Invalid lastname'},
     'Invalid gender': {code: 400, error: true, message: 'Invalid gender'},
+    'Invalid role': {code: 400, error: true, message: 'Invalid role'},
     'Invalid phone number': {code: 400, error: true, message: 'Invalid phone number'},
     'Invalid email': {code: 400, error: true, message: 'Invalid email'},
     'Email already exists': {code: 400, error: true, message: 'Email already exists'},
@@ -15,6 +16,7 @@ const errors:{[x: string]: ResponseApi<undefined>}={
     'Invalid address number': {code: 400, error: true, message: 'Invalid address number'},
     'Invalid status': {code: 400, error: true, message: 'Invalid status'},
     'Invalid id': {code: 400, error: true, message: 'Invalid id'},
+    'Invalid role id': {code: 400, error: true, message: 'Invalid role id'},
     'Invalid image': {code: 400, error: true, message: 'Invalid image'},
     'Invalid price': {code: 400, error: true, message: 'Invalid price, the price must be greater than 0'},
     'Invalid discount type': {code: 400, error: true, message: 'Invalid discount type'},
@@ -37,6 +39,7 @@ const errors:{[x: string]: ResponseApi<undefined>}={
     'Product not found': {code: 404, error: true, message: 'Product not found'},
     'Discount not found': {code: 500, error: true, message: 'Discount not found'},
     'Error generating receipt': {code: 500, error: true, message: 'Error generating receipt'},
+    'Error sending email': {code: 500, error: true, message: 'Error sending email'},
     'Server Error': {code: 500, error: true, message: 'Internal Server Error'},
     'Default': {code: 500, error: true, message: 'Internal Server Error'}
 }

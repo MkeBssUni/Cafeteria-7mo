@@ -12,7 +12,6 @@ export class CreateUserInteractor implements UseCase<User,User>{
 
         if(await this.usersRepository.existsByEmail(payload.email)) throw new Error('Email already exists');
         if(!isValidPassword(payload.password)) throw new Error('Invalid password');
-        //verificar que el rol existe
         if(!isValidName(payload.person.name)) throw new Error('Invalid name');
         if(!isValidName(payload.person.lastname)) throw new Error('Invalid lastname');
         if(!isValidGender(payload.person.gender)) throw new Error ('Invalid gender');
@@ -20,6 +19,8 @@ export class CreateUserInteractor implements UseCase<User,User>{
         if(payload.person.phone_number2 && !isValidPhone(payload.person.phone_number2)) throw new Error('Invalid phone number');
 
         if(!isValidPostalCode(payload.person.address.postal_code)) throw new Error('Invalid postal code');
+        if(payload.role_id==1) throw new Error('Invalid role id');
+        
         return await this.usersRepository.create(payload);
     }
 }

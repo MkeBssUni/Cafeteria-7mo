@@ -178,3 +178,5 @@ create trigger update_product_status after insert or update on products for each
 alter table people drop column notification_preference;
 
 insert into roles (name) values ('Administrador'),('Empleado'),('Cliente');
+
+alter table people alter column shopping_cart set default '[]';

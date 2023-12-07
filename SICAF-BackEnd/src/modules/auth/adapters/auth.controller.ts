@@ -36,7 +36,7 @@ export class AuthController {
             const payload = {
                 email: req.body.email,
                 origin: `${req.headers.origin}`,
-                path: req.body.path
+                path: `${req.body.path}`
             } as ResetTokenDto;
 
             const repository: AuthRepository = new AuthStorageGateway();
@@ -44,7 +44,7 @@ export class AuthController {
             const response: boolean = await interactor.execute(payload);
             const body: ResponseApi<boolean> = {
                 code: 200,
-                error: false,
+                error: response,
                 message: 'Token generated'
             }
             return res.status(body.code).json(body);

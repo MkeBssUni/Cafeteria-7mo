@@ -1,4 +1,6 @@
+import { UpdateCartDto } from "../../adapters/dto/update-cart-dto";
 import { UpdateUserDto } from "../../adapters/dto/update-user-dto";
+import { ShoppingCart } from "../../entity/shopping-cart";
 import { User } from "../../entity/user";
 
 export interface UsersRepository {
@@ -11,6 +13,8 @@ export interface UsersRepository {
     existsById(id: number): Promise<boolean>;
     update(payload: UpdateUserDto): Promise<User>;
     changeStatus(id: number): Promise<User>;
+    updateCart(payload: UpdateCartDto): Promise<ShoppingCart>;
+    getCartById(id: number): Promise<ShoppingCart>;
     //pendiente changePassword
 
 }
