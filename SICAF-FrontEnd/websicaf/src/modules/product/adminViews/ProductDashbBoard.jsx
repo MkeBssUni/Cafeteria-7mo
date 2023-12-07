@@ -1,8 +1,6 @@
 import {useState} from 'react'
-
 import { Container, Row, Col, Image, Form, InputGroup, Button, Card } from 'react-bootstrap';
 import FeatherIcon from 'feather-icons-react';
-
 import ProductRegister from '../adminViews/RegisterProductModal'
 import Image1 from '../../../assets/Products/pastel1.jpeg'
 import Image2 from '../../../assets/Products/pastel2.jpeg'
@@ -14,6 +12,7 @@ function ProductDashborad() {
 
   return (
     <>
+      <ProductRegister show={modalShow} onHide={() => setModalShow(false)}/>
       <Container fluid>
         <div className='image-top d-flex justify-content-center align-items-center' style={{ width: '100%', height: '300px' }}>
           <Form.Group as={Col} xs='12' md="5" className='mx-5'>
@@ -56,8 +55,6 @@ function ProductDashborad() {
             
           </Row>
         </div>
-        <ProductRegister show={modalShow}
-        onHide={() => setModalShow(false)}/>
       </Container>
     </>
   );

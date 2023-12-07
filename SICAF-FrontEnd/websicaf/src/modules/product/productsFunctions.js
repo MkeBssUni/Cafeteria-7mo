@@ -2,7 +2,7 @@ import AxiosClient from "../../shared/plugins/axios";
 
 /*Aqui he declarado todas mis funciones, muy probablemente el sweetalert tambein lo implemente desde aqui, pero eso lo revisare tomorrow */
 const productNull={
-  name: "Deliciosas sorpresas se estan horneando...\n Mientrras tanto esta sección esta  vacía",
+  name: "Deliciosas sorpresas se estan horneando...\n Mientras tanto esta sección esta  vacía",
   image:"",
   id: 0,
   description:""
@@ -46,6 +46,7 @@ export const getProductsByCategoryAndstatus = async (request) => {
 
 export const createProduct = async (request)=> {
   try {
+    console.log("Entra aqui?")
     const response = await AxiosClient({
       url:"products/",
       method:"POST",
