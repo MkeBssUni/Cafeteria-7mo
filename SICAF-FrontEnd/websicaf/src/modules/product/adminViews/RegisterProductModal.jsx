@@ -16,10 +16,8 @@ import Image1 from "../../../assets/Products/pastel1.jpeg";
 
 function ProductRegister(props) {
   const [validated, setValidated] = useState(false);
-  const [imageBase64, setImageBase64] = useState(null)
+  const [imageBase64, setImageBase64] = useState(null);
   const { Formik } = formik;
-
-  ;
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -27,7 +25,7 @@ function ProductRegister(props) {
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        const base64String = reader.result.split(',')[1];
+        const base64String = reader.result.split(",")[1];
         setImageBase64(base64String);
         console.log(base64String); // Aquí obtienes la representación base64
       };
@@ -35,21 +33,21 @@ function ProductRegister(props) {
     }
   };
 
-
   const handleSubmit = (event) => {
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
       event.preventDefault();
       event.stopPropagation();
     }
-
+  
     setValidated(true);
+  
+    const { values } = event;  // Accede a los valores del formulario a través de Formik
+    handleFormSubmit(values);
   };
 
   const handleFormSubmit = (formData) => {
-    // Aquí puedes realizar acciones como enviar formData a tu servidor
     console.log("Datos del formulario:", formData);
-    // También puedes incluir lógica adicional aquí según tus necesidades
   };
 
   const schema = yup.object().shape({
@@ -63,30 +61,33 @@ function ProductRegister(props) {
 
   return (
     <>
-      <Modal
-        {...props}
-        size="lg"
-        aria-labelledby="contained-modal-title-vcenter"
-        centered
+      <Formik
+        validationSchema={schema}
+        initialValues={{
+          name: "",
+          description: "",
+          image: "",
+          price: "",
+          stock: "",
+          category_id: 1,
+        }}
       >
-        <Modal.Header className="productModal" closeButton>
-          <Modal.Title className="modalTitle">Editar producto</Modal.Title>
-        </Modal.Header>
-        <Modal.Body className="productModal">
-          <Formik
-            validationSchema={schema}
-            onSubmit={handleFormSubmit}
-            initialValues={{
-              name: '',
-              description: '',
-              image: '',
-              price: '',
-              stock: '',
-              category_id: 1,
-            }}
+        {({ handleSubmit,errors }) => (
+          <Form
+            noValidate
+            validated={validated}
           >
-            {({ handleSubmit, handleChange, values, touched, errors }) => (
-              <Form noValidate validated={validated} onSubmit={(values) => handleFormSubmit(values)}>
+            <Modal
+              {...props}
+              size="lg"
+              aria-labelledby="contained-modal-title-vcenter"
+            >
+              <Modal.Header className="productModal" closeButton>
+                <Modal.Title className="modalTitle">
+                  Registrar producto
+                </Modal.Title>
+              </Modal.Header>
+              <Modal.Body className="productModal">
                 <Row>
                   <Form.Group as={Col} md="5" controlId="validationCustom01">
                     <Form.Label className="mb">Nombre</Form.Label>
@@ -112,7 +113,7 @@ function ProductRegister(props) {
                       type="file"
                       required
                       className="input-modal"
-                      name="file"
+                      name="image"
                       onChange={handleImageChange}
                       isInvalid={!!errors.image}
                     />
@@ -151,43 +152,48 @@ function ProductRegister(props) {
                     </Row>
                   </Col>
                   <Col md={7} className="text-center">
-                    {imageBase64 &&
+                    {imageBase64 && (
                       <Image
-                      src={Image1}
-                      className="mt-4 image-product-modal"
-                      rounded
-                    />}
+                        src={Image1}
+                        className="mt-4 image-product-modal"
+                        rounded
+                      />
+                    )}
                   </Col>
                 </Row>
                 <Row>
                   <Col className="mt-2">
-                    <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                    <Form.Group
+                      className="mb-3"
+                      controlId="exampleForm.ControlTextarea1"
+                    >
                       <Form.Label>Descripción</Form.Label>
                       <Form.Control as="textarea" rows={3} />
                     </Form.Group>
                   </Col>
                 </Row>
-              </Form>
-            )}
-          </Formik>
-        </Modal.Body>
-        <Modal.Footer className="productModal">
-          <Button
-            className="buttonsModal"
-            variant="outline-danger"
-            onClick={props.onHide}
-          >
-            Cancelar
-          </Button>
-          <Button
-            className="buttonsModal"
-            variant="outline-success"
-            onClick={props.onHide}
-          >
-            Registrar
-          </Button>
-        </Modal.Footer>
-      </Modal>
+              </Modal.Body>
+              <Modal.Footer className="productModal">
+                <Button
+                  className="buttonsModal"
+                  variant="outline-danger"
+                  onClick={props.onHide}
+                >
+                  Cancelar
+                </Button>
+                <Button
+                  className="buttonsModal"
+                  variant="outline-success"
+                  type="submit" 
+                  onClick={handleSubmit}
+                >
+                  Registrar
+                </Button>
+              </Modal.Footer>
+            </Modal>
+          </Form>
+        )}
+      </Formik>
     </>
   );
 }
