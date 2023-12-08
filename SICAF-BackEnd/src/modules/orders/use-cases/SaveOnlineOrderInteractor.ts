@@ -5,7 +5,7 @@ import { validateStringLength } from "../../../kernel/validations";
 import { Discount } from "../../discounts/entities/discount";
 import { Product } from "../../products/entities/product";
 import { ReceiptDto, ReceiptProductsDto, SaveOnlineOrderDto } from "../adapters/dto";
-import { findDiscountById, findProductById } from "../boundary";
+import { findDiscountById, findProductById, updateProductStock } from "../boundary";
 import { Order } from "../entities/order";
 import { OrderRepository } from "./ports/order.repository";
 
@@ -23,7 +23,8 @@ export class SaveOnlineOrderInteractor implements UseCase<SaveOnlineOrderDto, Or
 
         let subtotal: number = 0;
         let discount: Discount | null = null;
-        let products: ReceiptProductsDto[] = [];
+        let order_products: ReceiptProductsDto[] = [];
+        let products: Product[] = [];
 
         if (payload.discount_id) {
             if (isNaN(payload.discount_id)) throw new Error("Invalid id");
@@ -42,7 +43,8 @@ export class SaveOnlineOrderInteractor implements UseCase<SaveOnlineOrderDto, Or
 
             subtotal += optionalProduct.price * payload.products[i].quantity;
 
-            products.push({
+            products.push(optionalProduct);
+            order_products.push({
                 id: optionalProduct.id!,
                 name: optionalProduct.name,
                 quantity: payload.products[i].quantity,
@@ -53,7 +55,7 @@ export class SaveOnlineOrderInteractor implements UseCase<SaveOnlineOrderDto, Or
             });
         }
         
-        const receipt = generateReceipt(discount!, subtotal, products) as ReceiptDto;
+        const receipt = generateReceipt(discount!, subtotal, order_products) as ReceiptDto;
         if (!receipt) throw new Error("Error generating receipt");
 
         //enviar correo
@@ -72,7 +74,15 @@ export class SaveOnlineOrderInteractor implements UseCase<SaveOnlineOrderDto, Or
             comments: payload.comments,
             products: receipt.products
         } as SaveOnlineOrderDto;
+
+        const new_order = await this.orderRepository.saveOnlineOrder(order);
+        if (!new_order) throw new Error("Error saving order");
         
-        return await this.orderRepository.saveOnlineOrder(order);
+        for (let i = 0; i < products.length; i++) {
+            const updateStock = await updateProductStock({ id: products[i].id!, stock: products[i].stock - payload.products[i].quantity });
+            if (!updateStock) throw new Error("Error updating stock");
+        }
+
+        return new_order;
     }
 }
