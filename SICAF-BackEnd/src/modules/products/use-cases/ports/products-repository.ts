@@ -8,6 +8,7 @@ import { Product } from "../../entities/product";
 
 export interface ProductsRepository {
     findById: (id: number) => Promise<Product>
+    findProductWithCategoryById: (id: number) => Promise<GetProductWithCategoryDto>
     createProduct: (payload: CreateProductDto) => Promise<Product>
     getProducts: () => Promise<GetProductWithCategoryDto[]>
     getProductsByStatus: (status: boolean) => Promise<GetProductWithCategoryDto[]>

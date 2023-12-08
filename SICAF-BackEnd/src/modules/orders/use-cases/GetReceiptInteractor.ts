@@ -1,7 +1,7 @@
 import { UseCase } from "../../../kernel/contracts";
 import { generateReceipt } from "../../../kernel/generate_receipt";
 import { Discount } from "../../discounts/entities/discount";
-import { Product } from "../../products/entities/product";
+import { GetProductWithCategoryDto } from "../../products/adapters/dto/get-product-dto";
 import { GetReceiptDto, ReceiptDto, ReceiptProductsDto } from "../adapters/dto";
 import { findDiscountById, findProductById } from "../boundary";
 import { OrderRepository } from "./ports/order.repository";
@@ -30,7 +30,7 @@ export class GetReceiptInteractor implements UseCase<GetReceiptDto, ReceiptDto> 
             if (isNaN(payload.products[i].id)) throw new Error("Invalid id");
             if (isNaN(payload.products[i].quantity) || payload.products[i].quantity < 0) throw new Error("Invalid quantity");
 
-            const optionalProduct: Product = await findProductById(payload.products[i].id);
+            const optionalProduct: GetProductWithCategoryDto = await findProductById(payload.products[i].id);
             if (!optionalProduct) throw new Error("Product not found");
 
             subtotal += optionalProduct.price * payload.products[i].quantity;
@@ -38,6 +38,7 @@ export class GetReceiptInteractor implements UseCase<GetReceiptDto, ReceiptDto> 
             products.push({
                 id: optionalProduct.id!,
                 name: optionalProduct.name,
+                category: optionalProduct.category.category_name,
                 quantity: payload.products[i].quantity,
                 price: optionalProduct.price,
                 subtotal: optionalProduct.price * payload.products[i].quantity,

@@ -3,7 +3,7 @@ import { OrderStatus, OrderTypes, PaymentMethods } from "../../../kernel/enums";
 import { generateReceipt } from "../../../kernel/generate_receipt";
 import { validateStringLength } from "../../../kernel/validations";
 import { Discount } from "../../discounts/entities/discount";
-import { Product } from "../../products/entities/product";
+import { GetProductWithCategoryDto } from "../../products/adapters/dto/get-product-dto";
 import { ReceiptDto, ReceiptProductsDto, SaveOnlineOrderDto } from "../adapters/dto";
 import { existsUserByIdAndRole, findDiscountById, findProductById, updateProductStock } from "../boundary";
 import { Order } from "../entities/order";
@@ -24,7 +24,7 @@ export class SaveOnlineOrderInteractor implements UseCase<SaveOnlineOrderDto, Or
         let subtotal: number = 0;
         let discount: Discount | null = null;
         let order_products: ReceiptProductsDto[] = [];
-        let products: Product[] = [];
+        let products: GetProductWithCategoryDto[] = [];
 
         if (payload.discount_id) {
             if (isNaN(payload.discount_id)) throw new Error("Invalid id");
@@ -38,7 +38,7 @@ export class SaveOnlineOrderInteractor implements UseCase<SaveOnlineOrderDto, Or
             if (isNaN(payload.products[i].id)) throw new Error("Invalid id");
             if (isNaN(payload.products[i].quantity) || payload.products[i].quantity < 0) throw new Error("Invalid quantity");
 
-            const optionalProduct: Product = await findProductById(payload.products[i].id);
+            const optionalProduct: GetProductWithCategoryDto = await findProductById(payload.products[i].id);
             if (!optionalProduct) throw new Error("Product not found");
 
             subtotal += optionalProduct.price * payload.products[i].quantity;
@@ -47,6 +47,7 @@ export class SaveOnlineOrderInteractor implements UseCase<SaveOnlineOrderDto, Or
             order_products.push({
                 id: optionalProduct.id!,
                 name: optionalProduct.name,
+                category: optionalProduct.category.category_name,
                 quantity: payload.products[i].quantity,
                 price: optionalProduct.price,
                 subtotal: optionalProduct.price * payload.products[i].quantity,

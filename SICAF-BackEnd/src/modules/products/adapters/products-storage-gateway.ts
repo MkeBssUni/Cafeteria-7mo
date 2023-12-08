@@ -19,6 +19,31 @@ export class ProductsStorageGateway implements ProductsRepository{
         }
     }
 
+    async findProductWithCategoryById(id: number): Promise<GetProductWithCategoryDto> {
+        try {
+            const response = await pool.query("select p.*, c.name as category_name from products p inner join categories c on p.category_id = c.id where p.id = $1;", [id]);
+            const product: GetProductWithCategoryDto = {
+                id: response.rows[0].id,
+                name: response.rows[0].name,
+                status: response.rows[0].status,
+                description: response.rows[0].description,
+                image: response.rows[0].image,
+                price: response.rows[0].price,
+                stock: response.rows[0].stock,
+                category:{
+                    category_id: response.rows[0].category_id,
+                    category_name: response.rows[0].category_name
+                },
+                provider_id: response.rows[0].provider_id,
+                discount_id: response.rows[0].discount_id,
+                created_at: response.rows[0].created_at,
+            }
+            return product;
+        } catch (error) {
+            throw Error
+        }
+    }
+
     async createProduct(payload: CreateProductDto): Promise<Product> {
         try {
             const response = await pool.query("INSERT INTO PRODUCTS (name, description, image, price, stock, status, category_id) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *", [payload.name, payload.description, payload.image, payload.price, payload.stock, payload.status ,payload.category_id]);
