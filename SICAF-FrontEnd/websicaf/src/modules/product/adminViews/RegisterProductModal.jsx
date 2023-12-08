@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Modal, Button, Row, Col, Form, Image } from "react-bootstrap";
+import { Modal, Button, Row, Col, Form, Image,InputGroup } from "react-bootstrap";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { createProduct } from "../productsFunctions";
@@ -14,9 +14,9 @@ import FeatherIcon from "feather-icons-react/build/FeatherIcon";
 export const ProductRegister = ({ show, onHide }) => {
   const [imgs, setimgs] = useState()
   const [base64, setbase64] = useState()
+  const [count, setCount] = useState(0);
 
   const handleChangeImage=(file)=>{
-    console.log(file.target.files)
     const data = new FileReader()
     data.addEventListener('load',()=>{
       setimgs(data.result)
@@ -175,7 +175,9 @@ export const ProductRegister = ({ show, onHide }) => {
                 <Row>
                   <Form.Group controlId="validationCustom01">
                     <Form.Label className="mb">Precio</Form.Label>
-                    <Form.Control
+                    <InputGroup className="mb-3">
+                                <Button variant="primary" disabled>$</Button>
+                                <Form.Control
                       required
                       type="number"
                       name="price"
@@ -183,6 +185,7 @@ export const ProductRegister = ({ show, onHide }) => {
                       value={form.values.price}
                       onChange={form.handleChange}
                     />
+                    </InputGroup>
                     {form.errors.price && (
                       <span className="error-text">{form.errors.price}</span>
                     )}
@@ -191,17 +194,12 @@ export const ProductRegister = ({ show, onHide }) => {
                 <Row className="mt-3">
                   <Form.Group controlId="validationCustom01">
                     <Form.Label className="mb">Disponibilidad</Form.Label>
-                    <Form.Control
-                      required
-                      type="number"
-                      name="stock"
-                      className="input-modal"
-                      value={form.values.stock}
-                      onChange={form.handleChange}
-                    />
-                    {form.errors.stock && (
-                      <span className="error-text">{form.errors.stock}</span>
-                    )}
+                    <InputGroup className="mb-3" >
+                      <Button variant="primary"  onClick={() => form.setFieldValue('stock', form.values.stock - 1)}disabled={form.values.stock <= 0}> -</Button>
+                        <Form.Control required type="number" name="stock" className="input-modal" value={form.values.stock} onChange={form.handleChange} disabled/>
+                      <Button variant="primary" onClick={() => form.setFieldValue('stock', form.values.stock + 1)}> + </Button>
+                    </InputGroup>
+                    {form.errors.stock && (<span className="error-text">{form.errors.stock}</span>)}
                   </Form.Group>
                 </Row>
               </Col>
