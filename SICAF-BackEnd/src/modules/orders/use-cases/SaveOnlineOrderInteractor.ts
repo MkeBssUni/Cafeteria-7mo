@@ -5,7 +5,7 @@ import { validateStringLength } from "../../../kernel/validations";
 import { Discount } from "../../discounts/entities/discount";
 import { Product } from "../../products/entities/product";
 import { ReceiptDto, ReceiptProductsDto, SaveOnlineOrderDto } from "../adapters/dto";
-import { findDiscountById, findProductById, updateProductStock } from "../boundary";
+import { existsUserByIdAndRole, findDiscountById, findProductById, updateProductStock } from "../boundary";
 import { Order } from "../entities/order";
 import { OrderRepository } from "./ports/order.repository";
 
@@ -18,8 +18,8 @@ export class SaveOnlineOrderInteractor implements UseCase<SaveOnlineOrderDto, Or
         if (payload.payment_method !== PaymentMethods.creditCard && payload.payment_method !== PaymentMethods.debitCard) throw new Error("Invalid payment method");
         if (payload.comments && !validateStringLength(payload.comments, 0, 255)) throw new Error("Invalid comment");
         
-        //validar que el id del empleado exista
-        //validar que el id del cliente exista
+        const client = await existsUserByIdAndRole({ id: payload.client_id, role: 3 });
+        if (!client) throw new Error("User not found");
 
         let subtotal: number = 0;
         let discount: Discount | null = null;

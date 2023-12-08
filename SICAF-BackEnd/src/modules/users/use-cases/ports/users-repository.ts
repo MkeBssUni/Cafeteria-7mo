@@ -1,9 +1,11 @@
+import { UserByIdAndRoleDto } from "../../adapters/dto/UserByIdAndRoleDto";
 import { UpdateCartDto } from "../../adapters/dto/update-cart-dto";
 import { UpdateUserDto } from "../../adapters/dto/update-user-dto";
 import { ShoppingCart } from "../../entity/shopping-cart";
 import { User } from "../../entity/user";
 
 export interface UsersRepository {
+    existsByIdAndRole(payload: UserByIdAndRoleDto): Promise<boolean>;
     create(payload: User): Promise<User>;
     findAll(): Promise<User[]>;
     findByStatus(status: boolean): Promise<User[]>;
