@@ -3,9 +3,8 @@ import cors from 'cors';
 import categoriesRoutes from "../modules/categories/adapters/categories.routes"
 import productsRoutes from "../modules/products/adapters/products.routes"
 import discountsRoutes from "../modules/discounts/adapters/discount.routes"
-import RoleRouter from '../modules/roles/adapters/role.controller';
-import AuthRouter from '../auth/adapters/auth.controller';
-import UserRouter from '../modules/user/adapters/user.controller';
+import usersRoutes from "../modules/users/adapters/users.routes"
+import authRoutes from '../modules/auth/adapters/auth.routes';
 import * as dotenv from 'dotenv';
 import orderRoutes from "../modules/orders/adapters/order.routes"
 import providersRoutes from "../modules/providers/adapters/providers.routes"
@@ -34,9 +33,8 @@ app.use(`/${API}/products`,productsRoutes)
 app.use(`/${API}/discounts`,discountsRoutes)
 app.use(`/${API}/providers`,providersRoutes)
 app.use(`/${API}/orders`,orderRoutes)
-app.use(`/${API}/auth`,AuthRouter)
-app.use(`/${API}/role`,UserRouter)
-app.use(`/${API}/users`,RoleRouter)
+app.use(`/${API}/auth`,authRoutes)
+app.use(`/${API}/users`,usersRoutes)
 
 app.get('*',(req: Request, res: Response)=>res.status(404).send('Not Found'))
 

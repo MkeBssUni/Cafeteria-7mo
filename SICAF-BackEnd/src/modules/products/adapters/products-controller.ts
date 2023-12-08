@@ -15,14 +15,14 @@ import { ChangeStatusInteractor } from "../use-cases/change-status-interactor";
 import { SearchByNameInteractor } from "../use-cases/search-by-name-itneractor";
 import { GetProductsByStatusAndCategoryInteractor } from "../use-cases/get-products-by-status-and-category";
 
-export class ProductsController{
-    static CreateProduct = async (req: Request, res: Response): Promise<Response>=>{
+export class ProductsController {
+    static CreateProduct = async (req: Request, res: Response): Promise<Response> => {
         try {
-            const repo: ProductsRepository= new ProductsStorageGateway();
+            const repo: ProductsRepository = new ProductsStorageGateway();
             const interactor: CreateProductInteractor = new CreateProductInteractor(repo);
             const response = await interactor.execute(req.body);
 
-            const body: ResponseApi<Product>={
+            const body: ResponseApi<Product> = {
                 code: 201,
                 error: false,
                 message: "Created",
@@ -35,13 +35,13 @@ export class ProductsController{
         }
     }
 
-    static GetProducts = async (req: Request, res: Response): Promise<Response>=>{
+    static GetProducts = async (req: Request, res: Response): Promise<Response> => {
         try {
-            const repo: ProductsRepository= new ProductsStorageGateway();
+            const repo: ProductsRepository = new ProductsStorageGateway();
             const interactor: GetProductsInteractor = new GetProductsInteractor(repo);
             const response = await interactor.execute();
 
-            const body: ResponseApi<GetProductWithCategoryDto[]>={
+            const body: ResponseApi<GetProductWithCategoryDto[]> = {
                 code: 200,
                 error: false,
                 message: "OK",
@@ -54,13 +54,14 @@ export class ProductsController{
         }
     }
 
-    static GetProductsByCategory = async (req: Request, res: Response): Promise<Response>=>{
+    static GetProductsByCategory = async (req: Request, res: Response): Promise<Response> => {
+        const category_id = parseInt(req.params.category_id)
         try {
-            const repo: ProductsRepository= new ProductsStorageGateway();
+            const repo: ProductsRepository = new ProductsStorageGateway();
             const interactor: GetProductsByCategoryInteractor = new GetProductsByCategoryInteractor(repo);
-            const response = await interactor.execute(req.body.category_id);
+            const response = await interactor.execute(category_id);
 
-            const body: ResponseApi<GetProductWithCategoryDto[]>={
+            const body: ResponseApi<GetProductWithCategoryDto[]> = {
                 code: 200,
                 error: false,
                 message: "OK",
@@ -73,15 +74,15 @@ export class ProductsController{
         }
     }
 
-    static UpdateProduct = async (req: Request, res: Response): Promise<Response>=>{
+    static UpdateProduct = async (req: Request, res: Response): Promise<Response> => {
         try {
             const id = req.params.id;
-            const payload = {id, ...req.body}
-            const repo: ProductsRepository= new ProductsStorageGateway();
+            const payload = { id, ...req.body }
+            const repo: ProductsRepository = new ProductsStorageGateway();
             const interactor: UpdateProductInteractor = new UpdateProductInteractor(repo);
             const response = await interactor.execute(payload);
 
-            const body: ResponseApi<Product>={
+            const body: ResponseApi<Product> = {
                 code: 200,
                 error: false,
                 message: "OK",
@@ -94,13 +95,14 @@ export class ProductsController{
         }
     }
 
-    static GetProductsByStatus = async (req: Request, res: Response): Promise<Response>=>{
+    static GetProductsByStatus = async (req: Request, res: Response): Promise<Response> => {
+        const status = req.params.status == "true" ? true : false;
         try {
-            const repo: ProductsRepository= new ProductsStorageGateway();
+            const repo: ProductsRepository = new ProductsStorageGateway();
             const interactor: GetProductsByStatusInteractor = new GetProductsByStatusInteractor(repo);
-            const response = await interactor.execute(req.body.status);
+            const response = await interactor.execute(status);
 
-            const body: ResponseApi<GetProductWithCategoryDto[]>={
+            const body: ResponseApi<GetProductWithCategoryDto[]> = {
                 code: 200,
                 error: false,
                 message: "OK",
@@ -113,13 +115,13 @@ export class ProductsController{
         }
     }
 
-    static GetProductById = async (req: Request, res: Response): Promise<Response>=>{
+    static GetProductById = async (req: Request, res: Response): Promise<Response> => {
         try {
-            const repo: ProductsRepository= new ProductsStorageGateway();
+            const repo: ProductsRepository = new ProductsStorageGateway();
             const interactor: GetProductInteractor = new GetProductInteractor(repo);
             const response = await interactor.execute(parseInt(req.params.id));
 
-            const body: ResponseApi<GetProductWithCategoryDto>={
+            const body: ResponseApi<GetProductWithCategoryDto> = {
                 code: 200,
                 error: false,
                 message: "OK",
@@ -132,13 +134,14 @@ export class ProductsController{
         }
     }
 
-    static ChangeStatus = async (req: Request, res: Response): Promise<Response>=>{
+    static ChangeStatus = async (req: Request, res: Response): Promise<Response> => {
+
         try {
-            const repo: ProductsRepository= new ProductsStorageGateway();
+            const repo: ProductsRepository = new ProductsStorageGateway();
             const interactor: ChangeStatusInteractor = new ChangeStatusInteractor(repo);
             const response = await interactor.execute(parseInt(req.params.id));
 
-            const body: ResponseApi<GetProductWithCategoryDto>={
+            const body: ResponseApi<GetProductWithCategoryDto> = {
                 code: 200,
                 error: false,
                 message: "Status changed",
@@ -151,13 +154,13 @@ export class ProductsController{
         }
     }
 
-    static SearchByName = async (req: Request, res: Response): Promise<Response>=>{
+    static SearchByName = async (req: Request, res: Response): Promise<Response> => {
         try {
-            const repo: ProductsRepository= new ProductsStorageGateway();
+            const repo: ProductsRepository = new ProductsStorageGateway();
             const interactor: SearchByNameInteractor = new SearchByNameInteractor(repo);
             const response = await interactor.execute(req.body.name);
 
-            const body: ResponseApi<GetProductWithCategoryDto[]>={
+            const body: ResponseApi<GetProductWithCategoryDto[]> = {
                 code: 200,
                 error: false,
                 message: "ESTE SIGUE PENDIENTE DE REVISAR",
@@ -171,13 +174,17 @@ export class ProductsController{
         }
     }
 
-    static GetProductsByCategoryAndStatus = async (req: Request, res: Response): Promise<Response>=>{
+    static GetProductsByCategoryAndStatus = async (req: Request, res: Response): Promise<Response> => {
+        const dto = {
+            status: req.params.status == "true" ? true : false,
+            category_id: parseInt(req.params.category_id)
+        }
         try {
             const repo: ProductsRepository = new ProductsStorageGateway();
             const interactor: GetProductsByStatusAndCategoryInteractor = new GetProductsByStatusAndCategoryInteractor(repo)
-            const response = await interactor.execute(req.body)
+            const response = await interactor.execute(dto)
 
-            const body: ResponseApi<GetProductWithCategoryDto[]>={
+            const body: ResponseApi<GetProductWithCategoryDto[]> = {
                 code: 200,
                 error: false,
                 message: "Ok",
