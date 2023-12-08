@@ -6,6 +6,7 @@ import { GetProductWithCategoryDto } from "./dto/get-product-dto";
 import { UpdateProductDto } from "./dto/update-product-dto";
 import { addDiscountDto } from "./dto/addDiscountDto";
 import { GetProductsByCategoryAndStatusDto } from "./dto/get-products-by-category-and-status-dto";
+import { UpdateStockDto } from "./dto/UpdateStockDto";
 
 export class ProductsStorageGateway implements ProductsRepository{
 
@@ -248,6 +249,16 @@ export class ProductsStorageGateway implements ProductsRepository{
                 }
             })
             return products;
+        } catch (error) {
+            throw Error
+        }
+    }
+
+    async updateStock(payload: UpdateStockDto): Promise<boolean> {
+        try {
+            const { id, stock } = payload;
+            const response = await pool.query("update products set stock = $2 where id = $1", [id, stock]);
+            return true;
         } catch (error) {
             throw Error
         }

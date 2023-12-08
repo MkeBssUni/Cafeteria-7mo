@@ -29,6 +29,7 @@ const errors:{[x: string]: ResponseApi<undefined>}={
     'Invalid comment': {code: 400, error: true, message: 'Invalid comment'},
     'Description too short': {code: 400, error: true, message: 'Description too short'},
     'Discount not applicable': {code: 400, error: true, message: 'Discount not applicable'},
+    'Not enough stock': {code: 400, error: true, message: 'Not enough stock'},
     'Invalid token': {code: 401, error: true, message: 'Invalid token'},
     'Expired Token': {code: 401, error: true, message: 'Expired Token'},
     'Unauthorized': {code: 401, error: true, message: 'Unauthorized'},
@@ -39,6 +40,8 @@ const errors:{[x: string]: ResponseApi<undefined>}={
     'Product not found': {code: 404, error: true, message: 'Product not found'},
     'Discount not found': {code: 500, error: true, message: 'Discount not found'},
     'Error generating receipt': {code: 500, error: true, message: 'Error generating receipt'},
+    'Error saving order': {code: 500, error: true, message: 'Error saving order'},
+    'Error updating stock': {code: 500, error: true, message: 'Error updating stock'},
     'Error sending email': {code: 500, error: true, message: 'Error sending email'},
     'Server Error': {code: 500, error: true, message: 'Internal Server Error'},
     'Default': {code: 500, error: true, message: 'Internal Server Error'}

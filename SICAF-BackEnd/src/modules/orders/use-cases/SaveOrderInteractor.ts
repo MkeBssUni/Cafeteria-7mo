@@ -5,7 +5,7 @@ import { validateStringLength } from "../../../kernel/validations";
 import { Discount } from "../../discounts/entities/discount";
 import { Product } from "../../products/entities/product";
 import { ReceiptDto, ReceiptProductsDto, SaveOrderDto } from "../adapters/dto";
-import { findDiscountById, findProductById } from "../boundary";
+import { findDiscountById, findProductById, updateProductStock } from "../boundary";
 import { Order } from "../entities/order";
 import { OrderRepository } from "./ports/order.repository";
 
@@ -24,7 +24,8 @@ export class SaveOrderInteractor implements UseCase<SaveOrderDto, Order> {
 
         let subtotal: number = 0;
         let discount: Discount | null = null;
-        let products: ReceiptProductsDto[] = [];
+        let order_products: ReceiptProductsDto[] = [];
+        let products: Product[] = [];
 
         if (payload.discount_id) {
             if (isNaN(payload.discount_id)) throw new Error("Invalid id");
@@ -40,10 +41,12 @@ export class SaveOrderInteractor implements UseCase<SaveOrderDto, Order> {
 
             const optionalProduct: Product = await findProductById(payload.products[i].id);
             if (!optionalProduct) throw new Error("Product not found");
+            if (optionalProduct.stock < payload.products[i].quantity) throw new Error("Not enough stock");
 
             subtotal += optionalProduct.price * payload.products[i].quantity;
-
-            products.push({
+            
+            products.push(optionalProduct);
+            order_products.push({
                 id: optionalProduct.id!,
                 name: optionalProduct.name,
                 quantity: payload.products[i].quantity,
@@ -54,7 +57,7 @@ export class SaveOrderInteractor implements UseCase<SaveOrderDto, Order> {
             });
         }
 
-        const receipt = generateReceipt(discount!, subtotal, products) as ReceiptDto;
+        const receipt = generateReceipt(discount!, subtotal, order_products) as ReceiptDto;
         if (!receipt) throw new Error("Error generating receipt");
 
         if (payload.send_receipt) {
@@ -78,6 +81,14 @@ export class SaveOrderInteractor implements UseCase<SaveOrderDto, Order> {
             products: receipt.products
         } as SaveOrderDto;
 
-        return await this.orderRepository.saveOrder(order);
+        const new_order = await this.orderRepository.saveOrder(order);
+        if (!new_order) throw new Error("Error saving order");
+        
+        for (let i = 0; i < payload.products.length; i++) {
+            const updateStock = await updateProductStock({ id: products[i].id!, stock: products[i].stock - payload.products[i].quantity });
+            if (!updateStock) throw new Error("Error updating stock");
+        }
+
+        return new_order;
     }
 }

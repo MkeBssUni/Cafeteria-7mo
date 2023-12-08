@@ -6,8 +6,10 @@ const DiscountStorage = new DiscountStorageGateway();
 
 const findProductById = ProductStorage.findById;
 const findDiscountById = DiscountStorage.findById;
+const updateProductStock = ProductStorage.updateStock;
 
 export {
     findProductById,
-    findDiscountById
+    findDiscountById,
+    updateProductStock
 }
