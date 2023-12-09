@@ -17,14 +17,14 @@ const SidebarSicaf = ({ isOpen, onClose }) => {
   
  
   useEffect(() => {
-    const localStorageValue = localStorage.getItem("UserRole");
+    const localStorageValue = localStorage.getItem("userRole");
 
     let items;
     switch (localStorageValue) {
       case "Empleado":
         items = menuItemsEmpleado;
         break;
-      case "Gerente":
+      case "Administrador":
         items = menuItemsGerente;
         break;
       case "Cliente":
