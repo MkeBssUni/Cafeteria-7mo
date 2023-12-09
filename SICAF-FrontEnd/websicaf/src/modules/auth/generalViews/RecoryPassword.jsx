@@ -1,6 +1,6 @@
 import React from "react";
 import { Card, Button, Form, Figure, Alert } from "react-bootstrap";
-import logo from "../../assets/logo-sicaf.png";
+import logo from "../../../assets/logo-sicaf.png";
 
 const RecoryPassword = () => {
   return (

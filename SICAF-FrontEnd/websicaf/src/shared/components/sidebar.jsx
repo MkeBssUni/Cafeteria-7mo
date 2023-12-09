@@ -35,8 +35,8 @@ const SidebarSicaf = ({ isOpen, onClose }) => {
   }, []);
 
   const menuItemsCliente = [
-    { id: "link1", label: "Productos", icon: <LocalCafeOutlined /> },
-    { id: "link2", label: "Ofertas", icon: <EmojiFoodBeverageOutlined /> },
+    { id: "products", label: "Productos", icon: <LocalCafeOutlined /> },
+    { id: "offers", label: "Ofertas", icon: <EmojiFoodBeverageOutlined /> },
     { id: "link3", label: "Pedidos", icon: <CakeOutlined /> },
     { id: "link4", label: "Historial", icon: <PointOfSaleOutlined /> },
   ];
@@ -50,10 +50,10 @@ const SidebarSicaf = ({ isOpen, onClose }) => {
   ];
 
   const menuItemsEmpleado = [
-    { id: "link1", label: "Productos", icon: <LocalCafeOutlined /> },
+    { id: "productAdmin", label: "Productos", icon: <LocalCafeOutlined /> },
     { id: "link2", label: "Ofertas", icon: <EmojiFoodBeverageOutlined /> },
     { id: "link3", label: "Ventas", icon: <CakeOutlined /> },
-    { id: "link4", label: "Historial", icon: <PointOfSaleOutlined /> },
+    { id: "history", label: "Historial", icon: <PointOfSaleOutlined /> },
   ];
 
   return (
