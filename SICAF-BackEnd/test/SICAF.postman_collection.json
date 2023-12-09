@@ -1069,7 +1069,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3001/SICAF/users/1",
+							"raw": "http://localhost:3001/SICAF/users/13",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1078,7 +1078,7 @@
 							"path": [
 								"SICAF",
 								"users",
-								"1"
+								"13"
 							]
 						}
 					},
@@ -1250,6 +1250,57 @@
 								"SICAF",
 								"users",
 								"updateVisualConfigurations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"jda5ssd@gmail.com\",\r\n  \"role_id\": 2,\r\n  \"person\": {\r\n    \"name\": \"Ricardo\",\r\n    \"lastname\": \"Pérez\",\r\n    \"gender\": \"M\",\r\n    \"phone_number1\": \"7771568481\",\r\n    \"address\": {\r\n      \"street\": \"Calle Principal\",\r\n      \"settlement\": \"Colonia Centro\",\r\n      \"external_number\": \"123\",\r\n      \"city\": \"Ciudad de México\",\r\n      \"state\": \"CDMX\",\r\n      \"postal_code\": \"54321\",\r\n      \"country\": \"México\"\r\n    }\r\n  }\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/SICAF/users/13",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"SICAF",
+								"users",
+								"13"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get emails",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3001/SICAF/users/clientsEmails",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"SICAF",
+								"users",
+								"clientsEmails"
 							]
 						}
 					},
