@@ -10,22 +10,22 @@ import "../css/color.css";
 const Navbarsicaf = () => {
   const navigate = useNavigate();
   const { dispatch } = useContext(AuthContext);
-  // moon : sun en aspectos del icono
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
+  const role = localStorage.getItem("userRole");
 
-  // Function to toggle the state of isSidebarOpen
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
-    console.log(isSidebarOpen);
   };
+
   const handleLogout = () => {
-    setIsLoggingOut(true); // Agrega un estado para indicar que se está cerrando sesión
+    setIsLoggingOut(true); 
     setTimeout(() => {
       dispatch({ type: "LOGOUT" });
       navigate("/login", { replace: true });
-    }, 1000); // Ajusta el valor según sea necesario
+    }, 1000);
   };
+  
   return (
     <>
     <SidebarSicaf isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
@@ -66,7 +66,7 @@ const Navbarsicaf = () => {
             <Dropdown.Menu align={"end"}>
               <Dropdown.Item href="#">
                 <Badge pill bg="secondary">  
-                <b>{localStorage.getItem("userRole")}</b>
+                <b>{role}</b>
                 </Badge>
               </Dropdown.Item>
               <Dropdown.Item>Anna Christina Bustos</Dropdown.Item>

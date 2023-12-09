@@ -12,8 +12,10 @@ function App() {
   const [user, dispatch] = useReducer(authReducer, {}, init);
   useEffect(() => {
     if (!user) return;
+    const role = user.role;
+    const roleDefine = role.replace(/^"(.*)"$/, '$1');
     localStorage.setItem("user", JSON.stringify(user));
-    localStorage.setItem("userRole", JSON.stringify(user.role));
+    localStorage.setItem("userRole", roleDefine);
     localStorage.setItem("letter_size", JSON.stringify(user.letter_size));
     localStorage.setItem("darkMode", JSON.stringify(user.dark_theme));
   }, [user]);

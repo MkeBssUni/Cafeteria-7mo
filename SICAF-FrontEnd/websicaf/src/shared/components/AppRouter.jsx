@@ -5,13 +5,15 @@ import RecoryPassword from "../../modules/auth/generalViews/RecoryPassword";
 import Navbarsicaf from "./Navbar";
 import Welcome from "./Welcome";
 import { AuthContext } from "../../modules/auth/authContext";
-import RouterClient from "./Router/RouterClient";
-import RouterError from "./Router/RouterError";
-import RouterEmploy from "./Router/RouterEmploy";
-import RouterGerent from "./Router/RouterGerent";
+import ProductDashborad from "../../modules/product/adminViews/ProductDashbBoard";
+import UsersScreens from "../../modules/users/UsersScreens";
+import UserForm from "../../modules/users/components/UserForm";
+import HistoryScreens from "../../modules/History/HistoryScreens";
+import UserEdt from '../../modules/users/components/UserEdt';
 import ProductList from "../../modules/product/clientViews/ProductList";
 import OffersList from "../../modules/offers/OffersList";
 import OrdersScreens from "../../modules/orders/OrdersScreens";
+import ErrorNotFound from './Error/ErrorNotFound';
 
 const AppRouter = () => {
   const { user } = useContext(AuthContext);
@@ -19,12 +21,37 @@ const AppRouter = () => {
   const renderUserRoleRouter = (userRole) => {
     switch (userRole) {
       case "Gerente":
-        return <RouterGerent />;
+        return (
+          <>
+            <Route path="users" element={<UsersScreens />} />
+            <Route path="userform" element={<UserForm />} />
+            <Route path="useredt" element={<UserEdt />} />
+            <Route path="productAdmin" element={<ProductDashborad />} />
+            <Route path="history" element={<HistoryScreens />} />
+          </>
+        );
       case "Empleado":
-        return <RouterEmploy />;
+        return (
+          <>
+            <Route path="orders" element={<OrdersScreens />} />
+            <Route path="products" element={<ProductList />} />
+            <Route path="offers" element={<OffersList />} />
+            <Route path="productAdmin" element={<ProductDashborad />} />
+            <Route path="history" element={<HistoryScreens />} />
+          </>
+        );
       case "Cliente":
-        console.log("Entro aquí");
-        return <></>;
+        return (
+          <>
+            <Route path="orders" element={<OrdersScreens />} />
+            <Route path="products" element={<ProductList />} />
+            <Route path="offers" element={<OffersList />} />
+          </>
+        );
+      default:
+        <>
+        <Route path="notFound" element={<ErrorNotFound/>}/>
+        </>
     }
   };
   return (
@@ -40,9 +67,7 @@ const AppRouter = () => {
                 <Navbarsicaf />
                 <Routes>
                   <Route path="/welcome" element={<Welcome />} />
-                  <Route path="orders" element={<OrdersScreens />} />
-                  <Route path="products" element={<ProductList />} />
-                  <Route path="offers" element={<OffersList />} />
+                  {renderUserRoleRouter(userRole)}
                 </Routes>
               </>
             ) : (

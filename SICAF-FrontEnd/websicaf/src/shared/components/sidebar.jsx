@@ -77,7 +77,7 @@ const SidebarSicaf = ({ isOpen, onClose }) => {
             <Col cols="col-xl-12">
               <ListGroup>
                 {menuItems.map((item) => (
-                  <ListGroup.Item key={item.id} action href={`#${item.id}`}>
+                  <ListGroup.Item key={item.id} action href={`${item.id}`}>
                     <SvgIcon component={() => item.icon} inheritViewBox />
                     {item.label}
                   </ListGroup.Item>
