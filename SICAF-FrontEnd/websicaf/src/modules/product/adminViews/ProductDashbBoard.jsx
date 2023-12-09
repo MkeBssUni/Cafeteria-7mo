@@ -103,8 +103,7 @@ function ProductDashborad() {
             value={category}
             onChange={(e) => {
               setType("category");
-              setCategory(parseInt(e.target.value, 10));
-              console.log(parseInt(e.target.value, 10)); 
+              setCategory(parseInt(e.target.value, 10)); 
             }}
             aria-label="Categorias"
             className="input-search text-center mx-3"

@@ -16,7 +16,6 @@ export const ProductRegister = ({ show, onHide }) => {
   const [base64, setbase64] = useState()
 
   const handleChangeImage=(file)=>{
-    console.log(file.target.files)
     const data = new FileReader()
     data.addEventListener('load',()=>{
       setimgs(data.result)
@@ -24,7 +23,8 @@ export const ProductRegister = ({ show, onHide }) => {
     data.readAsDataURL(file.target.files[0]);
   }
 
-  const form = useFormik({
+  const form = 
+  useFormik({
     initialValues: {
       name: "",
       description: "",
@@ -53,8 +53,6 @@ export const ProductRegister = ({ show, onHide }) => {
       category_id: yup.number().required("Campo obligatorio"), // Corregido aquí
     }),
     onSubmit: async (values) => {
-      console.log(imgs)
-      console.log(values);
       return await Alert.fire({
         title: "¿Estas seguro de guardar el producto?",
         text: confirmMsj,
@@ -73,8 +71,6 @@ export const ProductRegister = ({ show, onHide }) => {
             // const imageData = await base64Image(values.image);
             const productData = { ...values, image: imgs };
             const response = await createProduct(productData);
-            console.log(productData)
-
             if (response && !response.error) {
               Alert.fire({
                 title: "Registro realizada exitosamente",
@@ -246,7 +242,7 @@ export const ProductRegister = ({ show, onHide }) => {
                 >
                   <FeatherIcon icon="x" /> &nbsp;Cerrar
                 </Button>
-                <Button type="submit" variant="outline-success">
+                <Button type="submit" onClick={form.onSubmit} variant="outline-success">
                   <FeatherIcon icon="check" /> &nbsp;Guardar
                 </Button>
               </Form.Group>
