@@ -1040,16 +1040,42 @@
 			]
 		},
 		{
+			"name": "roles",
+			"item": [
+				{
+					"name": "get-roles",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3001/SICAF/roles/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"SICAF",
+								"roles",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "users",
 			"item": [
 				{
-					"name": "Create Copy",
+					"name": "save-user",
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\":\"sofiasantosriopan10@gmail.com\",\r\n    \"password\":\"C0co\",\r\n    \"role_id\": 3,\r\n    \"person\":{\r\n        \"name\": \"Sofia\",\r\n        \"lastname\": \"Santos\",\r\n        \"gender\": \"F\",\r\n        \"phone_number1\": \"7778459632\",\r\n        \"address\":{\r\n            \"street\":\"Privada Gabino Vázquez\",\r\n            \"settlement\": \"Jiquilpan\",\r\n            \"city\": \"Cuernavaca\",\r\n            \"state\": \"Morelos\",\r\n            \"postal_code\":\"62170\",\r\n            \"country\": \"Mexico\"\r\n        }\r\n    }\r\n}",
+							"raw": "{\r\n    \"email\":\"jda5ssd@gmail.com\",\r\n    \"password\":\"Mamorcito4\",\r\n    \"role_id\": 2 ,\r\n    \"person\":{\r\n        \"name\": \"asdd\",\r\n        \"lastname\": \"Aguario\",\r\n        \"gender\": \"M\",\r\n        \"phone_number1\":\"7771568481\",\r\n        \"address\":{\r\n            \"street\":\"Emiliano Zapata\",\r\n            \"settlement\": \"Ahuehuetitla\",\r\n            \"city\": \"Cuernavaca\",\r\n            \"state\": \"Morelos\",\r\n            \"postal_code\":\"62294\",\r\n            \"country\": \"Mexico\"\r\n        }\r\n    }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1072,7 +1098,7 @@
 					"response": []
 				},
 				{
-					"name": "Get cart Copy",
+					"name": "get-cart",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -1106,7 +1132,7 @@
 					"response": []
 				},
 				{
-					"name": "Get one Copy",
+					"name": "get-user-by-id",
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -1127,7 +1153,7 @@
 					"response": []
 				},
 				{
-					"name": "Change status Copy",
+					"name": "change-status",
 					"request": {
 						"method": "PATCH",
 						"header": [],
@@ -1149,7 +1175,7 @@
 					"response": []
 				},
 				{
-					"name": "Get all Copy",
+					"name": "get-users",
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -1170,7 +1196,7 @@
 					"response": []
 				},
 				{
-					"name": "Get by status Copy",
+					"name": "get-users-by-status",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -1204,7 +1230,7 @@
 					"response": []
 				},
 				{
-					"name": "Update cart Copy",
+					"name": "update-cart",
 					"request": {
 						"method": "PATCH",
 						"header": [],
@@ -1233,19 +1259,26 @@
 						}
 					},
 					"response": []
-				}
-			]
-		},
-		{
-			"name": "roles",
-			"item": [
+				},
 				{
-					"name": "get-roles",
+					"name": "get-user-by-email",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
 						"method": "GET",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"jmassd@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": "http://localhost:3001/SICAF/roles/",
+							"raw": "http://localhost:3001/SICAF/users/getByEmail",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1253,8 +1286,89 @@
 							"port": "3001",
 							"path": [
 								"SICAF",
-								"roles",
-								""
+								"users",
+								"getByEmail"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update-visual-configuration",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"user_id\": 13,\r\n    \"dark_theme\": false,\r\n    \"letter_size\": \"Grande\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/SICAF/users/updateVisualConfigurations",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"SICAF",
+								"users",
+								"updateVisualConfigurations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update-user",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"jda5ssd@gmail.com\",\r\n  \"role_id\": 2,\r\n  \"person\": {\r\n    \"name\": \"Ricardo\",\r\n    \"lastname\": \"Pérez\",\r\n    \"gender\": \"M\",\r\n    \"phone_number1\": \"7771568481\",\r\n    \"address\": {\r\n      \"street\": \"Calle Principal\",\r\n      \"settlement\": \"Colonia Centro\",\r\n      \"external_number\": \"123\",\r\n      \"city\": \"Ciudad de México\",\r\n      \"state\": \"CDMX\",\r\n      \"postal_code\": \"54321\",\r\n      \"country\": \"México\"\r\n    }\r\n  }\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/SICAF/users/13",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"SICAF",
+								"users",
+								"13"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-user-emails",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3001/SICAF/users/clientsEmails",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"SICAF",
+								"users",
+								"clientsEmails"
 							]
 						}
 					},
