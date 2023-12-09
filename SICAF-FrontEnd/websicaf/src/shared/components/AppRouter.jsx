@@ -68,6 +68,7 @@ const AppRouter = () => {
                 <Routes>
                   <Route path="/welcome" element={<Welcome />} />
                   {renderUserRoleRouter(userRole)}
+                  <Route path="*" element={<ErrorNotFound />} />
                 </Routes>
               </>
             ) : (

@@ -12,11 +12,14 @@ function App() {
   const [user, dispatch] = useReducer(authReducer, {}, init);
   useEffect(() => {
     if (!user) return;
-    const role = user.role || ""; // Asegúrate de que role no sea nulo
-    const roleDefine = role.replace(/^"(.*)"$/, "$1");
+    let roleDefine = "";
+    if (user.role != null) {
+      const role = user.role || ""; // Asegúrate de que role no sea nulo
+      roleDefine = role.replace(/^"(.*)"$/, "$1");
+    }
     localStorage.setItem("user", JSON.stringify(user));
-    localStorage.setItem("userRole", roleDefine);
     localStorage.setItem("letter_size", JSON.stringify(user.letter_size));
+    localStorage.setItem("userRole", roleDefine);
     localStorage.setItem("darkMode", JSON.stringify(user.dark_theme));
   }, [user]);
   return (
