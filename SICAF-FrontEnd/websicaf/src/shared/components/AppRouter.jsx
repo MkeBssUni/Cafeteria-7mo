@@ -14,6 +14,7 @@ import ProductList from "../../modules/product/clientViews/ProductList";
 import OffersList from "../../modules/offers/OffersList";
 import OrdersScreens from "../../modules/orders/OrdersScreens";
 import ErrorNotFound from './Error/ErrorNotFound';
+import NewPassword from "../../modules/auth/generalViews/NewPassword";
 
 const AppRouter = () => {
   const { user } = useContext(AuthContext);
@@ -59,6 +60,7 @@ const AppRouter = () => {
       <Routes>
         <Route path="/login" element={<LoginScreens />} />
         <Route path="/recoveryPassword" element={<RecoryPassword />} />
+        <Route path="/newPassword" element={<NewPassword />} />
         <Route
           path="/*"
           element={
