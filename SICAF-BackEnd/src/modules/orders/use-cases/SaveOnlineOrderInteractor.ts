@@ -1,11 +1,13 @@
 import { UseCase } from "../../../kernel/contracts";
 import { OrderStatus, OrderTypes, PaymentMethods } from "../../../kernel/enums";
+import { sendReceiptEmail } from "../../../kernel/functions";
 import { generateReceipt } from "../../../kernel/generate_receipt";
 import { validateStringLength } from "../../../kernel/validations";
 import { Discount } from "../../discounts/entities/discount";
 import { GetProductWithCategoryDto } from "../../products/adapters/dto/get-product-dto";
-import { ReceiptDto, ReceiptProductsDto, SaveOnlineOrderDto } from "../adapters/dto";
-import { existsUserByIdAndRole, findDiscountById, findProductById, updateProductStock } from "../boundary";
+import { UserByIdDto } from "../../users/adapters/dto/UserByIdDto";
+import { ReceiptDto, ReceiptProductsDto, SaveOnlineOrderDto, SendReceiptDto } from "../adapters/dto";
+import { findDiscountById, findProductById, findUserById, updateProductStock } from "../boundary";
 import { Order } from "../entities/order";
 import { OrderRepository } from "./ports/order.repository";
 
@@ -18,8 +20,9 @@ export class SaveOnlineOrderInteractor implements UseCase<SaveOnlineOrderDto, Or
         if (payload.payment_method !== PaymentMethods.creditCard && payload.payment_method !== PaymentMethods.debitCard) throw new Error("Invalid payment method");
         if (payload.comments && !validateStringLength(payload.comments, 0, 255)) throw new Error("Invalid comment");
         
-        const client = await existsUserByIdAndRole({ id: payload.client_id, role: 3 });
+        /* const client: UserByIdDto = await findUserById(payload.client_id);
         if (!client) throw new Error("User not found");
+        if (client.role_id !== 3) throw new Error("Invalid role"); */
 
         let subtotal: number = 0;
         let discount: Discount | null = null;
@@ -40,6 +43,7 @@ export class SaveOnlineOrderInteractor implements UseCase<SaveOnlineOrderDto, Or
 
             const optionalProduct: GetProductWithCategoryDto = await findProductById(payload.products[i].id);
             if (!optionalProduct) throw new Error("Product not found");
+            if (optionalProduct.stock < payload.products[i].quantity) throw new Error("Not enough stock");
 
             subtotal += optionalProduct.price * payload.products[i].quantity;
 
@@ -59,8 +63,14 @@ export class SaveOnlineOrderInteractor implements UseCase<SaveOnlineOrderDto, Or
         const receipt = generateReceipt(discount!, subtotal, order_products) as ReceiptDto;
         if (!receipt) throw new Error("Error generating receipt");
 
-        //enviar correo
-        payload.send_receipt = payload.send_receipt || false;
+        /* const responseEmail = sendReceiptEmail({ email: '20213tn140@utez.edu.mx', receipt: {
+            products_sold: receipt.products_sold,
+            subtotal: receipt.subtotal,
+            discount: receipt.discount ? receipt.discount : 0,
+            total: receipt.total,
+            products: receipt.products
+        } as SendReceiptDto });
+        if (!responseEmail) throw new Error("Error sending email"); */
         
         const order = {
             type: OrderTypes.online,
@@ -71,7 +81,7 @@ export class SaveOnlineOrderInteractor implements UseCase<SaveOnlineOrderDto, Or
             discount_id: payload.discount_id,
             total: receipt.total,
             status: OrderStatus.pending,
-            send_receipt: payload.send_receipt,
+            send_receipt: true,
             comments: payload.comments,
             products: receipt.products
         } as SaveOnlineOrderDto;

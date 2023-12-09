@@ -10,6 +10,7 @@ import { UpdateUserDto } from "./dto/update-user-dto";
 import { Product } from "../../products/entities/product";
 import { ProductInCartDto } from "./dto/products-in-cart-dto";
 import { UserByIdAndRoleDto } from "./dto/UserByIdAndRoleDto";
+import { UserByIdDto } from "./dto/UserByIdDto";
 
 export class UsersStorageGateway implements UsersRepository{
     async create(payload: User): Promise<User> {
@@ -160,7 +161,6 @@ export class UsersStorageGateway implements UsersRepository{
 
             return user;
         } catch (error) {
-            console.log("Error: ", error)
             throw new Error
         }
     }
@@ -243,17 +243,17 @@ export class UsersStorageGateway implements UsersRepository{
                 }
             }
         } catch (error) {
+            console.log("Error: ", error)
             throw new Error
         }
     }
     
-    async existsByIdAndRole(payload: UserByIdAndRoleDto): Promise<boolean> {
+    async findUserInfoById(id: number): Promise<UserByIdDto> {
         try {
-            const { id, role } = payload;
-            const response = await pool.query('select exists(select 1 from users where id = $1 and role_id = $2)', [id, role]);
-            return response.rows[0].exists;
-        } catch (error) {
-            throw Error
+            const response = await pool.query('select id, role_id, email from users wher id = $1', [id]);
+            return response.rows[0] as UserByIdDto;
+        } catch (e) {
+            throw new Error
         }
     }
 

@@ -60,6 +60,7 @@ export class OrderController {
             }
             return res.status(body.code).json(body);
         } catch (e) {
+            console.log(e)
             const error = validateError(e as Error);
             return res.status(error.code).json(error);
         }

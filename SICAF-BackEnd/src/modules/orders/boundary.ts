@@ -6,13 +6,13 @@ const ProductStorage = new ProductsStorageGateway();
 const DiscountStorage = new DiscountStorageGateway();
 const UsersStorage = new UsersStorageGateway();
 
-const existsUserByIdAndRole = UsersStorage.existsByIdAndRole;
+const findUserById = UsersStorage.findUserInfoById;
 const findProductById = ProductStorage.findProductWithCategoryById;
 const findDiscountById = DiscountStorage.findById;
 const updateProductStock = ProductStorage.updateStock;
 
 export {
-    existsUserByIdAndRole,
+    findUserById,
     findProductById,
     findDiscountById,
     updateProductStock
