@@ -15,6 +15,7 @@ const errors:{[x: string]: ResponseApi<undefined>}={
     'Invalid password': {code: 400, error: true, message: 'Invalid password'},
     'Invalid address number': {code: 400, error: true, message: 'Invalid address number'},
     'Invalid status': {code: 400, error: true, message: 'Invalid status'},
+    'Invalid field type': {code: 400, error: true, message: 'Invalid field type'},
     'Invalid id': {code: 400, error: true, message: 'Invalid id'},
     'Invalid role id': {code: 400, error: true, message: 'Invalid role id'},
     'Invalid image': {code: 400, error: true, message: 'Invalid image'},

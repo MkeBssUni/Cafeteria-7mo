@@ -9,6 +9,7 @@ import { UpdateUserDto } from "./dto/update-user-dto";
 import { Product } from "../../products/entities/product";
 import { ProductInCartDto } from "./dto/products-in-cart-dto";
 import { UserByIdDto } from "./dto/UserByIdDto";
+import { UpdateVisualConfigurationsDto } from "./dto/update-visual-configurations-dto";
 
 export class UsersStorageGateway implements UsersRepository{
     async create(payload: User): Promise<User> {
@@ -255,4 +256,17 @@ export class UsersStorageGateway implements UsersRepository{
         }
     }
 
+    async updateVisualConfigurations(payload: UpdateVisualConfigurationsDto): Promise<UpdateVisualConfigurationsDto> {
+        try {
+            const response = await pool.query('UPDATE users SET dark_theme = $1, letter_size = $2 WHERE id = $3 RETURNING *', [payload.dark_theme, payload.letter_size, payload.user_id]);
+            
+            return {
+                user_id: response.rows[0].id,
+                dark_theme: response.rows[0].dark_theme,
+                letter_size: response.rows[0].letter_size
+            }
+        } catch (error) {
+            throw new Error
+        }
+    }
 }
