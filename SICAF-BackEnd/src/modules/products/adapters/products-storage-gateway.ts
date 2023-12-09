@@ -7,6 +7,7 @@ import { UpdateProductDto } from "./dto/update-product-dto";
 import { addDiscountDto } from "./dto/addDiscountDto";
 import { GetProductsByCategoryAndStatusDto } from "./dto/get-products-by-category-and-status-dto";
 import { UpdateStockDto } from "./dto/UpdateStockDto";
+import { GetReceiptProductDto } from "./dto/GetReceiptProductDto";
 
 export class ProductsStorageGateway implements ProductsRepository{
 
@@ -285,6 +286,15 @@ export class ProductsStorageGateway implements ProductsRepository{
             const response = await pool.query("update products set stock = $2 where id = $1", [id, stock]);
             return true;
         } catch (error) {
+            throw Error
+        }
+    }
+
+    async findReceiptProductById(id: number): Promise<GetReceiptProductDto> {
+        try {
+            const response = await pool.query("select p.id, c.name as category, p.name, p.price, p.discount_id as discount, p.stock from products p inner join categories c on p.category_id = c.id where p.id = $1;", [id]);
+            return response.rows[0] as GetReceiptProductDto;
+        } catch (e) {
             throw Error
         }
     }

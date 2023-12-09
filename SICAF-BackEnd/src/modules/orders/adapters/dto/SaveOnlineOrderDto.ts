@@ -10,6 +10,5 @@ export type SaveOnlineOrderDto = {
     total?: number,
     status: string,
     send_receipt: boolean,
-    comments?: string,
     products: ReceiptProductsDto[]
 }
