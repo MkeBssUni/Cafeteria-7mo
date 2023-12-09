@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "6bd71ee5-c3dd-4637-a6ba-c2d1c6df8888",
+		"_postman_id": "5b6b75c3-4a1e-48c6-88c7-ca3f6aa2d013",
 		"name": "SICAF",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "28539745"
+		"_exporter_id": "27939903"
 	},
 	"item": [
 		{
@@ -1187,6 +1187,69 @@
 								"users",
 								"cart",
 								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get by email",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"jmassd@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/SICAF/users/getByEmail",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"SICAF",
+								"users",
+								"getByEmail"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update visual configurations",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"user_id\": 13,\r\n    \"dark_theme\": false,\r\n    \"letter_size\": \"Grande\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/SICAF/users/updateVisualConfigurations",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"SICAF",
+								"users",
+								"updateVisualConfigurations"
 							]
 						}
 					},
