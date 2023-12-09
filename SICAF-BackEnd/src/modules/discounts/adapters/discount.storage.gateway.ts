@@ -13,6 +13,15 @@ export class DiscountStorageGateway implements DiscountRepository {
         }
     }
 
+    async findAllActive(): Promise<Discount[]> {
+        try {
+            const response = await pool.query("select * from discounts where status = true and ((start_date is null and end_date is null) or (start_date is not null and end_date is null and current_date >= start_date) or (start_date is not null and end_date is not null and current_date >= start_date and current_date <= end_date))");
+            return response.rows as Discount[];
+        } catch (e) {
+            throw Error
+        }
+    }
+
     async findById(id: number): Promise<Discount> {
         try {
             const response = await pool.query("select * from discounts where id = $1", [id]);

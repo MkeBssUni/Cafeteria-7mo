@@ -3,6 +3,7 @@ import { SaveDiscountDto, UpdateDiscountDto, ChangeStatusDto } from "../../adapt
 
 export interface DiscountRepository {
     findAll(): Promise<Discount[]>
+    findAllActive(): Promise<Discount[]>
     findById(id: number): Promise<Discount>
     findByOrderTotal(order_total: number): Promise<Discount[]>
     findByRole(id: number): Promise<Discount[]>
