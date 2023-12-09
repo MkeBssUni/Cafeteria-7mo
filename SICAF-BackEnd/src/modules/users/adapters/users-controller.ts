@@ -14,6 +14,7 @@ import { UpdateCartInteractor } from "../use-cases/update-cart-interactor";
 import { GetUserByEmailInteractor } from "../use-cases/get-user-by-email";
 import { UpdateVisualConfigurationsInteractor } from "../use-cases/update-visual-configurations-interactor";
 import { UpdateVisualConfigurationsDto } from "./dto/update-visual-configurations-dto";
+import { UpdateUserInteractor } from "../use-cases/update-user-interactor";
 
 export class UsersController{
     static Create = async (req: Request, res: Response) => {
@@ -176,6 +177,28 @@ export class UsersController{
             const user = await interactor.execute(req.body);
 
             const body: ResponseApi<UpdateVisualConfigurationsDto>={
+                code: 200,
+                error: false,
+                message: 'OK',
+                data: user
+            }
+
+            return res.status(body.code).json(body);
+        } catch (e) {
+            const error = validateError(e as Error);
+            res.status(error.code).json(error);
+        }
+    }
+    
+    static UpdateUser = async (req: Request, res: Response) => {
+        try {
+            const id = parseInt(req.params.id);
+            const payload= {...req.body, user_id: id};
+            const repo: UsersRepository = new UsersStorageGateway();
+            const interactor: UpdateUserInteractor = new UpdateUserInteractor(repo);
+            const user = await interactor.execute(payload);
+
+            const body: ResponseApi<User>={
                 code: 200,
                 error: false,
                 message: 'OK',

@@ -192,7 +192,22 @@ export class UsersStorageGateway implements UsersRepository{
     }
     
     async update(payload: UpdateUserDto): Promise<User> {
-        throw new Error("Method not implemented.");
+        try {
+            await pool.query('BEGIN')
+            const responseUser = await pool.query('UPDATE users SET email = $1 WHERE id = $2 RETURNING *', [payload.email, payload.user_id]);
+            const user = responseUser.rows[0];
+            let address;
+            const responsePerson = await pool.query('UPDATE people SET (name, lastname, gender, birthday, phone_number1, phone_number2) = ($1,$2,$3,$4,$5,$6)WHERE user_id = $7 returning *;',[payload.person.name, payload.person.lastname, payload.person.gender, payload.person.birthday, payload.person.phone_number1, payload.person.phone_number2,user.id]);
+            if(payload.person.address){
+                const responseAddress = await pool.query('UPDATE addresses SET street = $1, settlement = $2, external_number = $3, internal_number = $4, city = $5, state = $6, postal_code = $7, country = $8 WHERE id = $9 RETURNING *', [payload.person.address.street, payload.person.address.settlement, payload.person.address.external_number, payload.person.address.internal_number, payload.person.address.city, payload.person.address.state, payload.person.address.postal_code, payload.person.address.country, responsePerson.rows[0].address_id]);
+               address = responseAddress.rows[0]; 
+            }
+            await pool.query('COMMIT')
+            return this.findById(user.id);
+        } catch (error) {
+            console.log("error", error)
+            throw new Error
+        }
     }
 
     async changeStatus(id: number): Promise<User> {
