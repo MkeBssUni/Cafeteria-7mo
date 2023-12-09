@@ -18,58 +18,40 @@ export const generateReceiptDetailsTemplate = (products: ReceiptProductsDto[]): 
                             <strong>Cantidad:</strong> ${products[i].quantity}<br />
                             <strong>Precio:</strong> $${products[i].price}<br />
                             <strong>Subtotal:</strong> $${products[i].subtotal}<br />
-                            <span
-                                style="background-color: #ffffff;"><strong><span
-                                        style="color: #e44545;">Descuento:
-                                        $${products[i].discount ? (products[i].discount!*-1) : '0.00'}
-                            </span>
-                            </strong></span><br /><strong>Total:
-                            </strong> ${products[i].total}</p>
+                            <span style="background-color: #ffffff;">
+                            <strong>
+                                <span style="color: #e44545;">
+                                    Descuento: -$${products[i].discount ? (products[i].discount) : '0.00'}
+                                </span>
+                            </strong>
+                            </span><br />
+                            <strong>Total:</strong> $${products[i].total}</p>
                     </div>
                 </td>
             </tr>
         </table>
         <table border="0" cellpadding="10" cellspacing="0"
 		    class="divider_block block-6" role="presentation"
-			style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;"
-			width="100%">
+		    style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;"
+		    width="100%">
 			<tr>
 				<td class="pad">
                     <div align="center" class="alignment">
                         <table border="0" cellpadding="0" cellspacing="0"
-                        role="presentation"
-						style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;"
-                        width="100%">
-                    <tr>
-                <td class="divider_inner"
-                style="font-size: 1px; line-height: 1px; border-top: 2px dotted #9B6B43;">
-                <span> </span></td>
-                <table border="0" cellpadding="10" cellspacing="0"
-                class="divider_block block-6" role="presentation"
-                style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;"
-                width="100%">
-                <tr>
-                    <td class="pad">
-                        <div align="center" class="alignment">
-                            <table border="0" cellpadding="0" cellspacing="0"
-                                role="presentation"
-                                style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;"
-                                width="100%">
-                                <tr>
-                                    <td class="divider_inner"
-                                        style="font-size: 1px; line-height: 1px; border-top: 2px dotted #9B6B43;">
-                                        <span> </span></td>
-                                </tr>
-                            </table>
-                        </div>
-                    </td>
-                </tr>
-            </table></tr>
-            </table>
-            </div>
-            </td>
+                            role="presentation"
+						    style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;"
+                            width="100%">
+                            <tr>
+                                <td class="divider_inner"
+                                    style="font-size: 1px; line-height: 1px; border-top: 2px dotted #9B6B43;">
+                                    <span> </span>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </td>
             </tr>
-            </table>
+        </table>
         `
     }
     return receiptDetails;

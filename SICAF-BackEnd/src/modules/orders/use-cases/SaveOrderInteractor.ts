@@ -1,12 +1,13 @@
 import { UseCase } from "../../../kernel/contracts";
 import { DiscountTypes, OrderStatus, OrderTypes, PaymentMethods, Roles } from "../../../kernel/enums";
+import { sendReceiptEmail } from "../../../kernel/functions";
 import { generateReceipt } from "../../../kernel/generate_receipt";
 import { validateDate, validateDates, validateStringLength } from "../../../kernel/validations";
 import { findRoleById } from "../../discounts/boundary";
 import { Discount } from "../../discounts/entities/discount";
 import { GetReceiptProductDto } from "../../products/adapters/dto/GetReceiptProductDto";
 import { UserByIdDto } from "../../users/adapters/dto/UserByIdDto";
-import { ReceiptDto, ReceiptProductsDto, SaveOrderDto } from "../adapters/dto";
+import { ReceiptDto, ReceiptProductsDto, SaveOrderDto, SendReceiptDto } from "../adapters/dto";
 import { findDiscountById, findProductById, findUserById, updateProductStock } from "../boundary";
 import { Order } from "../entities/order";
 import { OrderRepository } from "./ports/order.repository";
@@ -77,7 +78,16 @@ export class SaveOrderInteractor implements UseCase<SaveOrderDto, Order> {
         const receipt = generateReceipt(discount!, subtotal, order_products) as ReceiptDto;
         if (!receipt) throw new Error("Error generating receipt");
 
-        //enviar correo
+        if (payload.send_receipt) {
+            const responseEmail = await sendReceiptEmail({ email: client!.email, receipt: {
+                products_sold: receipt.products_sold,
+                subtotal: receipt.subtotal,
+                discount: receipt.discount ? receipt.discount : 0,
+                total: receipt.total,
+                products: receipt.products
+            } as SendReceiptDto });
+            if (!responseEmail) throw new Error("Error sending email");
+        }
 
         const order = {
             type: OrderTypes.presential,
