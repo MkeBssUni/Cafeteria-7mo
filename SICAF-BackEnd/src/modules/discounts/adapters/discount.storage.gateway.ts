@@ -13,6 +13,15 @@ export class DiscountStorageGateway implements DiscountRepository {
         }
     }
 
+    async findByType(type: string): Promise<Discount[]> {
+        try {
+            const response = await pool.query("select * from discounts where type = $1", [type]);
+            return response.rows as Discount[];
+        } catch (e) {
+            throw Error
+        }    
+    }
+
     async findById(id: number): Promise<Discount> {
         try {
             const response = await pool.query("select * from discounts where id = $1", [id]);

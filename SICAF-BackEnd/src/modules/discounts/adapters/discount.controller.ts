@@ -6,6 +6,7 @@ import { ResponseApi } from "../../../kernel/types";
 import { validateError } from "../../../kernel/error_codes";
 import { DiscountsDto, OrderDto, SaveDiscountDto, UpdateDiscountDto } from "./dto";
 import { AllDiscountsInteractor, ChangeStatusInteractor, GetByOrderInteractor, SaveDiscountInteractor, UpdateDiscountInteractor } from "../use-cases";
+import { DiscountsByTypeInteractor } from "../use-cases/DiscountsByTypeInteractor";
 
 export class DiscountController {
     static findAllDiscounts = async (req: Request, res: Response) => {
@@ -17,6 +18,25 @@ export class DiscountController {
                 code: 200,
                 error: false,
                 message: 'Lista de descuentos',
+                data: discounts
+            }
+            return res.status(body.code).json(body);
+        } catch (e) {
+            const error = validateError(e as Error);
+            return res.status(error.code).json(error);
+        }
+    }
+
+    static findDiscountsByType = async (req: Request, res: Response) => {
+        try {
+            const type: string = req.body.type;
+            const repository: DiscountRepository = new DiscountStorageGateway();
+            const interactor: DiscountsByTypeInteractor = new DiscountsByTypeInteractor(repository);
+            const discounts: Discount[] = await interactor.execute(type);
+            const body: ResponseApi<Discount[]> = {
+                code: 200,
+                error: false,
+                message: `Lista: ${type}`,
                 data: discounts
             }
             return res.status(body.code).json(body);

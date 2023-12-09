@@ -1,4 +1,5 @@
 import { AllDiscountsInteractor } from "./AllDiscountsInteractor";
+import { DiscountsByTypeInteractor } from "./DiscountsByTypeInteractor";
 import { GetByOrderInteractor } from "./GetByOrderInteractor";
 import { SaveDiscountInteractor } from "./SaveDiscountInteractor";
 import { UpdateDiscountInteractor } from "./UpdateDiscountInteractor";
