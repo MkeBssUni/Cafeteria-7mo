@@ -4,6 +4,7 @@ const router = Router();
 
 router.get('/status/', UsersController.FindByStatus)
 router.get('/getByEmail/', UsersController.GetByEmail)
+router.get('/clientsEmails/', UsersController.GetEmails)
 router.patch('/updateVisualConfigurations/', UsersController.UpdateVisualConfigurations)
 router.post('/', UsersController.Create)
 router.put('/:id', UsersController.UpdateUser)

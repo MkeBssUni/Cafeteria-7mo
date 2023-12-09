@@ -284,4 +284,13 @@ export class UsersStorageGateway implements UsersRepository{
             throw new Error
         }
     }
+
+    async getEmails(): Promise<string[]> {
+        try {
+            const response = await pool.query('SELECT email FROM users where role_id = 3 and status = true;');
+            return response.rows.map((user: any) => user.email);
+        } catch (error) {
+            throw new Error
+        }
+    }
 }

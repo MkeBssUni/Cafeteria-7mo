@@ -211,4 +211,23 @@ export class UsersController{
             res.status(error.code).json(error);
         }
     }
+
+    static GetEmails = async (req: Request, res: Response) => {
+        try {
+            const repo: UsersRepository = new UsersStorageGateway();
+            const emails = await repo.getEmails();
+
+            const body: ResponseApi<string[]>={
+                code: 200,
+                error: false,
+                message: 'OK',
+                data: emails
+            }
+
+            return res.status(body.code).json(body);
+        } catch (e) {
+            const error = validateError(e as Error);
+            res.status(error.code).json(error);
+        }
+    }
 }
