@@ -10,7 +10,6 @@ import {
   SupervisedUserCircleOutlined,
   PointOfSaleOutlined,
 } from "@mui/icons-material";
-import { AuthContext } from './../../modules/auth/authContext';
 
 const SidebarSicaf = ({ isOpen, onClose }) => {
   const [menuItems, setMenuItems] = useState([]);
