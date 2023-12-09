@@ -44,11 +44,11 @@ const SidebarSicaf = ({ isOpen, onClose }) => {
   ];
 
   const menuItemsGerente = [
-    { id: "link1", label: "Productos", icon: <LocalCafeOutlined /> },
+    { id: "productAdmin", label: "Productos", icon: <LocalCafeOutlined /> },
     { id: "link2", label: "Ofertas", icon: <EmojiFoodBeverageOutlined /> },
     { id: "link3", label: "Pedidos", icon: <CakeOutlined /> },
-    { id: "link4", label: "Historial", icon: <PointOfSaleOutlined /> },
-    { id: "link5", label: "Usuarios", icon: <SupervisedUserCircleOutlined /> },
+    { id: "history", label: "Historial", icon: <PointOfSaleOutlined /> },
+    { id: "users", label: "Usuarios", icon: <SupervisedUserCircleOutlined /> },
   ];
 
   const menuItemsEmpleado = [
