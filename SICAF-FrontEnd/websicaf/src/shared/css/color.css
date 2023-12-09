@@ -1,20 +1,18 @@
-:root {
-  --color-primary: #9b6b43;
-  --color-secondary: #f3e3d3;
-  --color-tertiary: #c98860;
-  --color-search: #F3E3D3CF;
-  --color-ordes: #F5E8DB;
-  --color-title: #563411;
-  --color-textR: #FF2424;
-  --color-BotonV: #9ABFA2B2;
-  --color-BotonR: #E44545B2;
-}
-/* var(--color-primary) */
 
 .logo-nav {
   width: 70px;
   height: 77px;
   flex-shrink: 0;
+}
+
+.bakground-things{
+  background-color: var(--color-primary)!important;
+  color: #fff!important;
+}
+
+.sidebar-size{
+  width: 30% !important;
+  max-width: 300px !important;
 }
 
 .tabla-personalizada {
@@ -54,8 +52,5 @@
 .centered-text {
   text-align: center;
 }
-
-
-
 
 

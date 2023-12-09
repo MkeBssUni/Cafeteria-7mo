@@ -3,6 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@mui/icons-material": "^5.14.18",
+    "@mui/material": "^5.14.18",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
@@ -10,7 +14,7 @@
     "bootstrap": "^5.3.2",
     "feather-icons": "^4.29.1",
     "feather-icons-react": "^0.6.2",
-    "formik": "^2.4.5",
+    "formik": "^2.2.9",
     "react": "^18.2.0",
     "react-bootstrap": "^2.9.1",
     "react-dom": "^18.2.0",
@@ -20,7 +24,7 @@
     "sweetalert2": "^11.9.0",
     "sweetalert2-react-content": "^5.0.7",
     "web-vitals": "^2.1.4",
-    "yup": "^0.32.11"
+    "yup": "^1.3.2"
   },
   "scripts": {
     "start": "react-scripts start",
