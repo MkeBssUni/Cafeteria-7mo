@@ -7,12 +7,15 @@ import logo from "../../assets/logo-sicaf-crema.png";
 import SidebarSicaf from "./sidebar";
 import "../css/color.css";
 
+
 const Navbarsicaf = () => {
   const navigate = useNavigate();
-  const { dispatch } = useContext(AuthContext);
+  const { user,dispatch } = useContext(AuthContext);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
   const role = localStorage.getItem("userRole");
+
+  const fullName = user.name +" "+ user.lastname;
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
@@ -69,7 +72,7 @@ const Navbarsicaf = () => {
                 <b>{role}</b>
                 </Badge>
               </Dropdown.Item>
-              <Dropdown.Item>Anna Christina Bustos</Dropdown.Item>
+              <Dropdown.Item>{fullName} </Dropdown.Item>
               <Dropdown.Item href="#">
                 <FeatherIcon
                   icon="sun"

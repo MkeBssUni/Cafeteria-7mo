@@ -14,9 +14,7 @@ import { AuthContext } from './../../modules/auth/authContext';
 
 const SidebarSicaf = ({ isOpen, onClose }) => {
   const [menuItems, setMenuItems] = useState([]);
-  const { user } = useContext(AuthContext);
-
-  const fullname = user.
+  
  
   useEffect(() => {
     const localStorageValue = localStorage.getItem("UserRole");
@@ -26,7 +24,7 @@ const SidebarSicaf = ({ isOpen, onClose }) => {
       case "Empleado":
         items = menuItemsEmpleado;
         break;
-      case "Administrador":
+      case "Gerente":
         items = menuItemsGerente;
         break;
       case "Cliente":
