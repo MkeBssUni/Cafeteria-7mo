@@ -1,8 +1,36 @@
 import React from "react";
 import { Card, Button, Form, Figure, Alert } from "react-bootstrap";
-import logo from "../../assets/logo-sicaf.png";
+import logo from "../../../assets/logo-sicaf.png";
+import { useFormik } from "formik";
+import * as yup from "yup";
+import { useNavigate } from "react-router";
+import recoveryPassword from "../Functions/recoveryPassword";
 
 const RecoryPassword = () => {
+  const navigation = useNavigate();
+  const form = useFormik({
+    initialValues:{
+      email: "",
+    },
+    validationSchema: yup.object().shape({
+      email: yup.string().required("Campo Obligatorio")
+    }),
+    onSubmit: async (values) => {
+      try {
+        return  await recoveryPassword({ ...values, url: "http://localhost:3000/newPassword" });
+      } catch (error) {
+        Alert.fire({
+          title: "Error Interno",
+          text: "Vuelve a intentarlo más tarde",
+          icon: "error",
+          confirmButtonColor: "#3085d6",
+          confirmButtonText: "Aceptar",
+        });
+      }
+    }
+
+  })
+
   return (
     <div className="fondo-container">
       <Card className="fondo-cardlogin">
@@ -17,14 +45,20 @@ const RecoryPassword = () => {
             <span className="nota-advert">Nota:</span> De acuerdo al correo registrado de tu cuenta se te mandara
               un correo para restablecer la contraseña por medio de seguridad.
             </Alert>
-            <Form>
-              <Form.Group className=" mb-3" controlId="formBasicEmail">
+            <Form onSubmit={form.handleSubmit}>
+            <Form.Group>
                 <Form.Label className="">Correo electrónico</Form.Label>
                 <Form.Control
                   type="email"
+                  name="email"
                   placeholder="cafe@gmail.com"
                   className="input-redondo mx-auto"
+                  value={form.values.email} // Use form.values.email instead of form.initialValues.email
+                  onChange={form.handleChange}
                 />
+                {form.errors.email ? (
+                  <span className="error-text">{form.errors.email}</span>
+                ) : null}
               </Form.Group>
               <Button
                 variant="primary"

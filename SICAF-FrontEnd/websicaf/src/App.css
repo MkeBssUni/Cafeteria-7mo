@@ -307,3 +307,13 @@ html[letter-size='Pequeña'] {
 .error-text{
   color: red !important;
 }
+
+.image-error{
+  width: 40%;
+}
+
+.logging-out {
+  opacity: 0; /* Configura la opacidad a 0 para que desaparezca gradualmente */
+  transition: opacity 0.5s ease; /* Agrega una transición suave de 0.5 segundos */
+}
+

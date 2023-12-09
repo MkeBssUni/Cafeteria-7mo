@@ -1,4 +1,4 @@
-import React from "react";
+import React,{ useContext } from "react";
 import { Carousel, Figure, Button, Row, Col, Card } from "react-bootstrap";
 import SvgIcon from "@mui/material/SvgIcon";
 import foto1 from "../../assets/taza-1.jpeg";
@@ -8,6 +8,7 @@ import lugar from "../../assets/lugar.jpg";
 import PlaceIcon from "@mui/icons-material/Place";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import FacebookIcon from "@mui/icons-material/Facebook";
+
 
 const Welcome = () => {
   return (
@@ -25,7 +26,7 @@ const Welcome = () => {
                   encuentra su refugio.
                 </b>
               </p>
-              <Button variant="outline-light">Compra Aquí</Button>
+              <Button variant="outline-light" >Compra Aquí</Button>
             </Carousel.Caption>
           </Carousel.Item>
           <Carousel.Item>

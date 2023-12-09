@@ -1,19 +1,31 @@
-import React, { useState } from "react";
-import { Figure, Dropdown, Navbar, Container, Badge,Form } from "react-bootstrap";
+import React, { useState,useContext } from "react";
+import { Figure, Dropdown,Button, Navbar, Container, Badge } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../modules/auth/authContext";
 import FeatherIcon from "feather-icons-react/build/FeatherIcon";
 import logo from "../../assets/logo-sicaf-crema.png";
 import SidebarSicaf from "./sidebar";
 import "../css/color.css";
 
 const Navbarsicaf = () => {
-  // moon : sun en aspectos del icono
+  const navigate = useNavigate();
+  const { dispatch } = useContext(AuthContext);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
+  const role = localStorage.getItem("userRole");
 
-  // Function to toggle the state of isSidebarOpen
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
-    console.log(isSidebarOpen);
   };
+
+  const handleLogout = () => {
+    setIsLoggingOut(true); 
+    setTimeout(() => {
+      dispatch({ type: "LOGOUT" });
+      navigate("/login", { replace: true });
+    }, 1000);
+  };
+  
   return (
     <>
     <SidebarSicaf isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
@@ -54,10 +66,10 @@ const Navbarsicaf = () => {
             <Dropdown.Menu align={"end"}>
               <Dropdown.Item href="#">
                 <Badge pill bg="secondary">  
-                <b>Empleado</b>
+                <b>{role}</b>
                 </Badge>
               </Dropdown.Item>
-              <Dropdown.Item href="#">Anna Christina Bustos</Dropdown.Item>
+              <Dropdown.Item>Anna Christina Bustos</Dropdown.Item>
               <Dropdown.Item href="#">
                 <FeatherIcon
                   icon="sun"
@@ -72,18 +84,21 @@ const Navbarsicaf = () => {
                 />
                 Tamaño de letra: Normal
               </Dropdown.Item>
-              <Dropdown.Item href="#">
+              <Dropdown.Item>
+                <Button variant="outline-primary" onClick={handleLogout}>
                 <FeatherIcon
                   icon="arrow-right-circle"
                   style={{ strokeWidth: 1, marginRight: "0.5rem"}}
-                />
-                Cerrar sesión
+                  className={isLoggingOut ? "logging-out" : ""} 
+                />Cerrar sesión
+                </Button>
               </Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
         </Navbar.Collapse>
       </Container>
     </Navbar>
+    <br/>
     </>
   );
 };
