@@ -4,5 +4,6 @@ export type GetReceiptProductDto = {
     name: string,
     price: number,
     discount?: number,
-    stock?: number
+    stock: number
+    status: boolean
 }

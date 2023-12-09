@@ -40,6 +40,7 @@ const errors:{[x: string]: ResponseApi<undefined>}={
     'Product not found': {code: 404, error: true, message: 'Product not found'},
     'Discount not found': {code: 500, error: true, message: 'Discount not found'},
     'User not found': {code: 404, error: true, message: 'User not found'},
+    'Product disabled': {code: 404, error: true, message: 'Product disabled'},
     'Error generating receipt': {code: 500, error: true, message: 'Error generating receipt'},
     'Error saving order': {code: 500, error: true, message: 'Error saving order'},
     'Error updating stock': {code: 500, error: true, message: 'Error updating stock'},

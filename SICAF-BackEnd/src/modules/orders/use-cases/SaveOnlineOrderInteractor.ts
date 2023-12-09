@@ -1,7 +1,6 @@
 import { UseCase } from "../../../kernel/contracts";
 import { OrderStatus, OrderTypes, PaymentMethods } from "../../../kernel/enums";
 import { generateReceipt } from "../../../kernel/generate_receipt";
-import { validateStringLength } from "../../../kernel/validations";
 import { Discount } from "../../discounts/entities/discount";
 import { GetReceiptProductDto } from "../../products/adapters/dto/GetReceiptProductDto";
 import { ReceiptDto, ReceiptProductsDto, SaveOnlineOrderDto } from "../adapters/dto";
@@ -38,14 +37,13 @@ export class SaveOnlineOrderInteractor implements UseCase<SaveOnlineOrderDto, Or
 
             const optionalProduct: GetReceiptProductDto = await findProductById(payload.products[i].id);
             if (!optionalProduct) throw new Error("Product not found");
+            if (!optionalProduct.status) throw new Error("Product disabled");
             if (optionalProduct.stock! < payload.products[i].quantity) throw new Error("Not enough stock");
 
             subtotal += optionalProduct.price * payload.products[i].quantity;
-            
-            //validar que los productos estén habilitados
-            //validar stock
 
             products.push(optionalProduct);
+
             order_products.push({
                 id: optionalProduct.id!,
                 name: optionalProduct.name,
@@ -76,8 +74,14 @@ export class SaveOnlineOrderInteractor implements UseCase<SaveOnlineOrderDto, Or
             products: receipt.products
         } as SaveOnlineOrderDto;
 
-        //reducir stock
+        const orderSaved = await this.orderRepository.saveOnlineOrder(order);
+        if (!orderSaved) throw new Error("Error saving order");
 
-        return await this.orderRepository.saveOnlineOrder(order);
+        for (let i = 0; i < products.length; i++) {
+            const updateStock = await updateProductStock({ id: products[i].id!, stock: products[i].stock! - payload.products[i].quantity });
+            if (!updateStock) throw new Error("Error updating stock");
+        }
+
+        return orderSaved;
     }
 }

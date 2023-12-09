@@ -40,12 +40,13 @@ export class SaveOrderInteractor implements UseCase<SaveOrderDto, Order> {
 
             const optionalProduct: GetReceiptProductDto = await findProductById(payload.products[i].id);
             if (!optionalProduct) throw new Error("Product not found");
-            
-            //validar stock
+            if (!optionalProduct.status) throw new Error("Product disabled");
+            if (optionalProduct.stock! < payload.products[i].quantity) throw new Error("Not enough stock");
 
             subtotal += optionalProduct.price * payload.products[i].quantity;
             
             products.push(optionalProduct);
+
             order_products.push({
                 id: optionalProduct.id!,
                 name: optionalProduct.name,
@@ -78,8 +79,14 @@ export class SaveOrderInteractor implements UseCase<SaveOrderDto, Order> {
             products: receipt.products
         } as SaveOrderDto;
 
-        //reducir stock
+        const orderSaved = await this.orderRepository.saveOrder(order);
+        if (!orderSaved) throw new Error("Error saving order");
 
-        return await this.orderRepository.saveOrder(order);
+        for (let i = 0; i < products.length; i++) {
+            const updateStock = await updateProductStock({ id: products[i].id!, stock: products[i].stock! - payload.products[i].quantity });
+            if (!updateStock) throw new Error("Error updating stock");
+        }
+
+        return orderSaved;
     }
 }
