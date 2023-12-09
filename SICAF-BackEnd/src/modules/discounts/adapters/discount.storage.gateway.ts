@@ -1,9 +1,18 @@
 import { pool } from "../../../config/bdconfig";
 import { Discount } from "../entities/discount";
 import { DiscountRepository } from "../use-cases/ports/discount.repository";
-import { SaveDiscountDto, UpdateDiscountDto, ChangeStatusDto, OrderDto } from "./dto";
+import { SaveDiscountDto, UpdateDiscountDto, ChangeStatusDto } from "./dto";
 
 export class DiscountStorageGateway implements DiscountRepository {
+    async findAll(): Promise<Discount[]> {
+        try {
+            const response = await pool.query("select * from discounts");
+            return response.rows as Discount[];
+        } catch (e) {
+            throw Error
+        }
+    }
+
     async findById(id: number): Promise<Discount> {
         try {
             const response = await pool.query("select * from discounts where id = $1", [id]);
