@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,useContext } from "react";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import { Figure, Col, ListGroup, Row, Tab } from "react-bootstrap";
 import logo from "../../assets/logo-sicaf-crema.png";
@@ -10,9 +10,13 @@ import {
   SupervisedUserCircleOutlined,
   PointOfSaleOutlined,
 } from "@mui/icons-material";
+import { AuthContext } from './../../modules/auth/authContext';
 
 const SidebarSicaf = ({ isOpen, onClose }) => {
   const [menuItems, setMenuItems] = useState([]);
+  const { user } = useContext(AuthContext);
+
+  const fullname = user.
  
   useEffect(() => {
     const localStorageValue = localStorage.getItem("UserRole");
@@ -22,7 +26,7 @@ const SidebarSicaf = ({ isOpen, onClose }) => {
       case "Empleado":
         items = menuItemsEmpleado;
         break;
-      case "Gerente":
+      case "Administrador":
         items = menuItemsGerente;
         break;
       case "Cliente":
