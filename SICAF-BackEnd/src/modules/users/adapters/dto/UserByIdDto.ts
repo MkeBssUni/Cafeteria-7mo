@@ -1,6 +1,6 @@
-export type UserForOrderDto = {
+export type UserByIdDto = {
     id: number,
-    role: string,
+    role: number,
     email: string,
     status: boolean,
 }

@@ -1,4 +1,3 @@
-import { json } from "express";
 import { pool } from "../../../config/bdconfig";
 import { encodeString } from "../../../kernel/jwt";
 import { findProductById } from "../boundary";
@@ -9,7 +8,7 @@ import { UpdateCartDto } from "./dto/update-cart-dto";
 import { UpdateUserDto } from "./dto/update-user-dto";
 import { Product } from "../../products/entities/product";
 import { ProductInCartDto } from "./dto/products-in-cart-dto";
-import { UserForOrderDto } from "./dto/UserForOrderDto";
+import { UserByIdDto } from "./dto/UserByIdDto";
 
 export class UsersStorageGateway implements UsersRepository{
     async create(payload: User): Promise<User> {
@@ -247,10 +246,10 @@ export class UsersStorageGateway implements UsersRepository{
         }
     }
     
-    async findUserForOrder(id: number): Promise<UserForOrderDto> {
+    async findUserById(id: number): Promise<UserByIdDto> {
         try {
-            const response = await pool.query('select u.id, r.name as role, u.email, u.status from users u inner join roles r on u.role_id = r.id where u.id = $1', [id]);
-            return response.rows[0] as UserForOrderDto;
+            const response = await pool.query('select u.id, r.id as role, u.email, u.status from users u inner join roles r on u.role_id = r.id where u.id = $1', [id]);
+            return response.rows[0] as UserByIdDto;
         } catch (e) {
             throw new Error
         }

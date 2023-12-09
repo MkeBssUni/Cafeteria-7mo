@@ -1,7 +1,7 @@
 export const enum Roles {
-    admin = 'Administrador',
-    employee = 'Empleado',
-    client = 'Cliente'
+    admin = 1,
+    employee = 2,
+    client = 3
 }
 
 export const enum DiscountTypes {

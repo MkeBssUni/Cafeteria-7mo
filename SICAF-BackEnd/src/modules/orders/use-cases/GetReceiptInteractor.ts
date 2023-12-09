@@ -3,6 +3,7 @@ import { Roles } from "../../../kernel/enums";
 import { generateReceipt } from "../../../kernel/generate_receipt";
 import { Discount } from "../../discounts/entities/discount";
 import { GetReceiptProductDto } from "../../products/adapters/dto/GetReceiptProductDto";
+import { UserByIdDto } from "../../users/adapters/dto/UserByIdDto";
 import { GetReceiptDto, ReceiptDto, ReceiptProductsDto } from "../adapters/dto";
 import { findDiscountById, findProductById, findUserById } from "../boundary";
 
@@ -17,9 +18,8 @@ export class GetReceiptInteractor implements UseCase<GetReceiptDto, ReceiptDto> 
         if (!payload.client_id || !payload.products.length) throw new Error("Missing fields");
         if (isNaN(payload.client_id)) throw new Error("Invalid id");
     
-        const client = await findUserById(payload.client_id);
+        const client: UserByIdDto = await findUserById(payload.client_id);
         if (!client) throw new Error("User not found");
-        if (client.role !== Roles.client) throw new Error("Invalid role");
         
         if (payload.discount_id) {
             if (isNaN(payload.discount_id)) throw new Error("Invalid id");

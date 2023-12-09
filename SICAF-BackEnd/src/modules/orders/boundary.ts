@@ -8,7 +8,7 @@ const UserStorage = new UsersStorageGateway();
 
 const findProductById = ProductStorage.findReceiptProductById;
 const findDiscountById = DiscountStorage.findById;
-const findUserById = UserStorage.findUserForOrder;
+const findUserById = UserStorage.findUserById;
 const updateProductStock = ProductStorage.updateStock;
 
 export {

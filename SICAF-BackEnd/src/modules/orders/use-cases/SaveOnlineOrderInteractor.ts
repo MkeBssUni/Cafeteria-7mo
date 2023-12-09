@@ -3,7 +3,7 @@ import { OrderStatus, OrderTypes, PaymentMethods, Roles } from "../../../kernel/
 import { generateReceipt } from "../../../kernel/generate_receipt";
 import { Discount } from "../../discounts/entities/discount";
 import { GetReceiptProductDto } from "../../products/adapters/dto/GetReceiptProductDto";
-import { UserForOrderDto } from "../../users/adapters/dto/UserForOrderDto";
+import { UserByIdDto } from "../../users/adapters/dto/UserByIdDto";
 import { ReceiptDto, ReceiptProductsDto, SaveOnlineOrderDto } from "../adapters/dto";
 import { findDiscountById, findProductById, findUserById, updateProductStock } from "../boundary";
 import { Order } from "../entities/order";
@@ -22,9 +22,8 @@ export class SaveOnlineOrderInteractor implements UseCase<SaveOnlineOrderDto, Or
         if (isNaN(payload.client_id)) throw new Error("Invalid id");
         if (payload.payment_method !== PaymentMethods.creditCard && payload.payment_method !== PaymentMethods.debitCard) throw new Error("Invalid payment method");
 
-        const client: UserForOrderDto = await findUserById(payload.client_id);
+        const client: UserByIdDto = await findUserById(payload.client_id);
         if (!client) throw new Error("User not found");
-        if (client.role !== Roles.client) throw new Error("Invalid role");
 
         if (payload.discount_id) {
             if (isNaN(payload.discount_id)) throw new Error("Invalid id");

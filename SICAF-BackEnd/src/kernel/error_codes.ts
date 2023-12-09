@@ -27,6 +27,7 @@ const errors:{[x: string]: ResponseApi<undefined>}={
     'Invalid dates': {code: 400, error: true, message: 'Invalid dates'},
     'Invalid payment method': {code: 400, error: true, message: 'Invalid payment method'},
     'Invalid comment': {code: 400, error: true, message: 'Invalid comment'},
+    'Invalid users': {code: 400, error: true, message: 'Invalid users'},
     'Description too short': {code: 400, error: true, message: 'Description too short'},
     'Discount not applicable': {code: 400, error: true, message: 'Discount not applicable'},
     'Not enough stock': {code: 400, error: true, message: 'Not enough stock'},

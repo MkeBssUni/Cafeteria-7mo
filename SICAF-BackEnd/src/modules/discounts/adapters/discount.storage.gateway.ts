@@ -21,6 +21,15 @@ export class DiscountStorageGateway implements DiscountRepository {
             throw Error
         }
     }
+
+    async findByRole(id: number): Promise<Discount[]> {
+        try {
+            const response = await pool.query("select d.* from discounts d join roles r on d.id = r.discount_id where r.id = $1", [id]);
+            return response.rows as Discount[];
+        } catch (e) {
+            throw Error
+        }
+    }
     
     async save(payload: SaveDiscountDto): Promise<Discount> {
         try {

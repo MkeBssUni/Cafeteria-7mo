@@ -4,6 +4,7 @@ import { generateReceipt } from "../../../kernel/generate_receipt";
 import { validateStringLength } from "../../../kernel/validations";
 import { Discount } from "../../discounts/entities/discount";
 import { GetReceiptProductDto } from "../../products/adapters/dto/GetReceiptProductDto";
+import { UserByIdDto } from "../../users/adapters/dto/UserByIdDto";
 import { ReceiptDto, ReceiptProductsDto, SaveOrderDto } from "../adapters/dto";
 import { findDiscountById, findProductById, findUserById, updateProductStock } from "../boundary";
 import { Order } from "../entities/order";
@@ -24,12 +25,12 @@ export class SaveOrderInteractor implements UseCase<SaveOrderDto, Order> {
         if (payload.payment_method !== PaymentMethods.creditCard && payload.payment_method !== PaymentMethods.debitCard && payload.payment_method !== PaymentMethods.cash) throw new Error("Invalid payment method");
         if (payload.comments && !validateStringLength(payload.comments, 0, 255)) throw new Error("Invalid comment");
 
-        const employee = await findUserById(payload.employee_id);
+        const employee: UserByIdDto = await findUserById(payload.employee_id);
         if (!employee) throw new Error("User not found");
         if (employee.role !== Roles.employee) throw new Error("Invalid role");
-        const client = payload.client_id ? await findUserById(payload.client_id) : null;
+        const client = payload.client_id ? await findUserById(payload.client_id) as UserByIdDto : null;
         if (payload.client_id && !client) throw new Error("User not found");
-        if (payload.client_id && client!.role !== Roles.client) throw new Error("Invalid role");
+        if (payload.client_id && !(payload.client_id !== payload.employee_id)) throw new Error("Invalid users");
 
         if (payload.discount_id) {
             if (isNaN(payload.discount_id)) throw new Error("Invalid id");
