@@ -1,9 +1,9 @@
 import { ReceiptProductsDto } from "./ReceiptProductsDto"
 
 export type ReceiptDto = {
-    subtotal: number,
-    total: number,
     products_sold: number,
-    products: ReceiptProductsDto[],    
+    subtotal: number,
     discount?: number
+    total: number,
+    products: ReceiptProductsDto[]
 }

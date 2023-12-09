@@ -11,8 +11,7 @@ export class OrderController {
     static getReceipt = async (req: Request, res: Response) => {
         try {
             const payload: GetReceiptDto = {...req.body};
-            const repository: OrderRepository = new OrderStorageGateway();
-            const interactor: GetReceiptInteractor = new GetReceiptInteractor(repository);
+            const interactor: GetReceiptInteractor = new GetReceiptInteractor();
             const receipt: ReceiptDto = await interactor.execute(payload);
             const body: ResponseApi<ReceiptDto> = {
                 code: 200,

@@ -19,11 +19,11 @@ export const generateReceipt = (discount: Discount, subtotal: number, products: 
                     products_sold += products[i].quantity;
                 }
                 return {
+                    products_sold: products_sold,
                     subtotal: subtotal,
-                    discount: appliedDiscount * (-1),
+                    discount: appliedDiscount,
                     total: subtotal - appliedDiscount,
-                    products: products,
-                    products_sold: products_sold
+                    products: products
                 } as ReceiptDto;
             case DiscountTypes.discountByProductsTotal:
                 for (let i = 0; i < products.length; i++) {
@@ -38,11 +38,11 @@ export const generateReceipt = (discount: Discount, subtotal: number, products: 
                     products_sold += products[i].quantity;
                 }
                 return {
+                    products_sold: products_sold,
                     subtotal: subtotal,
-                    discount: total - subtotal,
+                    discount: subtotal - total,
                     total: total,
-                    products: products,
-                    products_sold: products_sold
+                    products: products
                 } as ReceiptDto;
             default:
                 for (let i = 0; i < products.length; i++) {
@@ -57,11 +57,11 @@ export const generateReceipt = (discount: Discount, subtotal: number, products: 
                     products_sold += products[i].quantity;
                 }
                 return {
+                    products_sold: products_sold,
                     subtotal: subtotal,
-                    discount: total - subtotal,
+                    discount: subtotal - total,
                     total: total,
-                    products: products,
-                    products_sold: products_sold
+                    products: products
                 } as ReceiptDto;
         }
     } else {
@@ -69,11 +69,11 @@ export const generateReceipt = (discount: Discount, subtotal: number, products: 
             products_sold += products[i].quantity;
         }
         return {
+            products_sold: products_sold,
             subtotal: subtotal,
             discount: 0,
             total: subtotal,
-            products: products,
-            products_sold: products_sold
+            products: products
         } as ReceiptDto;
     }
 }

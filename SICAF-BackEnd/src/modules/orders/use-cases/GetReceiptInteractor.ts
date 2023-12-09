@@ -1,23 +1,26 @@
 import { UseCase } from "../../../kernel/contracts";
+import { Roles } from "../../../kernel/enums";
 import { generateReceipt } from "../../../kernel/generate_receipt";
 import { Discount } from "../../discounts/entities/discount";
-import { GetProductWithCategoryDto } from "../../products/adapters/dto/get-product-dto";
+import { GetReceiptProductDto } from "../../products/adapters/dto/GetReceiptProductDto";
 import { GetReceiptDto, ReceiptDto, ReceiptProductsDto } from "../adapters/dto";
-import { findDiscountById, findProductById } from "../boundary";
-import { OrderRepository } from "./ports/order.repository";
+import { findDiscountById, findProductById, findUserById } from "../boundary";
 
 export class GetReceiptInteractor implements UseCase<GetReceiptDto, ReceiptDto> {
-    constructor(private readonly orderRepository: OrderRepository) {}
+    constructor() {}
 
     async execute(payload: GetReceiptDto): Promise<ReceiptDto> {
-        if (!payload.client_id || !payload.products.length) throw new Error("Missing fields");
-        if (isNaN(payload.client_id)) throw new Error("Invalid id");
-        //validar que el cliente exista
-
         let subtotal: number = 0;
         let discount: Discount | null = null;
         let products: ReceiptProductsDto[] = [];
 
+        if (!payload.client_id || !payload.products.length) throw new Error("Missing fields");
+        if (isNaN(payload.client_id)) throw new Error("Invalid id");
+    
+        const client = await findUserById(payload.client_id);
+        if (!client) throw new Error("User not found");
+        if (client.role !== Roles.client) throw new Error("Invalid role");
+        
         if (payload.discount_id) {
             if (isNaN(payload.discount_id)) throw new Error("Invalid id");
             const optionalDiscount: Discount = await findDiscountById(payload.discount_id);
@@ -30,19 +33,21 @@ export class GetReceiptInteractor implements UseCase<GetReceiptDto, ReceiptDto> 
             if (isNaN(payload.products[i].id)) throw new Error("Invalid id");
             if (isNaN(payload.products[i].quantity) || payload.products[i].quantity < 0) throw new Error("Invalid quantity");
 
-            const optionalProduct: GetProductWithCategoryDto = await findProductById(payload.products[i].id);
+            const optionalProduct: GetReceiptProductDto = await findProductById(payload.products[i].id);
             if (!optionalProduct) throw new Error("Product not found");
+            if (!optionalProduct.status) throw new Error("Product disabled");
+            if (optionalProduct.stock! < payload.products[i].quantity) throw new Error("Not enough stock");
 
             subtotal += optionalProduct.price * payload.products[i].quantity;
 
             products.push({
                 id: optionalProduct.id!,
                 name: optionalProduct.name,
-                category: optionalProduct.category.category_name,
+                category: optionalProduct.category,
                 quantity: payload.products[i].quantity,
                 price: optionalProduct.price,
                 subtotal: optionalProduct.price * payload.products[i].quantity,
-                discount: discount ? optionalProduct.discount_id : 0,
+                discount: discount ? optionalProduct.discount : 0,
                 total: optionalProduct.price * payload.products[i].quantity
             });
         }
