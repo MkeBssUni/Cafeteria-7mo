@@ -25,8 +25,7 @@ function CookiesList({ products }) {
                       className="text-center mx-2 mt-2 mb-4"
                       key={products[cardIndex].id}
                     >
-                      <div className="product col-12 col-sm-6 col-md-12 col-lg-12 mb-4" onClick={() => { setModalShow(true); console.log("Modal abierto"); }}>
-                        {/* Utiliza products[cardIndex] para acceder a los datos */}
+                      <div className="product col-12 col-sm-6 col-md-12 col-lg-12 mb-4" onClick={() => setModalShow(true)}>
                         <Row>
                           <Col xs={12} md={3}>
                             <Image
@@ -58,17 +57,17 @@ function CookiesList({ products }) {
                             </div>
                             <div>
                               <small className="info_products_offers">
-                                {products[cardIndex].description.length < 60
+                                {products[cardIndex].description.length < 40
                                   ? products[cardIndex].description
                                   : products[cardIndex].description.substring(
                                     0,
-                                    60
+                                    40
                                   ) + "..."}
                               </small>
                             </div>
                           </Col>
                         </Row>
-                        <ProductDetail show={modalShow} onClose={() => setModalShow(false)} product={products[cardIndex]} />
+                        <ProductDetail show={modalShow} onHide={() => setModalShow(false)} product={products[cardIndex]} />
                       </div>
                     </Col>
                   ))}

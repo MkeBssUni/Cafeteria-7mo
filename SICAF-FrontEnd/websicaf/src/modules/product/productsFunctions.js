@@ -46,7 +46,6 @@ export const getProductsByCategoryAndstatus = async (request) => {
 
 export const createProduct = async (request)=> {
   try {
-    console.log("Entra aqui?")
     const response = await AxiosClient({
       url:"products/",
       method:"POST",
