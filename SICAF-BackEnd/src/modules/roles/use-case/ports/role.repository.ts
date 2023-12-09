@@ -1,7 +1,8 @@
-import { UpdateDiscountDto } from "../../adapters/dto";
+import { UpdateDiscountDto } from "../../adapters/dto/UpdateDiscountDto";
 import { Role } from "../../entities/role";
 
 export interface RoleRepository {
-    getRoles(): Promise<Role[]>;
+    findAll(): Promise<Role[]>;
+    findById(id: number): Promise<Role>;
     updateDiscount(payload: UpdateDiscountDto): Promise<Role>;
 }

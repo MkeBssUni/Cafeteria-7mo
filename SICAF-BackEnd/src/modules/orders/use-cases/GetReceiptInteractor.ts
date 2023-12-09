@@ -1,8 +1,11 @@
 import { UseCase } from "../../../kernel/contracts";
-import { Roles } from "../../../kernel/enums";
+import { DiscountTypes, Roles } from "../../../kernel/enums";
 import { generateReceipt } from "../../../kernel/generate_receipt";
+import { validateDate, validateDates } from "../../../kernel/validations";
+import { findRoleById } from "../../discounts/boundary";
 import { Discount } from "../../discounts/entities/discount";
 import { GetReceiptProductDto } from "../../products/adapters/dto/GetReceiptProductDto";
+import { Role } from "../../roles/entities/role";
 import { UserByIdDto } from "../../users/adapters/dto/UserByIdDto";
 import { GetReceiptDto, ReceiptDto, ReceiptProductsDto } from "../adapters/dto";
 import { findDiscountById, findProductById, findUserById } from "../boundary";
@@ -25,6 +28,13 @@ export class GetReceiptInteractor implements UseCase<GetReceiptDto, ReceiptDto> 
             if (isNaN(payload.discount_id)) throw new Error("Invalid id");
             const optionalDiscount: Discount = await findDiscountById(payload.discount_id);
             if (!optionalDiscount) throw new Error("Discount not found");
+            if (!optionalDiscount.status) throw new Error("Discount disabled");
+            if (optionalDiscount.start_date && !optionalDiscount.end_date && !validateDate(optionalDiscount.start_date)) throw new Error("Invalid discount");
+            if (optionalDiscount.start_date && optionalDiscount.end_date && !validateDates(optionalDiscount.start_date, optionalDiscount.end_date)) throw new Error("Invalid discount");
+            if (optionalDiscount.type === DiscountTypes.discountByRol) {
+                const role = await findRoleById(client.role);
+                if (!role.discount_id || (role.discount_id && role.discount_id !== optionalDiscount.id)) throw new Error("Invalid discount");
+            }
             discount = optionalDiscount;
         }
 
