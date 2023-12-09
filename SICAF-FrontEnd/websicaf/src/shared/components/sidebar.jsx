@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,useContext } from "react";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import { Figure, Col, ListGroup, Row, Tab } from "react-bootstrap";
 import logo from "../../assets/logo-sicaf-crema.png";
@@ -10,19 +10,21 @@ import {
   SupervisedUserCircleOutlined,
   PointOfSaleOutlined,
 } from "@mui/icons-material";
+import { AuthContext } from './../../modules/auth/authContext';
 
 const SidebarSicaf = ({ isOpen, onClose }) => {
   const [menuItems, setMenuItems] = useState([]);
+  
  
   useEffect(() => {
-    const localStorageValue = localStorage.getItem("UserRole");
+    const localStorageValue = localStorage.getItem("userRole");
 
     let items;
     switch (localStorageValue) {
       case "Empleado":
         items = menuItemsEmpleado;
         break;
-      case "Gerente":
+      case "Administrador":
         items = menuItemsGerente;
         break;
       case "Cliente":
@@ -42,11 +44,11 @@ const SidebarSicaf = ({ isOpen, onClose }) => {
   ];
 
   const menuItemsGerente = [
-    { id: "link1", label: "Productos", icon: <LocalCafeOutlined /> },
+    { id: "productAdmin", label: "Productos", icon: <LocalCafeOutlined /> },
     { id: "link2", label: "Ofertas", icon: <EmojiFoodBeverageOutlined /> },
     { id: "link3", label: "Pedidos", icon: <CakeOutlined /> },
-    { id: "link4", label: "Historial", icon: <PointOfSaleOutlined /> },
-    { id: "link5", label: "Usuarios", icon: <SupervisedUserCircleOutlined /> },
+    { id: "history", label: "Historial", icon: <PointOfSaleOutlined /> },
+    { id: "users", label: "Usuarios", icon: <SupervisedUserCircleOutlined /> },
   ];
 
   const menuItemsEmpleado = [

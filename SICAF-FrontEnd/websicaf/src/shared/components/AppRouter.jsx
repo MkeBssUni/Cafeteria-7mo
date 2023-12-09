@@ -21,7 +21,7 @@ const AppRouter = () => {
   const userRole = localStorage.getItem("userRole");
   const renderUserRoleRouter = (userRole) => {
     switch (userRole) {
-      case "Gerente":
+      case "Administrador":
         return (
           <>
             <Route path="users" element={<UsersScreens />} />
