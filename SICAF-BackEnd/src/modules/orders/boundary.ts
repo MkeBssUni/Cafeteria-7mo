@@ -4,16 +4,16 @@ import { UsersStorageGateway } from "../users/adapters/users-storage-gateway";
 
 const ProductStorage = new ProductsStorageGateway();
 const DiscountStorage = new DiscountStorageGateway();
-const UsersStorage = new UsersStorageGateway();
+const UserStorage = new UsersStorageGateway();
 
-const findUserById = UsersStorage.findUserInfoById;
 const findProductById = ProductStorage.findReceiptProductById;
 const findDiscountById = DiscountStorage.findById;
+const findUserById = UserStorage.findUserForOrder;
 const updateProductStock = ProductStorage.updateStock;
 
 export {
-    findUserById,
     findProductById,
     findDiscountById,
+    findUserById,
     updateProductStock
 }

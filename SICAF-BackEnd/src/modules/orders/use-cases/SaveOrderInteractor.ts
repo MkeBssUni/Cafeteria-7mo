@@ -1,11 +1,11 @@
 import { UseCase } from "../../../kernel/contracts";
-import { OrderStatus, OrderTypes, PaymentMethods } from "../../../kernel/enums";
+import { OrderStatus, OrderTypes, PaymentMethods, Roles } from "../../../kernel/enums";
 import { generateReceipt } from "../../../kernel/generate_receipt";
 import { validateStringLength } from "../../../kernel/validations";
 import { Discount } from "../../discounts/entities/discount";
 import { GetReceiptProductDto } from "../../products/adapters/dto/GetReceiptProductDto";
 import { ReceiptDto, ReceiptProductsDto, SaveOrderDto } from "../adapters/dto";
-import { findDiscountById, findProductById, updateProductStock } from "../boundary";
+import { findDiscountById, findProductById, findUserById, updateProductStock } from "../boundary";
 import { Order } from "../entities/order";
 import { OrderRepository } from "./ports/order.repository";
 
@@ -13,18 +13,23 @@ export class SaveOrderInteractor implements UseCase<SaveOrderDto, Order> {
     constructor(private readonly orderRepository: OrderRepository) {}
 
     async execute(payload: SaveOrderDto): Promise<Order> {
+        let subtotal: number = 0;
+        let discount: Discount | null = null;
+        let order_products: ReceiptProductsDto[] = [];
+        let products: GetReceiptProductDto[] = [];
+        
         if (!payload.employee_id || !payload.payment_method || !payload.products.length) throw new Error("Missing fields");
         if (payload.send_receipt && !payload.client_id) throw new Error("Missing fields");
         if (isNaN(payload.employee_id)) throw new Error("Invalid id");
         if (payload.payment_method !== PaymentMethods.creditCard && payload.payment_method !== PaymentMethods.debitCard && payload.payment_method !== PaymentMethods.cash) throw new Error("Invalid payment method");
         if (payload.comments && !validateStringLength(payload.comments, 0, 255)) throw new Error("Invalid comment");
 
-        //validar usuarios y sus roles
-        
-        let subtotal: number = 0;
-        let discount: Discount | null = null;
-        let order_products: ReceiptProductsDto[] = [];
-        let products: GetReceiptProductDto[] = [];
+        const employee = await findUserById(payload.employee_id);
+        if (!employee) throw new Error("User not found");
+        if (employee.role !== Roles.employee) throw new Error("Invalid role");
+        const client = payload.client_id ? await findUserById(payload.client_id) : null;
+        if (payload.client_id && !client) throw new Error("User not found");
+        if (payload.client_id && client!.role !== Roles.client) throw new Error("Invalid role");
 
         if (payload.discount_id) {
             if (isNaN(payload.discount_id)) throw new Error("Invalid id");

@@ -9,8 +9,7 @@ import { UpdateCartDto } from "./dto/update-cart-dto";
 import { UpdateUserDto } from "./dto/update-user-dto";
 import { Product } from "../../products/entities/product";
 import { ProductInCartDto } from "./dto/products-in-cart-dto";
-import { UserByIdAndRoleDto } from "./dto/UserByIdAndRoleDto";
-import { UserByIdDto } from "./dto/UserByIdDto";
+import { UserForOrderDto } from "./dto/UserForOrderDto";
 
 export class UsersStorageGateway implements UsersRepository{
     async create(payload: User): Promise<User> {
@@ -248,10 +247,10 @@ export class UsersStorageGateway implements UsersRepository{
         }
     }
     
-    async findUserInfoById(id: number): Promise<UserByIdDto> {
+    async findUserForOrder(id: number): Promise<UserForOrderDto> {
         try {
-            const response = await pool.query('select id, role_id, email from users wher id = $1', [id]);
-            return response.rows[0] as UserByIdDto;
+            const response = await pool.query('select u.id, r.name as role, u.email, u.status from users u inner join roles r on u.role_id = r.id where u.id = $1', [id]);
+            return response.rows[0] as UserForOrderDto;
         } catch (e) {
             throw new Error
         }

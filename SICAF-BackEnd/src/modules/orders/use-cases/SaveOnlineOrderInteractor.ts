@@ -1,10 +1,11 @@
 import { UseCase } from "../../../kernel/contracts";
-import { OrderStatus, OrderTypes, PaymentMethods } from "../../../kernel/enums";
+import { OrderStatus, OrderTypes, PaymentMethods, Roles } from "../../../kernel/enums";
 import { generateReceipt } from "../../../kernel/generate_receipt";
 import { Discount } from "../../discounts/entities/discount";
 import { GetReceiptProductDto } from "../../products/adapters/dto/GetReceiptProductDto";
+import { UserForOrderDto } from "../../users/adapters/dto/UserForOrderDto";
 import { ReceiptDto, ReceiptProductsDto, SaveOnlineOrderDto } from "../adapters/dto";
-import { findDiscountById, findProductById, updateProductStock } from "../boundary";
+import { findDiscountById, findProductById, findUserById, updateProductStock } from "../boundary";
 import { Order } from "../entities/order";
 import { OrderRepository } from "./ports/order.repository";
 
@@ -12,16 +13,18 @@ export class SaveOnlineOrderInteractor implements UseCase<SaveOnlineOrderDto, Or
     constructor(private readonly orderRepository: OrderRepository) {}
 
     async execute(payload: SaveOnlineOrderDto): Promise<Order> {
-        if (!payload.client_id || !payload.payment_method || !payload.products.length) throw new Error("Missing fields");
-        if (isNaN(payload.client_id)) throw new Error("Invalid id");
-        if (payload.payment_method !== PaymentMethods.creditCard && payload.payment_method !== PaymentMethods.debitCard) throw new Error("Invalid payment method");
-
-        //validar que el cliente exista y que tenga el rol de cliente
-
         let subtotal: number = 0;
         let discount: Discount | null = null;
         let order_products: ReceiptProductsDto[] = [];
         let products: GetReceiptProductDto[] = [];
+
+        if (!payload.client_id || !payload.payment_method || !payload.products.length) throw new Error("Missing fields");
+        if (isNaN(payload.client_id)) throw new Error("Invalid id");
+        if (payload.payment_method !== PaymentMethods.creditCard && payload.payment_method !== PaymentMethods.debitCard) throw new Error("Invalid payment method");
+
+        const client: UserForOrderDto = await findUserById(payload.client_id);
+        if (!client) throw new Error("User not found");
+        if (client.role !== Roles.client) throw new Error("Invalid role");
 
         if (payload.discount_id) {
             if (isNaN(payload.discount_id)) throw new Error("Invalid id");

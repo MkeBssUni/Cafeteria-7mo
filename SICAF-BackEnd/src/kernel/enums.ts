@@ -1,3 +1,9 @@
+export const enum Roles {
+    admin = 'Administrador',
+    employee = 'Empleado',
+    client = 'Cliente'
+}
+
 export const enum DiscountTypes {
     discountByRol = 'Descuento por rol',
     discountByOrderTotal = 'Descuento por total de la compra',
