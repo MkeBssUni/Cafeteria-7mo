@@ -311,3 +311,12 @@ html[letter-size='Pequeña'] {
   opacity: 0; /* Configura la opacidad a 0 para que desaparezca gradualmente */
   transition: opacity 0.5s ease; /* Agrega una transición suave de 0.5 segundos */
 }
+
+.input-user {
+  border: none !important;
+  border-bottom: 2px solid brown !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  color: var(--color-primary) !important;
+  margin-bottom: 15px !important;
+}

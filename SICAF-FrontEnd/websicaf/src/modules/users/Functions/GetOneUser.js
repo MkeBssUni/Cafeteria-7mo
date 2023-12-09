@@ -1,12 +1,11 @@
 import AxiosClient from "../../../shared/plugins/axios"
 import Alert,{errorMsg,errorTitle,successMsg,successTitle} from "../../../shared/plugins/Alert"
 
-const CreateUser = async (request) => {
+const GetOneUser = async () => {
     try {
         const response = await AxiosClient({
-            url:'users/',
-            method: 'POST',
-            data: JSON.stringify(request)
+            url:'',
+            method: ''
         })
         if(!response.error){
             Alert.fire({
@@ -28,4 +27,4 @@ const CreateUser = async (request) => {
       }
 }
 
-export default CreateUser
+export default GetOneUser
