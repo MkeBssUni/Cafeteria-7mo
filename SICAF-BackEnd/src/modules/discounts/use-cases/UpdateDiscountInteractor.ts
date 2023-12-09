@@ -2,7 +2,7 @@ import { UseCase } from "../../../kernel/contracts";
 import { DiscountTypes } from "../../../kernel/enums";
 import { validateStringLength } from "../../../kernel/validations";
 import { UpdateDiscountDto } from "../adapters/dto";
-import { addDiscountToProduct, existsCategoryById, existsProductById, findProductsIdByCategory } from "../boundary";
+import { addDiscountToProduct, existsCategoryById, existsProductById, findProductsIdByCategory, updateRoleDiscount } from "../boundary";
 import { Discount } from "../entities/discount";
 import { DiscountRepository } from "./ports/discount.repository";
 
@@ -61,7 +61,10 @@ export class UpdateDiscountInteractor implements UseCase<UpdateDiscountDto, Disc
         }
         const updated_discount = await this.discountRepository.update(payload);
         if (!updated_discount) throw new Error('Discount not updated');
-        //editar rol
+        if (payload.rol_id) {
+            const updateRole = await updateRoleDiscount({ id: payload.rol_id!, discount: updated_discount.id! });
+            if (!updateRole) throw new Error('Discount not updated');
+        }
         if (payload.products_id && payload.products_id.length) {
             for (let id of payload.products_id) {
                 const addDiscount = await addDiscountToProduct({product_id: id, discount_id: updated_discount.id!});

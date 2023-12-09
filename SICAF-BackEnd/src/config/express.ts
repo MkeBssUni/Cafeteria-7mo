@@ -8,6 +8,7 @@ import authRoutes from '../modules/auth/adapters/auth.routes';
 import * as dotenv from 'dotenv';
 import orderRoutes from "../modules/orders/adapters/order.routes"
 import providersRoutes from "../modules/providers/adapters/providers.routes"
+import rolesRoutes from "../modules/roles/adapters/role.routes"
 
 dotenv.config()
 
@@ -35,6 +36,7 @@ app.use(`/${API}/providers`,providersRoutes)
 app.use(`/${API}/orders`,orderRoutes)
 app.use(`/${API}/auth`,authRoutes)
 app.use(`/${API}/users`,usersRoutes)
+app.use(`/${API}/roles`,rolesRoutes)
 
 app.get('*',(req: Request, res: Response)=>res.status(404).send('Not Found'))
 

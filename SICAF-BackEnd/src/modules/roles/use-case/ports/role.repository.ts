@@ -1,7 +1,8 @@
-import { SaveRole } from "../../adapters/dto/save-role";
+import { UpdateDiscountDto } from "../../adapters/dto/UpdateDiscountDto";
 import { Role } from "../../entities/role";
 
 export interface RoleRepository {
-    save(payload: SaveRole): Promise<Role>;
-    getRoles(): Promise<Role[]>;
+    findAll(): Promise<Role[]>;
+    findById(id: number): Promise<Role>;
+    updateDiscount(payload: UpdateDiscountDto): Promise<Role>;
 }
