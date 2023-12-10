@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
 import { validateError } from "../../../kernel/error_codes";
-import { FilterDto, GetHistoryDto, GetReceiptDto, OnlineOrderHistoryDto, OrderHistoryDto, ReceiptDto, SaveOnlineOrderDto, SaveOrderDto } from "./dto";
+import { ChangeStatusDto, FilterDto, GetHistoryDto, GetReceiptDto, OnlineOrderHistoryDto, OrderHistoryDto, ReceiptDto, SaveOnlineOrderDto, SaveOrderDto } from "./dto";
 import { OrderStorageGateway } from "./order.storage.gateway";
 import { OrderRepository } from "../use-cases/ports/order.repository";
-import { AllOnlineOrdersInteractor, AllOrdersInteractor, GetReceiptInteractor, OnlineOrderHistoryInteractor, OrderHistoryInteractor, SaveOnlineOrderInteractor, SaveOrderInteractor } from "../use-cases";
+import { AllOnlineOrdersInteractor, AllOrdersInteractor, GetReceiptInteractor, OnlineOrderHistoryInteractor, OrderHistoryInteractor, SaveOnlineOrderInteractor, SaveOrderInteractor, changeOrderStatusInteractor } from "../use-cases";
 import { ResponseApi } from "../../../kernel/types";
 import { Order } from "../entities/order";
 
@@ -131,6 +131,25 @@ export class OrderController {
                 code: 201,
                 error: false,
                 message: 'Created',
+                data: order
+            }
+            return res.status(body.code).json(body);
+        } catch (e) {
+            const error = validateError(e as Error);
+            return res.status(error.code).json(error);
+        }
+    }
+
+    static changeOrderStatus = async (req: Request, res: Response) => {
+        try {
+            const payload: ChangeStatusDto = {...req.body};
+            const repository: OrderRepository = new OrderStorageGateway();
+            const interactor: changeOrderStatusInteractor = new changeOrderStatusInteractor(repository);
+            const order = await interactor.execute(payload);
+            const body: ResponseApi<Order> = {
+                code: 200,
+                error: false,
+                message: 'Updated',
                 data: order
             }
             return res.status(body.code).json(body);
