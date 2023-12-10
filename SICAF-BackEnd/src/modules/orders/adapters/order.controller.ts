@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { validateError } from "../../../kernel/error_codes";
-import { GetReceiptDto, OnlineOrderHistoryDto, OrderHistoryDto, ReceiptDto, SaveOnlineOrderDto, SaveOrderDto } from "./dto";
+import { FilterDto, GetReceiptDto, OnlineOrderHistoryDto, OrderHistoryDto, ReceiptDto, SaveOnlineOrderDto, SaveOrderDto } from "./dto";
 import { OrderStorageGateway } from "./order.storage.gateway";
 import { OrderRepository } from "../use-cases/ports/order.repository";
 import { AllOnlineOrdersInteractor, AllOrdersInteractor, GetReceiptInteractor, OnlineOrderHistoryInteractor, OrderHistoryInteractor, SaveOnlineOrderInteractor, SaveOrderInteractor } from "../use-cases";
@@ -28,9 +28,10 @@ export class OrderController {
 
     static getAllOrders = async (req: Request, res: Response) => {
         try {
+            const payload: FilterDto = {...req.body};
             const repository: OrderRepository = new OrderStorageGateway();
             const interactor: AllOrdersInteractor = new AllOrdersInteractor(repository);
-            const orders: OrderHistoryDto[] = await interactor.execute();
+            const orders: OrderHistoryDto[] = await interactor.execute(payload);
             const body: ResponseApi<OrderHistoryDto[]> = {
                 code: 200,
                 error: false,
