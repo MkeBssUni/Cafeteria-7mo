@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { Button, Badge } from "react-bootstrap";
+import { Badge } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 import "../../shared/css/color.css";
 import FilterComponent from "../../shared/components/FilterComponent";
 import DataTable from "react-data-table-component";
 import GetUser from "./Functions/GetUser";
 import editar from "../../assets/editar.png";
 import eliminar from "../../assets/eliminar.png";
+import CryptoJS from 'crypto-js';
 
 const option = {
   rowsPerPageText: "Registros por página",
@@ -14,9 +16,6 @@ const option = {
 const UsersScreens = () => {
   const [usuarios, setUsuarios] = useState([]);
   const [filterText, setFilterText] = useState("");
-  const [selectUser, setSelectUser] = useState({});
-  const [isOpen, setisOpen] = useState(false);
-  const [setsetOpenregister, setSetsetOpenregister] = useState(false);
 
   const filteredUsuarios = usuarios
     ? usuarios.filter(
@@ -29,12 +28,9 @@ const UsersScreens = () => {
   const getUsuarios = async () => {
     try {
       const data = await GetUser();
-      console.log(data);
       if (!data.error) {
-        console.log(data);
         setUsuarios(data); // Update this line to setUsuarios(data.data)
       }
-      console.log(usuarios);
     } catch (error) {
       console.error("No esta funcionando");
     }
@@ -43,6 +39,17 @@ const UsersScreens = () => {
   useEffect(() => {
     getUsuarios();
   }, []);
+
+  const navigation = useNavigate()
+  
+  const handleOpen = (row) => {
+    console.log(row.user_id);
+    const datos = row.user_id.toString();  // Convierte a cadena si no lo es
+    const datosCifrado = datos ? CryptoJS.AES.encrypt(datos, 'sicaf-Cofee').toString() : '';
+    navigation(`/useredt/${datosCifrado}`);
+  };
+  const datos = 'Hola desde ComponenteA';
+
 
   const headerComponent = React.useMemo(() => {
     const handleClear = () => {
@@ -103,7 +110,9 @@ const UsersScreens = () => {
       cell: (row) => (
         <>
           <button type="button" class="btn btn-link">
-            <img src={editar} width="35" height="35" />
+            <img src={editar}  onClick={() => {
+                handleOpen(row);
+            }} width="35" height="35" />
           </button>
           <button type="button" class="btn btn-link">
             <img src={eliminar} width="31" height="31" />

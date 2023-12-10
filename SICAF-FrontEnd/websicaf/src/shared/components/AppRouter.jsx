@@ -26,7 +26,7 @@ const AppRouter = () => {
           <>
             <Route path="users" element={<UsersScreens />} />
             <Route path="userform" element={<UserForm />} />
-            <Route path="useredt" element={<UserEdt />} />
+            <Route path="useredt/:datosCifrado" element={<UserEdt />} />
             <Route path="productAdmin" element={<ProductDashborad />} />
             <Route path="history" element={<HistoryScreens />} />
           </>
