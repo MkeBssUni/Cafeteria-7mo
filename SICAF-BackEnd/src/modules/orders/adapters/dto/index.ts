@@ -6,7 +6,6 @@ import { GetReceiptDto } from "./GetReceiptDto";
 import { SaveOrderDto } from "./SaveOrderDto";
 import { SaveOnlineOrderDto } from "./SaveOnlineOrderDto";
 import { OrderHistoryDto } from "./OrderHistoryDto";
-import { GetOrderDetailsDto } from "./GetOrderDetailsDto";
 
 export {
     OrderProductsDto,
@@ -16,6 +15,5 @@ export {
     GetReceiptDto,
     SaveOrderDto,
     SaveOnlineOrderDto,
-    OrderHistoryDto,
-    GetOrderDetailsDto
+    OrderHistoryDto
 }
