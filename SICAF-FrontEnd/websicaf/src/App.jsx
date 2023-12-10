@@ -8,9 +8,12 @@ const init = () => {
   return JSON.parse(localStorage.getItem("user")) || { isLogged: false };
 };
 
+
+
 function App() {
   const [user, dispatch] = useReducer(authReducer, {}, init);
   useEffect(() => {
+    document.title = 'SICAF';
     if (!user) return;
     let roleDefine = "";
     if (user.role != null) {

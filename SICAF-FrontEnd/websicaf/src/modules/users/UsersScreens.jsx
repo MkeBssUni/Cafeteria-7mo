@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Badge } from "react-bootstrap";
+import { Badge,Card } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import "../../shared/css/color.css";
 import FilterComponent from "../../shared/components/FilterComponent";
@@ -8,6 +8,8 @@ import GetUser from "./Functions/GetUser";
 import editar from "../../assets/editar.png";
 import eliminar from "../../assets/eliminar.png";
 import CryptoJS from 'crypto-js';
+import ChageStatus from "./Functions/ChageStatus"
+import Alert,{confirmTitle,errorTitle,confirmMsj,errorMsj} from "../../shared/plugins/alerts"
 
 const option = {
   rowsPerPageText: "Registros por página",
@@ -16,6 +18,8 @@ const option = {
 const UsersScreens = () => {
   const [usuarios, setUsuarios] = useState([]);
   const [filterText, setFilterText] = useState("");
+  const [setselectUser, setSetselectUser] = useState({});
+  const navigation = useNavigate();
 
   const filteredUsuarios = usuarios
     ? usuarios.filter(
@@ -39,8 +43,6 @@ const UsersScreens = () => {
   useEffect(() => {
     getUsuarios();
   }, []);
-
-  const navigation = useNavigate()
   
   const handleOpen = (row) => {
     console.log(row.user_id);
@@ -48,21 +50,42 @@ const UsersScreens = () => {
     const datosCifrado = datos ? CryptoJS.AES.encrypt(datos, 'sicaf-Cofee').toString() : '';
     navigation(`/useredt/${datosCifrado}`);
   };
-  const datos = 'Hola desde ComponenteA';
 
+  const enableOrDisable = (row) => {
+    Alert.fire({
+        title: confirmTitle,
+        text: confirmMsj,
+        icon: 'warning',
+        confirmButtonColor: '#009574',
+        confirmButtonText: 'Aceptar',
+        cancelButtonColor: '#DD6B55',
+        cancelButtonText: 'Cancelar',
+        reverseButtons: true,
+        backdrop: true,
+        showCancelButton: true,
+        showLoaderOnConfirm: true,
+        allowOutsideClick: () => !Alert.isLoading,
+        preConfirm: async () => {
+            try {
+               return await ChageStatus(row.user_id);
+            } catch (error) {
+                Alert.fire({
+                    title: errorTitle,
+                    text: errorMsj,
+                    icon: 'error',
+                    confirmButtonColor: '#3085d6',
+                    confirmButtonText: 'Aceptar'
+                })
+            } finally {
+                getUsuarios()
+            }
+        }
+    })
+}
 
-  const headerComponent = React.useMemo(() => {
-    const handleClear = () => {
-      if (filterText) setFilterText("");
-    };
-    return (
-      <FilterComponent
-        onFilter={(e) => setFilterText(e.target.value)}
-        onClear={handleClear}
-        filterText={filterText}
-      />
-    );
-  }, [filterText]);
+  const handleClear = () => {
+    if (filterText) setFilterText("");
+  };
 
   const columns = React.useMemo(() => [
     {
@@ -109,12 +132,14 @@ const UsersScreens = () => {
       name: "Acciones",
       cell: (row) => (
         <>
-          <button type="button" class="btn btn-link">
-            <img src={editar}  onClick={() => {
+          <button type="button" class="btn btn-link" onClick={() => {
                 handleOpen(row);
-            }} width="35" height="35" />
+            }}>
+            <img src={editar}   width="35" height="35" />
           </button>
-          <button type="button" class="btn btn-link">
+          <button type="button" class="btn btn-link" onClick={() => {
+                enableOrDisable(row);
+            }}> 
             <img src={eliminar} width="31" height="31" />
           </button>
         </>
@@ -124,18 +149,32 @@ const UsersScreens = () => {
 
   return (
     <>
+    <div>
+    <FilterComponent
+        onFilter={(e) => setFilterText(e.target.value)}
+        onClear={handleClear}
+        filterText={filterText}
+      />
+      <div className="center">
+      <Card className="size-Table">
         <DataTable
           columns={columns}
           data={filteredUsuarios}
           noDataComponent={"Sin registros"}
           pagination
           paginationComponentOptions={option}
-          subHeader
-          subHeaderComponent={headerComponent}
           persistTableHead
           striped={true}
           highlightOnHover={true}
+          customStyles={{
+            table: {
+              textAlign: 'center',
+            },
+          }}
         />
+      </Card>
+      </div>
+    </div>
     </>
   );
 };

@@ -1,12 +1,11 @@
 import AxiosClient from "../../../shared/plugins/axios"
 import Alert,{errorMsg,errorTitle,successMsg,successTitle} from "../../../shared/plugins/Alert"
 
-const GetByStatus = async (request) => {
+const GetByStatus = async (id) => {
     try {
         const response = await AxiosClient({
-            url:'/users/status/',
-            method: 'GET',
-            data: JSON.stringify(request)
+            url: `users/changeStatus/${id}`,
+            method: 'PATCH',
         })
         if(!response.error){
             Alert.fire({

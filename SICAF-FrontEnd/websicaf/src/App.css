@@ -324,3 +324,11 @@ html[letter-size='Pequeña'] {
 .error-text{
   color: red;
 }
+
+.size-Table{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 90%;
+}
