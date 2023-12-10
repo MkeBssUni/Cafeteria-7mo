@@ -21,7 +21,7 @@ function ProductDashborad() {
   const [category, setCategory] = useState(7);
   const [selectedProductId, setSelectedProductId] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
-  const[originalList, setOriginalList]=useState([])
+  const [originalList, setOriginalList] = useState([])
 
   const getProductsByType = async () => {
     switch (category) {
@@ -63,6 +63,7 @@ function ProductDashborad() {
         const response = await enableOrDisableProduct(id);
         if (!response.error) {
           getProducts().then((products) => setProducts(products));
+          getProducts().then((products) => setOriginalList(products));
         }
       },
     });
@@ -79,7 +80,7 @@ function ProductDashborad() {
   useEffect(() => {
     getCategories().then((categories) => setCategories(categories));
     getProductsByType()
-  }, [category, searchTerm]);
+  }, [category, searchTerm, originalList]);
 
   return (
     <>

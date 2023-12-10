@@ -58,7 +58,7 @@ export const UpdateProduct = ({ show, onHide,changed }) => {
       }),
       onSubmit: async (values) => {
         return await Alert.fire({
-          title: "¿Estas seguro de guardar el producto?",
+          title: "¿Estas seguro de actualizar el producto?",
           text: confirmMsj,
           icon: "warning",
           confirmButtonColor: "#009574",
