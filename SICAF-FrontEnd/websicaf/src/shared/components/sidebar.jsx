@@ -10,6 +10,8 @@ import {
   SupervisedUserCircleOutlined,
   PointOfSaleOutlined,
 } from "@mui/icons-material";
+import StorefrontIcon from '@mui/icons-material/Storefront';
+import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
 
 const SidebarSicaf = ({ isOpen, onClose }) => {
   const [menuItems, setMenuItems] = useState([]);
@@ -44,15 +46,16 @@ const SidebarSicaf = ({ isOpen, onClose }) => {
   const menuItemsCliente = [
     { id: "products", label: "Productos", icon: <LocalCafeOutlined /> },
     { id: "offers", label: "Ofertas", icon: <EmojiFoodBeverageOutlined /> },
-    { id: "link3", label: "Pedidos", icon: <CakeOutlined /> },
-    { id: "link4", label: "Historial", icon: <PointOfSaleOutlined /> },
+    { id: "orders", label: "Pedidos", icon: <CakeOutlined /> },
+    { id: "historyClient", label: "Historial de compras Presenciales", icon: <StorefrontIcon/> },
+    { id: "historyClientOnline", label: "Historial de compras Online", icon: <ShoppingBagIcon/> },
   ];
 
   const menuItemsGerente = [
     { id: "productAdmin", label: "Productos", icon: <LocalCafeOutlined /> },
     { id: "link2", label: "Ofertas", icon: <EmojiFoodBeverageOutlined /> },
-    { id: "link3", label: "Pedidos", icon: <CakeOutlined /> },
-    { id: "history", label: "Historial", icon: <PointOfSaleOutlined /> },
+    { id: "historySaleStore", label: "Historial de ventas en Tienda", icon: <StorefrontIcon/> },
+    { id: "historySaleOnline", label: "Historial de ventas Online", icon: <ShoppingBagIcon/> },
     { id: "users", label: "Usuarios", icon: <SupervisedUserCircleOutlined /> },
   ];
 
@@ -60,7 +63,8 @@ const SidebarSicaf = ({ isOpen, onClose }) => {
     { id: "productAdmin", label: "Productos", icon: <LocalCafeOutlined /> },
     { id: "link2", label: "Ofertas", icon: <EmojiFoodBeverageOutlined /> },
     { id: "link3", label: "Ventas", icon: <CakeOutlined /> },
-    { id: "history", label: "Historial", icon: <PointOfSaleOutlined /> },
+    { id: "historySaleStore", label: "Historial de ventas en Tienda", icon: <StorefrontIcon/> },
+    { id: "historySaleOnline", label: "Historial de ventas Online", icon: <ShoppingBagIcon/> },
   ];
 
   return (
@@ -78,7 +82,6 @@ const SidebarSicaf = ({ isOpen, onClose }) => {
       <Offcanvas.Body>
         <Tab.Container
           id="list-group-tabs-example"
-          defaultActiveKey={menuItems[0]?.id}
         >
           <Row>
             <Col cols="col-xl-12">

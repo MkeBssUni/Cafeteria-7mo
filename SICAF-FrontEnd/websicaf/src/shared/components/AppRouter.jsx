@@ -8,11 +8,9 @@ import { AuthContext } from "../../modules/auth/authContext";
 import ProductDashborad from "../../modules/product/adminViews/ProductDashbBoard";
 import UsersScreens from "../../modules/users/UsersScreens";
 import UserForm from "../../modules/users/components/UserForm";
-import HistoryScreens from "../../modules/History/HistoryScreens";
 import UserEdt from '../../modules/users/components/UserEdt';
 import ProductList from "../../modules/product/clientViews/ProductList";
 import OffersList from "../../modules/offers/OffersList";
-import OrdersScreens from "../../modules/orders/OrdersScreens";
 import ErrorNotFound from './Error/ErrorNotFound';
 import NewPassword from "../../modules/auth/generalViews/NewPassword";
 
@@ -34,23 +32,19 @@ const AppRouter = () => {
             <Route path="userform" element={<UserForm />} />
             <Route path="useredt/:datosCifrado" element={<UserEdt />} />
             <Route path="productAdmin" element={<ProductDashborad />} />
-            <Route path="history" element={<HistoryScreens />} />
           </>
         );
       case "Empleado":
         return (
           <>
-            <Route path="orders" element={<OrdersScreens />} />
             <Route path="products" element={<ProductList />} />
             <Route path="offers" element={<OffersList />} />
             <Route path="productAdmin" element={<ProductDashborad />} />
-            <Route path="history" element={<HistoryScreens />} />
           </>
         );
       case "Cliente":
         return (
           <>
-            <Route path="orders" element={<OrdersScreens />} />
             <Route path="products" element={<ProductList />} />
             <Route path="offers" element={<OffersList />} />
           </>

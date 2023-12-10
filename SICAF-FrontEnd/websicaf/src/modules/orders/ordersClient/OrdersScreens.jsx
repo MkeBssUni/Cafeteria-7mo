@@ -2,7 +2,7 @@ import React from 'react'
 import caja from '../../assets/caja.png'
 import usuario from '../../assets/usuario.png'
 import taza from '../../assets/taza.png'
-import Navbarsicaf from '../../shared/components/Navbar'
+import Navbarsicaf from '../../../shared/components/Navbar'
 
 const OrdersScreens = () => {
     return (
