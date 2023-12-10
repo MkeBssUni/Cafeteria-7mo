@@ -937,6 +937,27 @@
 					"response": []
 				},
 				{
+					"name": "get-presential-orders",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3001/SICAF/orders/presential",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"SICAF",
+								"orders",
+								"presential"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "get-user-history",
 					"request": {
 						"method": "GET",
@@ -953,6 +974,50 @@
 								"orders",
 								"history",
 								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-online-orders",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3001/SICAF/orders/online",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"SICAF",
+								"orders",
+								"online"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-user-online-history",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3001/SICAF/orders/online/history/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"SICAF",
+								"orders",
+								"online",
+								"history",
+								"2"
 							]
 						}
 					},

@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
 import { validateError } from "../../../kernel/error_codes";
-import { GetReceiptDto, OrderHistoryDto, ReceiptDto, SaveOnlineOrderDto, SaveOrderDto } from "./dto";
+import { GetReceiptDto, OnlineOrderHistoryDto, OrderHistoryDto, ReceiptDto, SaveOnlineOrderDto, SaveOrderDto } from "./dto";
 import { OrderStorageGateway } from "./order.storage.gateway";
 import { OrderRepository } from "../use-cases/ports/order.repository";
-import { GetReceiptInteractor, OrderHistoryInteractor, SaveOnlineOrderInteractor, SaveOrderInteractor } from "../use-cases";
+import { AllOnlineOrdersInteractor, AllOrdersInteractor, GetReceiptInteractor, OnlineOrderHistoryInteractor, OrderHistoryInteractor, SaveOnlineOrderInteractor, SaveOrderInteractor } from "../use-cases";
 import { ResponseApi } from "../../../kernel/types";
 import { Order } from "../entities/order";
 
@@ -26,6 +26,42 @@ export class OrderController {
         }
     }
 
+    static getAllOrders = async (req: Request, res: Response) => {
+        try {
+            const repository: OrderRepository = new OrderStorageGateway();
+            const interactor: AllOrdersInteractor = new AllOrdersInteractor(repository);
+            const orders: OrderHistoryDto[] = await interactor.execute();
+            const body: ResponseApi<OrderHistoryDto[]> = {
+                code: 200,
+                error: false,
+                message: 'Historial de compras',
+                data: orders
+            }
+            return res.status(body.code).json(body);
+        } catch (e) {
+            const error = validateError(e as Error);
+            return res.status(error.code).json(error);
+        }
+    }
+
+    static getAllOnlineOrders = async (req: Request, res: Response) => {
+        try {
+            const repository: OrderRepository = new OrderStorageGateway();
+            const interactor: AllOnlineOrdersInteractor = new AllOnlineOrdersInteractor(repository);
+            const orders: OnlineOrderHistoryDto[] = await interactor.execute();
+            const body: ResponseApi<OnlineOrderHistoryDto[]> = {
+                code: 200,
+                error: false,
+                message: 'Historial de pedidos en línea',
+                data: orders
+            }
+            return res.status(body.code).json(body);
+        } catch (e) {
+            const error = validateError(e as Error);
+            return res.status(error.code).json(error);
+        }
+    }
+
     static getOrderHistoryByClient = async (req: Request, res: Response) => {
         try {
             const client: number = parseInt(req.params.client);
@@ -36,6 +72,25 @@ export class OrderController {
                 code: 200,
                 error: false,
                 message: 'Historial de compras del cliente',
+                data: orders
+            }
+            return res.status(body.code).json(body);
+        } catch (e) {
+            const error = validateError(e as Error);
+            return res.status(error.code).json(error);
+        }
+    }
+
+    static getOnlineOrderHistoryByClient = async (req: Request, res: Response) => {
+        try {
+            const client: number = parseInt(req.params.client);
+            const repository: OrderRepository = new OrderStorageGateway();
+            const interactor: OnlineOrderHistoryInteractor = new OnlineOrderHistoryInteractor(repository);
+            const orders: OnlineOrderHistoryDto[] = await interactor.execute(client);
+            const body: ResponseApi<OnlineOrderHistoryDto[]> = {
+                code: 200,
+                error: false,
+                message: 'Historial de pedidos en línea del cliente',
                 data: orders
             }
             return res.status(body.code).json(body);

@@ -1,8 +1,7 @@
 import { ReceiptProductsDto } from "./ReceiptProductsDto"
 
-export type OrderHistoryDto = {
+export type OnlineOrderHistoryDto = {
     id: number,
-    employee: string,
     client: string,
     payment_method: string,
     status: string,
@@ -10,8 +9,6 @@ export type OrderHistoryDto = {
     subtotal: number,
     discount?: number,
     total: number,
-    send_receipt: boolean,
-    comments?: string,
     date: Date,
     products?: ReceiptProductsDto[]
 }
