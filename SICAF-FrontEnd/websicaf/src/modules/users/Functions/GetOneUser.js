@@ -1,21 +1,13 @@
 import AxiosClient from "../../../shared/plugins/axios"
 import Alert,{errorMsg,errorTitle,successMsg,successTitle} from "../../../shared/plugins/Alert"
 
-const GetOneUser = async () => {
+const GetOneUser = async (id) => {
     try {
         const response = await AxiosClient({
-            url:'',
-            method: ''
+            url:`/users/${id}`,
+            method: 'GET'
         })
-        if(!response.error){
-            Alert.fire({
-                title: successTitle,
-                text:successMsg,
-                icon:'success',
-                confirmButtonColor: '#3085d6',
-                confirmButtonText: 'Aceptar'
-            })
-        }
+        if (!response.error) return response.data;
       } catch (error) {
         Alert.fire({
             title: errorTitle,

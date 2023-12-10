@@ -320,3 +320,7 @@ html[letter-size='Pequeña'] {
   color: var(--color-primary) !important;
   margin-bottom: 15px !important;
 }
+
+.error-text{
+  color: red;
+}

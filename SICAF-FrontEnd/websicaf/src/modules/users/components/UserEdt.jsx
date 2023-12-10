@@ -1,24 +1,35 @@
-import React,{ReactComponentElement}from "react";
+import React,{useState, useEffect}from "react";
 import AgregarF from "../../../assets/AgregarF.jpg";
 import { Figure, Row, Col, Form, Container, Card } from "react-bootstrap";
 import Alert, { confirmMsj } from "../../../shared/plugins/alerts";
 import { useNavigate,useParams  } from "react-router-dom";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import CreateUser from "../Functions/CreateUser";
 import CryptoJS from 'crypto-js';
+import GetOneUser from "../Functions/GetOneUser";
+import UpdateUser from './../Functions/UpdateUser';
 
-const UserEdt = (props) => {
+const UserEdt = () => {
+  const [user, setuser] = useState({})
   const navigation = useNavigate();
   const { datosCifrado  } = useParams();
   const bytes = CryptoJS.AES.decrypt(datosCifrado , 'sicaf-Cofee');
   const datosDescifrados = bytes.toString(CryptoJS.enc.Utf8);
 
-  console.log('aa',datosDescifrados);
+  
 
   const handleOpen = () => {
     navigation("/users", { replace: true });
+    window.location.reload();
   };
+
+  const getUser =async (id)=>{
+      const data = await GetOneUser(id);
+      setuser(data)
+  }
+  useEffect(()=>{
+    getUser(datosDescifrados);
+  },[])
 
   const form = useFormik({
     initialValues: {
@@ -45,7 +56,6 @@ const UserEdt = (props) => {
         .string()
         .required("Campo Obligatorio")
         .matches(/^(?!.*@[^,]*,)/, "Correo Electrónico no Válido"),
-      password: yup.string().required("Campo Obligatorio"),
       role_id: yup.number().required("Campo Obligatorio"),
       person: yup.object().shape({
         name: yup.string().required("Campo Obligatorio"),
@@ -77,11 +87,37 @@ const UserEdt = (props) => {
         showLoaderOnConfirm: true,
         allowOutsideClick: () => !Alert.isLoading,
         preConfirm: async () => {
-          return await CreateUser(values);
+          handleOpen()
+          return await UpdateUser(datosDescifrados,values);
         },
       });
     },
   });
+
+  React.useMemo(() => {
+    if (user) {
+      const { role_id, email, person } = user;
+      form.values.email = email;
+      form.values.role_id = role_id;
+      
+      if (person) {
+        form.values.person.name = person.name;
+        form.values.person.lastname = person.lastname;
+        form.values.person.gender = person.gender;
+        form.values.person.phone_number1 = person.phone_number1;
+        
+        if (person.address) {
+          form.values.person.address.street = person.address.street;
+          form.values.person.address.settlement = person.address.settlement;
+          form.values.person.address.city = person.address.city;
+          form.values.person.address.state = person.address.state;
+          form.values.person.address.postal_code = person.address.postal_code;
+          form.values.person.address.country = person.address.country;
+        }
+      }
+    }
+  }, [user]);
+  
 
   
 
@@ -201,19 +237,24 @@ const UserEdt = (props) => {
 
                   <Col>
                     <Form.Group>
+
+                    </Form.Group>
                       <Form.Label>Genero: </Form.Label>
                       <Form.Control
+                        as="select"
                         className="input-user"
                         name="person.gender"
                         value={form.values.person && form.values.person.gender}
                         onChange={form.handleChange}
-                      />
-                      {form.errors.person && form.errors.person.lastname && (
+                      >
+                        <option value='F'>Femenino</option>
+                        <option value='M'>Masculino</option>
+                      </Form.Control>
+                        {form.errors.person && form.errors.person.lastname && (
                         <span className="error-text">
                           {form.errors.person.lastname}
                         </span>
                       )}
-                    </Form.Group>
                   </Col>
                   <Col>
                     <Form.Group>
@@ -388,7 +429,7 @@ const UserEdt = (props) => {
               >
                 Cancelar
               </button>
-              <button className="btn  btn-outline-success">Registrar</button>
+              <button className="btn  btn-outline-success">Actualizar</button>
             </div>
           </Row>
         </Form>
