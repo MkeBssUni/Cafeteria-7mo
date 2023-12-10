@@ -12,6 +12,7 @@ const tema = localStorage.getItem("darkMode");
 console.log(tema)
 if(tema == "true"){
     document.documentElement.setAttribute("theme", "dark");
+    document.documentElement.setAttribute("data-bs-theme", "dark");
 }else {
     document.documentElement.setAttribute("theme", "light");
 }
