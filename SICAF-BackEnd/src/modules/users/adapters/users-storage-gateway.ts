@@ -1,4 +1,3 @@
-import { json } from "express";
 import { pool } from "../../../config/bdconfig";
 import { encodeString } from "../../../kernel/jwt";
 import { findProductById } from "../boundary";
@@ -9,6 +8,8 @@ import { UpdateCartDto } from "./dto/update-cart-dto";
 import { UpdateUserDto } from "./dto/update-user-dto";
 import { Product } from "../../products/entities/product";
 import { ProductInCartDto } from "./dto/products-in-cart-dto";
+import { UserByIdDto } from "./dto/UserByIdDto";
+import { UpdateVisualConfigurationsDto } from "./dto/update-visual-configurations-dto";
 
 export class UsersStorageGateway implements UsersRepository{
     async create(payload: User): Promise<User> {
@@ -159,7 +160,6 @@ export class UsersStorageGateway implements UsersRepository{
 
             return user;
         } catch (error) {
-            console.log("Error: ", error)
             throw new Error
         }
     }
@@ -192,7 +192,22 @@ export class UsersStorageGateway implements UsersRepository{
     }
     
     async update(payload: UpdateUserDto): Promise<User> {
-        throw new Error("Method not implemented.");
+        try {
+            await pool.query('BEGIN')
+            const responseUser = await pool.query('UPDATE users SET email = $1 WHERE id = $2 RETURNING *', [payload.email, payload.user_id]);
+            const user = responseUser.rows[0];
+            let address;
+            const responsePerson = await pool.query('UPDATE people SET (name, lastname, gender, birthday, phone_number1, phone_number2) = ($1,$2,$3,$4,$5,$6)WHERE user_id = $7 returning *;',[payload.person.name, payload.person.lastname, payload.person.gender, payload.person.birthday, payload.person.phone_number1, payload.person.phone_number2,user.id]);
+            if(payload.person.address){
+                const responseAddress = await pool.query('UPDATE addresses SET street = $1, settlement = $2, external_number = $3, internal_number = $4, city = $5, state = $6, postal_code = $7, country = $8 WHERE id = $9 RETURNING *', [payload.person.address.street, payload.person.address.settlement, payload.person.address.external_number, payload.person.address.internal_number, payload.person.address.city, payload.person.address.state, payload.person.address.postal_code, payload.person.address.country, responsePerson.rows[0].address_id]);
+               address = responseAddress.rows[0]; 
+            }
+            await pool.query('COMMIT')
+            return this.findById(user.id);
+        } catch (error) {
+            console.log("error", error)
+            throw new Error
+        }
     }
 
     async changeStatus(id: number): Promise<User> {
@@ -242,8 +257,40 @@ export class UsersStorageGateway implements UsersRepository{
                 }
             }
         } catch (error) {
+            console.log("Error: ", error)
             throw new Error
         }
-    }  
+    }
+    
+    async findUserById(id: number): Promise<UserByIdDto> {
+        try {
+            const response = await pool.query('select u.id, r.id as role, u.email, u.status from users u inner join roles r on u.role_id = r.id where u.id = $1', [id]);
+            return response.rows[0] as UserByIdDto;
+        } catch (e) {
+            throw new Error
+        }
+    }
 
+    async updateVisualConfigurations(payload: UpdateVisualConfigurationsDto): Promise<UpdateVisualConfigurationsDto> {
+        try {
+            const response = await pool.query('UPDATE users SET dark_theme = $1, letter_size = $2 WHERE id = $3 RETURNING *', [payload.dark_theme, payload.letter_size, payload.user_id]);
+            
+            return {
+                user_id: response.rows[0].id,
+                dark_theme: response.rows[0].dark_theme,
+                letter_size: response.rows[0].letter_size
+            }
+        } catch (error) {
+            throw new Error
+        }
+    }
+
+    async getEmails(): Promise<string[]> {
+        try {
+            const response = await pool.query('SELECT email FROM users where role_id = 3 and status = true;');
+            return response.rows.map((user: any) => user.email);
+        } catch (error) {
+            throw new Error
+        }
+    }
 }

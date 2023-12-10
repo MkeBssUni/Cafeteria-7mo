@@ -2,8 +2,9 @@ import { UseCase } from "../../../kernel/contracts";
 import { DiscountTypes } from "../../../kernel/enums";
 import { validateDate, validateDates } from "../../../kernel/validations";
 import { Product } from "../../products/entities/product";
+import { UserByIdDto } from "../../users/adapters/dto/UserByIdDto";
 import { OrderDto } from "../adapters/dto";
-import { findProductById } from "../boundary";
+import { findProductById, findUserById } from "../boundary";
 import { Discount } from "../entities/discount";
 import { DiscountRepository } from "./ports/discount.repository";
 
@@ -11,23 +12,23 @@ export class GetByOrderInteractor implements UseCase<OrderDto, Discount[]> {
     constructor(private readonly discountRepository: DiscountRepository) {}
 
     async execute(payload: OrderDto): Promise<Discount[]> {
-
         let amount: number = 0;
         let products_sold: number = 0;
         let discounts: Discount[] = [];
         let discountsByTotal: Discount[] = [];
+        let discountsByRole: Discount[] = [];
 
         if (!payload.client_id || !payload.products.length) throw new Error("Missing fields");
         if (isNaN(payload.client_id)) throw new Error("Invalid id");
 
-        //verificar que el cliente exista
-        //verificar si el cliente tiene descuento por rol y agregarlo a la lista de descuentos
+        const client: UserByIdDto = await findUserById(payload.client_id);
+        if (!client) throw new Error("User not found");
 
         for (let i = 0; i < payload.products.length; i++) {
             if (!payload.products[i].id || !payload.products[i].quantity) throw new Error("Missing fields");
             if (isNaN(payload.products[i].id)) throw new Error("Invalid id");
             if (isNaN(payload.products[i].quantity) || payload.products[i].quantity < 0) throw new Error("Invalid quantity");
-
+            
             const product: Product = await findProductById(payload.products[i].id);
             if (!product) throw new Error("Product not found");
             amount += Number(product.price * payload.products[i].quantity);
@@ -45,16 +46,18 @@ export class GetByOrderInteractor implements UseCase<OrderDto, Discount[]> {
 
         discountsByTotal = await this.discountRepository.findByOrderTotal(amount);
         discounts.push(...discountsByTotal);
+        
+        discountsByRole = await this.discountRepository.findByRole(client.role!);
+        discounts.push(...discountsByRole);
 
-        for (let i = 0; i < discounts.length; i++) {
-            if (discounts[i].start_date && !discounts[i].end_date && !validateDate(discounts[i].start_date!)) discounts.splice(i, 1);
-            if (discounts[i].start_date && discounts[i].end_date && !validateDates(discounts[i].start_date!, discounts[i].end_date!)) discounts.splice(i, 1);
-            if (!discounts[i].status) discounts.splice(i, 1);
-            for (let j = 0; j < discounts.length; j++) {
-                if (discounts[i].id === discounts[j].id && i !== j) discounts.splice(j, 1);
-            }
-        }
-
-        return [...discountsByTotal, ...discounts];
+        discounts = discounts.filter((discount, index, self) => self.findIndex(d => d.id === discount.id) === index);
+        discounts = discounts.filter(discount => {
+            if (discount.start_date && !discount.end_date && !validateDate(discount.start_date!)) return false;
+            if (discount.start_date && discount.end_date && !validateDates(discount.start_date!, discount.end_date!)) return false;
+            if (!discount.status) return false;
+            return true;
+        });
+            
+        return discounts;
     }
 }

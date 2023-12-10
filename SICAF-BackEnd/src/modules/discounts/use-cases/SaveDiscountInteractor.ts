@@ -2,7 +2,7 @@ import { UseCase } from "../../../kernel/contracts";
 import { DiscountTypes } from "../../../kernel/enums";
 import { validateStringLength } from "../../../kernel/validations";
 import { SaveDiscountDto } from "../adapters/dto/SaveDiscountDto";
-import { addDiscountToProduct, existsCategoryById, existsProductById, findProductsIdByCategory } from "../boundary";
+import { addDiscountToProduct, existsCategoryById, existsProductById, findProductsIdByCategory, updateRoleDiscount } from "../boundary";
 import { Discount } from "../entities/discount";
 import { DiscountRepository } from "./ports/discount.repository";
 
@@ -57,8 +57,11 @@ export class SaveDiscountInteractor implements UseCase<SaveDiscountDto, Discount
                 throw new Error('Invalid discount type');
         }
         const discount = await this.discountRepository.save(payload);
-        if (!discount) throw new Error('Discount not saved');
-        //editar rol
+        if (!discount) throw new Error('Discount not saved');    
+        if (payload.rol_id) {
+            const roleDiscount = await updateRoleDiscount({ id: payload.rol_id!, discount: discount.id! });
+            if (!roleDiscount) throw new Error('Discount not saved');
+        }
         if (payload.products_id && payload.products_id.length) {
             for (let id of payload.products_id) {
                 const addDiscount = await addDiscountToProduct({product_id: id, discount_id: discount.id!});
