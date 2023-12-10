@@ -13,10 +13,16 @@ import {
 
 const SidebarSicaf = ({ isOpen, onClose }) => {
   const [menuItems, setMenuItems] = useState([]);
+  const userRole = localStorage.getItem("userRole");
+  let roleDefine = "";
   
+    if (userRole != null) {
+      const role = userRole || ""; // Asegúrate de que role no sea nulo
+      roleDefine = role.replace(/^"(.*)"$/, "$1");
+    }
  
   useEffect(() => {
-    const localStorageValue = localStorage.getItem("userRole");
+    const localStorageValue = roleDefine;
 
     let items;
     switch (localStorageValue) {

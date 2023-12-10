@@ -122,6 +122,7 @@ const UserEdt = () => {
   
 
   return (
+    <body>   
     <div>
       <div className="card" style={{ position: "relative", border: "none" }}>
         <Figure.Image className="fondo-user" alt="fondo-user" src={AgregarF} />
@@ -435,6 +436,7 @@ const UserEdt = () => {
         </Form>
       </Container>
     </div>
+    </body>
   );
 };
 

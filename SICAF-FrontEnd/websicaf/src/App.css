@@ -332,3 +332,7 @@ html[letter-size='Pequeña'] {
   height: 100%;
   width: 90%;
 }
+
+.switch-style{
+  color: #fff!important;
+}

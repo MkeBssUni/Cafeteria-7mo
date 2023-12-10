@@ -19,8 +19,14 @@ import NewPassword from "../../modules/auth/generalViews/NewPassword";
 const AppRouter = () => {
   const { user } = useContext(AuthContext);
   const userRole = localStorage.getItem("userRole");
-  const renderUserRoleRouter = (userRole) => {
-    switch (userRole) {
+  let roleDefine = "";
+    if (userRole != null) {
+      const role = userRole || ""; // Asegúrate de que role no sea nulo
+      roleDefine = role.replace(/^"(.*)"$/, "$1");
+    }
+
+  const renderUserRoleRouter = () => {
+    switch (roleDefine) {
       case "Administrador":
         return (
           <>

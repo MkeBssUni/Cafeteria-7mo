@@ -5,7 +5,7 @@ const VisualConfigurations = async (request) => {
   try {
     const response = await AxiosClient({
         url:'users/updateVisualConfigurations',
-        method: 'PACTH',
+        method: 'PATCH',
         data: JSON.stringify(request)
     });
     if(!response.error){
@@ -17,6 +17,7 @@ const VisualConfigurations = async (request) => {
             confirmButtonText: 'Aceptar'
         })
     }
+    window.location.reload();
   } catch (error) {
     Alert.fire({
         title: errorTitle,

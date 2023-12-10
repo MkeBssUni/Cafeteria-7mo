@@ -149,6 +149,7 @@ const UsersScreens = () => {
 
   return (
     <>
+    <body>
     <div>
     <FilterComponent
         onFilter={(e) => setFilterText(e.target.value)}
@@ -175,6 +176,7 @@ const UsersScreens = () => {
       </Card>
       </div>
     </div>
+    </body>
     </>
   );
 };

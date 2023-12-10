@@ -78,6 +78,7 @@ const UserForm = () => {
   });
 
   return (
+    <body>  
     <div>
       <div className="card" style={{ position: "relative", border: "none" }}>
         <Figure.Image className="fondo-user" alt="fondo-user" src={AgregarF} />
@@ -386,6 +387,7 @@ const UserForm = () => {
         </Form>
       </Container>
     </div>
+    </body>
   );
 };
 
