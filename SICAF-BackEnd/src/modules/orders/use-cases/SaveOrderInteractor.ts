@@ -99,7 +99,7 @@ export class SaveOrderInteractor implements UseCase<SaveOrderDto, Order> {
             discount_id: receipt.discount ? payload.discount_id : null,
             total: receipt.total,
             status: OrderStatus.completed,
-            send_receipt: payload.send_receipt,
+            send_receipt: payload.send_receipt ? payload.send_receipt : false,
             comments: payload.comments,
             products: receipt.products
         } as SaveOrderDto;
