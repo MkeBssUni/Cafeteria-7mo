@@ -13,6 +13,7 @@ import ProductList from "../../modules/product/clientViews/ProductList";
 import OffersList from "../../modules/offers/OffersList";
 import ErrorNotFound from './Error/ErrorNotFound';
 import NewPassword from "../../modules/auth/generalViews/NewPassword";
+import OffersDashborard from "./../../modules/offers/adminViews/OffersDashboard"
 
 const AppRouter = () => {
   const { user } = useContext(AuthContext);
@@ -32,6 +33,7 @@ const AppRouter = () => {
             <Route path="userform" element={<UserForm />} />
             <Route path="useredt/:datosCifrado" element={<UserEdt />} />
             <Route path="productAdmin" element={<ProductDashborad />} />
+            <Route path="offersAdmin" element={<OffersDashborard />} />
           </>
         );
       case "Empleado":

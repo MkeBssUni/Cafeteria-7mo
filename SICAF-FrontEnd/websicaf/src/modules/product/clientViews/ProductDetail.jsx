@@ -8,67 +8,12 @@ import CreateProduct from "../Functions/CreateProduct";
 
 function ProductDetail(props) {
     const [count, setCount] = useState(0);
-
-
-    const form = {
-        onSubmit: async () => {
-            Alert.fire({
-                title: confirmTitle,
-                text: confirmMsg,
-                icon: 'warning',
-                confirmButtonColor: '#009574',
-                confirmButtonText: 'Aceptar',
-                cancelButtonColor: '#DD6B55',
-                cancelButtonText: 'Cancelar',
-                reverseButtons: true,
-                backdrop: true,
-                showCancelButton: true,
-                showLoaderOnConfirm: true,
-                allowOutsideClick: () => !Alert.isLoading,
-                preConfirm: async () => {
-                    try {
-                        const response = CreateProduct({ id: props.product.id, amount: count })
-                        if (!response.error) {
-                            Alert.fire({
-                                title: successTitle,
-                                text: successMsg,
-                                icon: 'success',
-                                confirmButtonColor: '#3085d6',
-                                confirmButtonText: 'Aceptar'
-                            }).then((result) => {
-                                if (result.isConfirmed) {
-                                    props.onClose()
-                                }
-                            })
-                        }
-                        return response
-                    } catch (error) {
-                        Alert.fire({
-                            title: errorTitle,
-                            text: errorMsg,
-                            icon: 'error',
-                            confirmButtonColor: '#3085d6',
-                            confirmButtonText: 'Aceptar'
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                props.onClose()
-                            }
-                        })
-                    }
-                }
-
-            })
-        }
-    }
-
-
     return (
         <>
-            <Modal 
-                
-                backdrop='static'
+            <Modal
                 keyboard={false}
-                onHide={props.onClose}
+                show={props.show}
+                onHide={props.onHide}
                 size="lg"
                 aria-labelledby="contained-modal-title-vcenter"
                 centered>
@@ -86,7 +31,7 @@ function ProductDetail(props) {
                         <Col xs={12} sm={12} md={7} lg={7} xl={7} xxl={7} >
                             <Image
                                 src={props.product.image.length > 20 ? (props.product.image) : (Image1)}
-                                className=" card-img-top image-product-moda mt-4"
+                                className=" image-product-modal mt-4"
                                 rounded
                             />
                         </Col>
@@ -96,7 +41,7 @@ function ProductDetail(props) {
                             <Form.Label className="mb">Precio</Form.Label>
                             <InputGroup className="mb-3">
                                 <Button variant="primary" disabled>$</Button>
-                                <Form.Control aria-label="Amount (to the nearest dollar)" placeholder={props.product.price} disabled />
+                                <Form.Control placeholder={props.product.price} disabled />
                             </InputGroup>
                         </Col>
 

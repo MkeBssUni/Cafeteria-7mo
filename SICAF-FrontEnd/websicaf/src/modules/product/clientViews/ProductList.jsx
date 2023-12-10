@@ -68,7 +68,7 @@ const ProductList = () => {
 
       <section className='my-3 text-center'>
         <Container fluid >
-          <h3 className='mb-0'>Pays</h3>
+          <h3 className='mb-0'>Cupcakes</h3>
           <Image className='separator mt-0' src={Separator} />
           { Pays.length >0 ? <CookiesList products={Pays} /> : <WithOutProducts/>}
         </Container>
@@ -76,7 +76,7 @@ const ProductList = () => {
 
       <section className='my-3 text-center ' style={{ backgroundColor: "var(--color-secondary)" }}>
         <Container fluid className='p-3'>
-          <h3 className='mb-0'>Cupcakes</h3>
+          <h3 className='mb-0'>Panes</h3>
           {<Image className='separator mt-0' src={Separator} />}
           {CupCakes.length > 0 ? <CakesList products={CupCakes} /> : <WithOutProducts/>}
         </Container>
