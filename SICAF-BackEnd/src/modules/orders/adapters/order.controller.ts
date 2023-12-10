@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { validateError } from "../../../kernel/error_codes";
-import { FilterDto, GetReceiptDto, OnlineOrderHistoryDto, OrderHistoryDto, ReceiptDto, SaveOnlineOrderDto, SaveOrderDto } from "./dto";
+import { FilterDto, GetHistoryDto, GetReceiptDto, OnlineOrderHistoryDto, OrderHistoryDto, ReceiptDto, SaveOnlineOrderDto, SaveOrderDto } from "./dto";
 import { OrderStorageGateway } from "./order.storage.gateway";
 import { OrderRepository } from "../use-cases/ports/order.repository";
 import { AllOnlineOrdersInteractor, AllOrdersInteractor, GetReceiptInteractor, OnlineOrderHistoryInteractor, OrderHistoryInteractor, SaveOnlineOrderInteractor, SaveOrderInteractor } from "../use-cases";
@@ -47,9 +47,10 @@ export class OrderController {
 
     static getAllOnlineOrders = async (req: Request, res: Response) => {
         try {
+            const payload: FilterDto = {...req.body};
             const repository: OrderRepository = new OrderStorageGateway();
             const interactor: AllOnlineOrdersInteractor = new AllOnlineOrdersInteractor(repository);
-            const orders: OnlineOrderHistoryDto[] = await interactor.execute();
+            const orders: OnlineOrderHistoryDto[] = await interactor.execute(payload);
             const body: ResponseApi<OnlineOrderHistoryDto[]> = {
                 code: 200,
                 error: false,
@@ -65,10 +66,10 @@ export class OrderController {
 
     static getOrderHistoryByClient = async (req: Request, res: Response) => {
         try {
-            const client: number = parseInt(req.params.client);
+            const payload: GetHistoryDto = {...req.body};
             const repository: OrderRepository = new OrderStorageGateway();
             const interactor: OrderHistoryInteractor = new OrderHistoryInteractor(repository);
-            const orders: OrderHistoryDto[] = await interactor.execute(client);
+            const orders: OrderHistoryDto[] = await interactor.execute(payload);
             const body: ResponseApi<OrderHistoryDto[]> = {
                 code: 200,
                 error: false,
@@ -84,10 +85,10 @@ export class OrderController {
 
     static getOnlineOrderHistoryByClient = async (req: Request, res: Response) => {
         try {
-            const client: number = parseInt(req.params.client);
+            const payload: GetHistoryDto = {...req.body};
             const repository: OrderRepository = new OrderStorageGateway();
             const interactor: OnlineOrderHistoryInteractor = new OnlineOrderHistoryInteractor(repository);
-            const orders: OnlineOrderHistoryDto[] = await interactor.execute(client);
+            const orders: OnlineOrderHistoryDto[] = await interactor.execute(payload);
             const body: ResponseApi<OnlineOrderHistoryDto[]> = {
                 code: 200,
                 error: false,

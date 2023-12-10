@@ -5,7 +5,6 @@ const errors:{[x: string]: ResponseApi<undefined>}={
     'Already exists': {code: 400, error: true, message: 'Already exists'},
     'Missing fields': {code: 400, error: true, message: 'Missing fields'},
     'Invalid filter': {code: 400, error: true, message: 'Invalid filter'},
-    'Invalid date format': {code: 400, error: true, message: 'Invalid date format'},
     'Invalid name': {code: 400, error: true, message: 'Invalid name'},
     'Invalid lastname': {code: 400, error: true, message: 'Invalid lastname'},
     'Invalid gender': {code: 400, error: true, message: 'Invalid gender'},

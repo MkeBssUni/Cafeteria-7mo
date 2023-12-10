@@ -8,7 +8,7 @@ router.post('/saveOrder', OrderController.saveOrder);
 router.post('/saveOnlineOrder', OrderController.saveOnlineOrder);
 router.get('/presential', OrderController.getAllOrders);
 router.get('/online', OrderController.getAllOnlineOrders);
-router.get('/history/:client', OrderController.getOrderHistoryByClient);
-router.get('/online/history/:client', OrderController.getOnlineOrderHistoryByClient);
+router.get('/history', OrderController.getOrderHistoryByClient);
+router.get('/online/history', OrderController.getOnlineOrderHistoryByClient);
 
 export default router;
