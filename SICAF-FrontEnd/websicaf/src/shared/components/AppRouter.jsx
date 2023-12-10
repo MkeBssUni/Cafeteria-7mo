@@ -15,6 +15,7 @@ import OffersList from "../../modules/offers/OffersList";
 import OrdersScreens from "../../modules/orders/OrdersScreens";
 import ErrorNotFound from './Error/ErrorNotFound';
 import NewPassword from "../../modules/auth/generalViews/NewPassword";
+import OffersDashborard from "./../../modules/offers/adminViews/OffersDashboard"
 
 const AppRouter = () => {
   const { user } = useContext(AuthContext);
@@ -29,6 +30,7 @@ const AppRouter = () => {
             <Route path="useredt" element={<UserEdt />} />
             <Route path="productAdmin" element={<ProductDashborad />} />
             <Route path="history" element={<HistoryScreens />} />
+            <Route path="offersAdmin" element={<OffersDashborard />} />
           </>
         );
       case "Empleado":
