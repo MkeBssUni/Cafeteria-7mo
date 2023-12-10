@@ -7,5 +7,6 @@ router.post('/confirmationReceipt', OrderController.getReceipt);
 router.post('/saveOrder', OrderController.saveOrder);
 router.post('/saveOnlineOrder', OrderController.saveOnlineOrder);
 router.get('/history/:client', OrderController.getOrderHistoryByClient);
+router.get('/online/history/:client', OrderController.getOnlineOrderHistoryByClient);
 
 export default router;
