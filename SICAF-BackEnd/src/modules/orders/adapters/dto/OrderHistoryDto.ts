@@ -1,12 +1,16 @@
-import { ReceiptDto } from "./ReceiptDto"
+import { ReceiptProductsDto } from "./ReceiptProductsDto"
 
 export type OrderHistoryDto = {
     id: number,
     employee: string,
     payment_method: string,
     status: string,
-    details: ReceiptDto,
+    products_sold: number,
+    subtotal: number,
+    discount?: number,
+    total: number,
     send_receipt: boolean,
     comments?: string,
-    date: Date
+    date: Date,
+    products?: ReceiptProductsDto[]
 }

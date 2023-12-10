@@ -1,33 +1,18 @@
 import { pool } from "../../../config/bdconfig";
 import { Order } from "../entities/order";
 import { OrderRepository } from "../use-cases/ports/order.repository";
-import { GetOrderDetailsDto, OrderDetailsDto, SaveOnlineOrderDto, SaveOrderDto } from "./dto";
+import { OrderHistoryDto, ReceiptProductsDto, SaveOnlineOrderDto, SaveOrderDto } from "./dto";
 
 export class OrderStorageGateway implements OrderRepository {
-    async countOrdersByClient(payload: GetOrderDetailsDto): Promise<number> {
+    async getOrderHistoryByClient(client: number): Promise<OrderHistoryDto[]> {
         try {
-            const response = await pool.query("select count(*) from orders where client_id = $1 and type = $2", [payload.client, payload.type]);
-            return parseInt(response.rows[0].count);
-        } catch (e) {
-            throw Error;
-        } 
-    }
-
-    async findOrderDetailsByClient(payload: GetOrderDetailsDto): Promise<OrderDetailsDto[]> {
-        try {
-            let orderDetails: OrderDetailsDto[] = [];
-            const orderCount: number = await this.countOrdersByClient({ client: payload.client, type: payload.type } as GetOrderDetailsDto);
-            for (let i = 0; i < orderCount; i++) {
-                const orderResponse = await pool.query("select * from orders where client_id = $1 and type = $2 order by id desc", [payload.client, payload.type]);
-                const order = orderResponse.rows[0] as Order;
-                const detailsResponse = await pool.query("select * from order_details where order_id = $1", [order.id]);
-                const orderDetails = detailsResponse.rows;
-                orderDetails.push({
-                    order,
-                    orderDetails
-                });
+            const response = await pool.query(`select o.id, CONCAT(p.name,' ',p.lastname) as employee, o.payment_method, o.status, o.products_sold, o.subtotal, o.total, o.send_receipt, o.comments, o.created_at as date from orders o inner join users u on o.client_id = u.id inner join people p on u.id = p.user_id where o.client_id = ${client} and o.type = 'Presencial' order by o.id desc`);
+            const orders = response.rows as OrderHistoryDto[];
+            for (let i = 0; i < orders.length; i++) {
+                const response = await pool.query(`select c.name as category, p.name as name, o.products_sold as quantity, o.subtotal, o.total from order_details o inner join products p on o.product_id = p.id inner join categories c on p.category_id = c.id where o.order_id = ${orders[i].id}`);
+                orders[i].products = response.rows as ReceiptProductsDto[];
             }
-            return orderDetails;
+            return orders;
         } catch (e) {
             throw Error;
         }

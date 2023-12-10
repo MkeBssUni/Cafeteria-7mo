@@ -1,9 +1,8 @@
-import { GetOrderDetailsDto, OrderDetailsDto, SaveOnlineOrderDto, SaveOrderDto } from "../../adapters/dto";
+import { OrderHistoryDto, SaveOnlineOrderDto, SaveOrderDto } from "../../adapters/dto";
 import { Order } from "../../entities/order";
 
 export interface OrderRepository {
-    countOrdersByClient(payload: GetOrderDetailsDto): Promise<number>;
-    findOrderDetailsByClient(payload: GetOrderDetailsDto): Promise<OrderDetailsDto[]>;
+    getOrderHistoryByClient(client: number): Promise<OrderHistoryDto[]>;
     saveOrder(order: SaveOrderDto): Promise<Order>;
-    saveOnlineOrder(order: SaveOnlineOrderDto): Promise<Order>;  
+    saveOnlineOrder(order: SaveOnlineOrderDto): Promise<Order>;
 }
