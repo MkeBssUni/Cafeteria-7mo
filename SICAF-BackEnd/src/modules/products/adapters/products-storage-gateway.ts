@@ -6,6 +6,8 @@ import { GetProductWithCategoryDto } from "./dto/get-product-dto";
 import { UpdateProductDto } from "./dto/update-product-dto";
 import { addDiscountDto } from "./dto/addDiscountDto";
 import { GetProductsByCategoryAndStatusDto } from "./dto/get-products-by-category-and-status-dto";
+import { UpdateStockDto } from "./dto/UpdateStockDto";
+import { GetReceiptProductDto } from "./dto/GetReceiptProductDto";
 
 export class ProductsStorageGateway implements ProductsRepository{
 
@@ -13,6 +15,31 @@ export class ProductsStorageGateway implements ProductsRepository{
         try {
             const response = await pool.query("select * from products where id = $1", [id]);
             return response.rows[0] as Product;
+        } catch (error) {
+            throw Error
+        }
+    }
+
+    async findProductWithCategoryById(id: number): Promise<GetProductWithCategoryDto> {
+        try {
+            const response = await pool.query("select p.*, c.name as category_name from products p inner join categories c on p.category_id = c.id where p.id = $1;", [id]);
+            const product: GetProductWithCategoryDto = {
+                id: response.rows[0].id,
+                name: response.rows[0].name,
+                status: response.rows[0].status,
+                description: response.rows[0].description,
+                image: response.rows[0].image,
+                price: response.rows[0].price,
+                stock: response.rows[0].stock,
+                category:{
+                    category_id: response.rows[0].category_id,
+                    category_name: response.rows[0].category_name
+                },
+                provider_id: response.rows[0].provider_id,
+                discount_id: response.rows[0].discount_id,
+                created_at: response.rows[0].created_at,
+            }
+            return product;
         } catch (error) {
             throw Error
         }
@@ -249,6 +276,25 @@ export class ProductsStorageGateway implements ProductsRepository{
             })
             return products;
         } catch (error) {
+            throw Error
+        }
+    }
+
+    async updateStock(payload: UpdateStockDto): Promise<boolean> {
+        try {
+            const { id, stock } = payload;
+            await pool.query("update products set stock = $2 where id = $1", [id, stock]);
+            return true;
+        } catch (e) {
+            throw Error
+        }
+    }
+
+    async findReceiptProductById(id: number): Promise<GetReceiptProductDto> {
+        try {
+            const response = await pool.query("select p.id, c.name as category, p.name, p.price, p.discount_id as discount, p.stock, p.status from products p inner join categories c on p.category_id = c.id where p.id = $1;", [id]);
+            return response.rows[0] as GetReceiptProductDto;
+        } catch (e) {
             throw Error
         }
     }

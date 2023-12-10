@@ -8,22 +8,33 @@ export const generateReceipt = (discount: Discount, subtotal: number, products: 
     if (discount) {
         switch (discount.type) {
             case DiscountTypes.discountByRol:
-                //validar que payload.client_id tenga el rol correspondiente
-                throw new Error("Not implemented");
-            case DiscountTypes.discountByOrderTotal:
-                if (discount.order_total! > subtotal) throw new Error("Discount not applicable");
-                const appliedDiscount = Math.round(subtotal * (discount.percentage / 100) * 100) / 100;
+                const appliedDiscountByRol = Math.round(subtotal * (discount.percentage / 100) * 100) / 100;
                 for (let i = 0; i < products.length; i++) {
                     products[i].discount = 0;
                     products[i].total = products[i].subtotal;
                     products_sold += products[i].quantity;
                 }
                 return {
+                    products_sold: products_sold,
                     subtotal: subtotal,
-                    discount: appliedDiscount * (-1),
-                    total: subtotal - appliedDiscount,
-                    products: products,
-                    products_sold: products_sold
+                    discount: appliedDiscountByRol,
+                    total: subtotal - appliedDiscountByRol,
+                    products: products
+                } as ReceiptDto;                
+            case DiscountTypes.discountByOrderTotal:
+                if (discount.order_total! > subtotal) throw new Error("Discount not applicable");
+                const appliedDiscountByOrderTotal = Math.round(subtotal * (discount.percentage / 100) * 100) / 100;
+                for (let i = 0; i < products.length; i++) {
+                    products[i].discount = 0;
+                    products[i].total = products[i].subtotal;
+                    products_sold += products[i].quantity;
+                }
+                return {
+                    products_sold: products_sold,
+                    subtotal: subtotal,
+                    discount: appliedDiscountByOrderTotal,
+                    total: subtotal - appliedDiscountByOrderTotal,
+                    products: products
                 } as ReceiptDto;
             case DiscountTypes.discountByProductsTotal:
                 for (let i = 0; i < products.length; i++) {
@@ -38,11 +49,11 @@ export const generateReceipt = (discount: Discount, subtotal: number, products: 
                     products_sold += products[i].quantity;
                 }
                 return {
+                    products_sold: products_sold,
                     subtotal: subtotal,
-                    discount: total - subtotal,
+                    discount: subtotal - total,
                     total: total,
-                    products: products,
-                    products_sold: products_sold
+                    products: products
                 } as ReceiptDto;
             default:
                 for (let i = 0; i < products.length; i++) {
@@ -57,11 +68,11 @@ export const generateReceipt = (discount: Discount, subtotal: number, products: 
                     products_sold += products[i].quantity;
                 }
                 return {
+                    products_sold: products_sold,
                     subtotal: subtotal,
-                    discount: total - subtotal,
+                    discount: subtotal - total,
                     total: total,
-                    products: products,
-                    products_sold: products_sold
+                    products: products
                 } as ReceiptDto;
         }
     } else {
@@ -69,11 +80,11 @@ export const generateReceipt = (discount: Discount, subtotal: number, products: 
             products_sold += products[i].quantity;
         }
         return {
+            products_sold: products_sold,
             subtotal: subtotal,
             discount: 0,
             total: subtotal,
-            products: products,
-            products_sold: products_sold
+            products: products
         } as ReceiptDto;
     }
 }

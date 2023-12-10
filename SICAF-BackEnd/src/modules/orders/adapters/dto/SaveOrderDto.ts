@@ -1,8 +1,9 @@
 import { ReceiptProductsDto } from "./ReceiptProductsDto"
 
-export type SaveOnlineOrderDto = {
+export type SaveOrderDto = {
     type: string,
-    client_id: number,
+    employee_id: number,
+    client_id?: number,
     products_sold?: number,
     subtotal?: number,
     payment_method: string,
@@ -10,5 +11,6 @@ export type SaveOnlineOrderDto = {
     total?: number,
     status: string,
     send_receipt: boolean,
+    comments?: string,
     products: ReceiptProductsDto[]
 }

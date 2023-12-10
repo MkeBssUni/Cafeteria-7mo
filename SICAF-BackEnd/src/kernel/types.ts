@@ -1,4 +1,5 @@
 import { Request } from "express";
+import { SendReceiptDto } from "../modules/orders/adapters/dto";
 
 export type Entity<Tidentifier extends number | string>={
     id?: Tidentifier
@@ -18,4 +19,5 @@ export type ResponseEmail<T> = {
     url?: string,
     data?: T
     emails?: string[]
+    receipt?: SendReceiptDto
 }

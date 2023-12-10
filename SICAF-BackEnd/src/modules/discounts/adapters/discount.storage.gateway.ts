@@ -1,9 +1,27 @@
 import { pool } from "../../../config/bdconfig";
 import { Discount } from "../entities/discount";
 import { DiscountRepository } from "../use-cases/ports/discount.repository";
-import { SaveDiscountDto, UpdateDiscountDto, ChangeStatusDto, OrderDto } from "./dto";
+import { SaveDiscountDto, UpdateDiscountDto, ChangeStatusDto } from "./dto";
 
 export class DiscountStorageGateway implements DiscountRepository {
+    async findAll(): Promise<Discount[]> {
+        try {
+            const response = await pool.query("select * from discounts");
+            return response.rows as Discount[];
+        } catch (e) {
+            throw Error
+        }
+    }
+
+    async findAllActive(): Promise<Discount[]> {
+        try {
+            const response = await pool.query("select * from discounts where status = true and ((start_date is null and end_date is null) or (start_date is not null and end_date is null and current_date >= start_date) or (start_date is not null and end_date is not null and current_date >= start_date and current_date <= end_date))");
+            return response.rows as Discount[];
+        } catch (e) {
+            throw Error
+        }
+    }
+
     async findById(id: number): Promise<Discount> {
         try {
             const response = await pool.query("select * from discounts where id = $1", [id]);
@@ -16,6 +34,15 @@ export class DiscountStorageGateway implements DiscountRepository {
     async findByOrderTotal(order_total: number): Promise<Discount[]> {
         try {
             const response = await pool.query("select * from discounts where order_total <= $1", [order_total]);
+            return response.rows as Discount[];
+        } catch (e) {
+            throw Error
+        }
+    }
+
+    async findByRole(id: number): Promise<Discount[]> {
+        try {
+            const response = await pool.query("select d.* from discounts d join roles r on d.id = r.discount_id where r.id = $1", [id]);
             return response.rows as Discount[];
         } catch (e) {
             throw Error

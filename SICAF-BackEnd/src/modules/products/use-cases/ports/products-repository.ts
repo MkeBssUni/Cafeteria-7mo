@@ -1,3 +1,5 @@
+import { GetReceiptProductDto } from "../../adapters/dto/GetReceiptProductDto";
+import { UpdateStockDto } from "../../adapters/dto/UpdateStockDto";
 import { addDiscountDto } from "../../adapters/dto/addDiscountDto";
 import { CreateProductDto } from "../../adapters/dto/create-product.dto";
 import { GetProductWithCategoryDto } from "../../adapters/dto/get-product-dto";
@@ -7,6 +9,8 @@ import { Product } from "../../entities/product";
 
 export interface ProductsRepository {
     findById: (id: number) => Promise<Product>
+    findReceiptProductById: (id: number) => Promise<GetReceiptProductDto>
+    findProductWithCategoryById: (id: number) => Promise<GetProductWithCategoryDto>
     createProduct: (payload: CreateProductDto) => Promise<Product>
     getProducts: () => Promise<GetProductWithCategoryDto[]>
     getProductsByStatus: (status: boolean) => Promise<GetProductWithCategoryDto[]>
@@ -19,4 +23,5 @@ export interface ProductsRepository {
     changeStatus: (id: number) => Promise<GetProductWithCategoryDto>
     searchByName: (name: string) => Promise<GetProductWithCategoryDto[]>
     addDiscount: (payload: addDiscountDto) => Promise<boolean>
+    updateStock: (payload: UpdateStockDto) => Promise<boolean>
 }
