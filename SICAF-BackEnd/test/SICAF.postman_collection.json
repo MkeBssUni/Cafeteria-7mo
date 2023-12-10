@@ -935,6 +935,139 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "get-presential-orders",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"value\": \"2023-12-01\", //\"YYYY-MM-DD\",\"YYYY-MM\",\"YYYY\",\"\"\r\n    \"filter\": \"day\" //\"day\",\"month\",\"year\",\"default\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/SICAF/orders/presential",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"SICAF",
+								"orders",
+								"presential"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-user-history",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"client\": 1,\r\n    \"filter\": {\r\n        \"value\": \"2023-12\", //\"YYYY-MM-DD\",\"YYYY-MM\",\"YYYY\",\"\"\r\n        \"filter\": \"month\" //\"day\",\"month\",\"year\",\"default\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/SICAF/orders/history",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"SICAF",
+								"orders",
+								"history"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-online-orders",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"value\": \"\", //\"YYYY-MM-DD\",\"YYYY-MM\",\"YYYY\",\"\"\r\n    \"filter\": \"default\" //\"day\",\"month\",\"year\",\"default\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/SICAF/orders/online",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"SICAF",
+								"orders",
+								"online"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-user-online-history",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"client\": 2,\r\n    \"filter\": {\r\n        \"value\": \"2023\", //\"YYYY-MM-DD\",\"YYYY-MM\",\"YYYY\",\"\"\r\n        \"filter\": \"year\" //\"day\",\"month\",\"year\",\"default\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/SICAF/orders/online/history",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"SICAF",
+								"orders",
+								"online",
+								"history"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
