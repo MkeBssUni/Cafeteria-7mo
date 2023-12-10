@@ -938,9 +938,21 @@
 				},
 				{
 					"name": "get-presential-orders",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
 						"method": "GET",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"value\": \"2022\", //\"YYYY-MM-DD\",\"YYYY-MM\",\"YYYY\",\"\"\r\n    \"filter\": \"year\" //\"day\",\"month\",\"year\",\"default\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
 							"raw": "http://localhost:3001/SICAF/orders/presential",
 							"protocol": "http",
