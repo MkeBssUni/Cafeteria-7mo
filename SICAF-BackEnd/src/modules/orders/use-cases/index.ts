@@ -5,6 +5,7 @@ import { OrderHistoryInteractor } from "./OrderHistoryInteractor";
 import { OnlineOrderHistoryInteractor } from "./OnlineOrderHistoryInteractor";
 import { AllOrdersInteractor } from "./AllOrdersInteractor";
 import { AllOnlineOrdersInteractor } from "./AllOnlineOrdersInteractor";
+import { changeOrderStatusInteractor } from "./ChangeOrderStatusInteractor";
 
 export {
     GetReceiptInteractor,
@@ -13,5 +14,6 @@ export {
     OrderHistoryInteractor,
     OnlineOrderHistoryInteractor,
     AllOrdersInteractor,
-    AllOnlineOrdersInteractor
+    AllOnlineOrdersInteractor,
+    changeOrderStatusInteractor
 }

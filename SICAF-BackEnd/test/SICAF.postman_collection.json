@@ -1068,6 +1068,36 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "change-order-status",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 42,\r\n    \"status\": \"Cancelada\", //Pendiente, En preparacion, Completada, Cancelada\r\n    \"comments\": \"Se canceló la compra\" //Opcional\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/SICAF/orders/status",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"SICAF",
+								"orders",
+								"status"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
