@@ -2,6 +2,8 @@ import { OnlineOrderHistoryDto, OrderHistoryDto, SaveOnlineOrderDto, SaveOrderDt
 import { Order } from "../../entities/order";
 
 export interface OrderRepository {
+    findAllOrders(): Promise<OrderHistoryDto[]>;
+    findAllOnlineOrders(): Promise<OnlineOrderHistoryDto[]>;
     getOrderHistoryByClient(client: number): Promise<OrderHistoryDto[]>;
     getOnlineOrderHistoryByClient(client: number): Promise<OnlineOrderHistoryDto[]>;
     saveOrder(order: SaveOrderDto): Promise<Order>;
