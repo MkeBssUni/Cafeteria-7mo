@@ -8,6 +8,7 @@ import { SaveOnlineOrderDto } from "./SaveOnlineOrderDto";
 import { OrderHistoryDto } from "./OrderHistoryDto";
 import { OnlineOrderHistoryDto } from "./OnlineOrderHistoryDto";
 import { FilterDto } from "./FilterDto";
+import { GetHistoryDto } from "./GetHistoryDto";
 
 export {
     OrderProductsDto,
@@ -19,5 +20,6 @@ export {
     SaveOnlineOrderDto,
     OrderHistoryDto,
     OnlineOrderHistoryDto,
-    FilterDto
+    FilterDto,
+    GetHistoryDto
 }

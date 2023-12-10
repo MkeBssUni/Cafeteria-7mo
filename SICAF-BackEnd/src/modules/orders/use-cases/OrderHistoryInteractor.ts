@@ -1,16 +1,22 @@
 import { UseCase } from "../../../kernel/contracts";
-import { OrderHistoryDto } from "../adapters/dto";
+import { validateFilter } from "../../../kernel/validations";
+import { FilterDto, GetHistoryDto, OrderHistoryDto } from "../adapters/dto";
 import { existsUserById } from "../boundary";
 import { OrderRepository } from "./ports/order.repository";
 
-export class OrderHistoryInteractor implements UseCase<number, OrderHistoryDto[]> {
+export class OrderHistoryInteractor implements UseCase<GetHistoryDto, OrderHistoryDto[]> {
     constructor(private readonly orderRepository: OrderRepository) {}
 
-    async execute(client: number): Promise<OrderHistoryDto[]> {
-        if (!client) throw new Error('Missing fields');
-        if (!await existsUserById(client)) throw new Error('User not found');
+    async execute(payload: GetHistoryDto): Promise<OrderHistoryDto[]> {
+        if (!payload.client) throw new Error('Missing fields');
+        if (isNaN(payload.client)) throw new Error('Invalid id');
+        if (!await existsUserById(payload.client)) throw new Error('User not found');
+        if (!payload.filter.filter) throw new Error('Missing fields');
+        if (payload.filter.filter !== 'day' && payload.filter.filter !== 'month' && payload.filter.filter !== 'year' && payload.filter.filter !== 'default') throw new Error('Invalid filter');
+        if (payload.filter.filter !== 'default' && !payload.filter.value) throw new Error('Missing fields');
+        if (!validateFilter(payload.filter)) throw new Error('Invalid date');
         
-        const orders: OrderHistoryDto[] = await this.orderRepository.getOrderHistoryByClient(client);
+        const orders: OrderHistoryDto[] = await this.orderRepository.getOrderHistoryByClient(payload);
 
         for (let i = 0; i < orders.length; i++) {
             (orders[i].total != orders[i].subtotal) ? (orders[i].discount = orders[i].subtotal - orders[i].total) : orders[i].discount = 0;
