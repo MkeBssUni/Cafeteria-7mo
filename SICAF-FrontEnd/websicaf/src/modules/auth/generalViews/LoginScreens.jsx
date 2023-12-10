@@ -21,7 +21,6 @@ const LoginScreens = () => {
       password: yup.string().required("Campo obligatorio"),
     }),
     onSubmit: async (values) => {
-      console.log("Entra aqui", values);
       try {
         const response = await AxiosClient({
           url: "/auth/login",

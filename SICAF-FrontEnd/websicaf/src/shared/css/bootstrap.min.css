@@ -2831,14 +2831,14 @@ textarea.form-control-lg {
 }
 
 .form-check-input:focus {
-  border-color: #86b7fe;
+  border-color: #b0630b;
   outline: 0;
-  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+  box-shadow: 0 0 0 0.25rem rgba(207, 159, 2, 0.25);
 }
 
 .form-check-input:checked {
-  background-color: var(--color-primary);
-  border-color: var(--color-primary);
+  background-color: var(--bs-danger-text-emphasis);
+  border-color: var(--color-secondary);
 }
 
 .form-check-input:checked[type="checkbox"] {

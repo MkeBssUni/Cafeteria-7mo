@@ -339,4 +339,27 @@ html[letter-size='Pequeña'] {
   /* Agrega una transición suave de 0.5 segundos */
 }
 
+.input-user {
+  border: none !important;
+  border-bottom: 2px solid brown !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  color: var(--color-primary) !important;
+  margin-bottom: 15px !important;
+}
 
+.error-text{
+  color: red;
+}
+
+.size-Table{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 90%;
+}
+
+.switch-style{
+  color: #fff!important;
+}

@@ -8,11 +8,9 @@ import { AuthContext } from "../../modules/auth/authContext";
 import ProductDashborad from "../../modules/product/adminViews/ProductDashbBoard";
 import UsersScreens from "../../modules/users/UsersScreens";
 import UserForm from "../../modules/users/components/UserForm";
-import HistoryScreens from "../../modules/History/HistoryScreens";
 import UserEdt from '../../modules/users/components/UserEdt';
 import ProductList from "../../modules/product/clientViews/ProductList";
 import OffersList from "../../modules/offers/OffersList";
-import OrdersScreens from "../../modules/orders/OrdersScreens";
 import ErrorNotFound from './Error/ErrorNotFound';
 import NewPassword from "../../modules/auth/generalViews/NewPassword";
 import OffersDashborard from "./../../modules/offers/adminViews/OffersDashboard"
@@ -20,33 +18,35 @@ import OffersDashborard from "./../../modules/offers/adminViews/OffersDashboard"
 const AppRouter = () => {
   const { user } = useContext(AuthContext);
   const userRole = localStorage.getItem("userRole");
-  const renderUserRoleRouter = (userRole) => {
-    switch (userRole) {
+  let roleDefine = "";
+    if (userRole != null) {
+      const role = userRole || ""; // Asegúrate de que role no sea nulo
+      roleDefine = role.replace(/^"(.*)"$/, "$1");
+    }
+
+  const renderUserRoleRouter = () => {
+    switch (roleDefine) {
       case "Administrador":
         return (
           <>
             <Route path="users" element={<UsersScreens />} />
             <Route path="userform" element={<UserForm />} />
-            <Route path="useredt" element={<UserEdt />} />
+            <Route path="useredt/:datosCifrado" element={<UserEdt />} />
             <Route path="productAdmin" element={<ProductDashborad />} />
-            <Route path="history" element={<HistoryScreens />} />
             <Route path="offersAdmin" element={<OffersDashborard />} />
           </>
         );
       case "Empleado":
         return (
           <>
-            <Route path="orders" element={<OrdersScreens />} />
             <Route path="products" element={<ProductList />} />
             <Route path="offers" element={<OffersList />} />
             <Route path="productAdmin" element={<ProductDashborad />} />
-            <Route path="history" element={<HistoryScreens />} />
           </>
         );
       case "Cliente":
         return (
           <>
-            <Route path="orders" element={<OrdersScreens />} />
             <Route path="products" element={<ProductList />} />
             <Route path="offers" element={<OffersList />} />
           </>
