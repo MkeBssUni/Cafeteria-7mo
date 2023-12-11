@@ -9,6 +9,7 @@ import { DiscountByProductDto } from "./DiscountByProductDto";
 import { DiscountByProductQuantityDto } from "./DiscountByProductQuantityDto";
 import { DiscountByTotalDto } from "./DiscountByTotalDto";
 import { DiscountByRolDto } from "./DiscountByRolDto";
+import { DiscountEmailDto } from "./DiscountEmailDto";
 
 export {
     DiscountsDto,
@@ -22,4 +23,5 @@ export {
     DiscountByProductQuantityDto,
     DiscountByTotalDto,
     DiscountByRolDto
+    DiscountEmailDto
 }

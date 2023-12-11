@@ -15,10 +15,13 @@ const findUserById = UsersStorage.findUserById;
 const findProductById = ProductStorage.findById;
 const findProductsIdByCategory = ProductStorage.getProductsIdByCategory;
 const addDiscountToProduct = ProductStorage.addDiscount;
+const existsRoleById = RoleStorage.existsById;
 const findRoleById = RoleStorage.findById;
 const updateRoleDiscount = RoleStorage.updateDiscount;
 const findRoleByDiscount = RoleStorage.findByDiscount;
 const findProductsByDiscount = ProductStorage.findByDiscount;
+const findUserEmails = UsersStorage.getEmailsByRol;
+
 
 export {
     existsCategoryById,
@@ -28,8 +31,10 @@ export {
     findProductById,
     findProductsIdByCategory,
     addDiscountToProduct,
+    existsRoleById,
     findRoleById,
     updateRoleDiscount,
     findRoleByDiscount,
     findProductsByDiscount
+    findUserEmails
 }

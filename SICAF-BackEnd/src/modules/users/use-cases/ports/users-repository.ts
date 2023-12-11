@@ -19,5 +19,5 @@ export interface UsersRepository {
     updateCart(payload: UpdateCartDto): Promise<ShoppingCart>;
     getCartById(id: number): Promise<ShoppingCart>;
     updateVisualConfigurations(payload: UpdateVisualConfigurationsDto): Promise<UpdateVisualConfigurationsDto>;
-    getEmails(): Promise<string[]>;
+    getEmailsByRol(roles: number[]): Promise<string[]>;
 }

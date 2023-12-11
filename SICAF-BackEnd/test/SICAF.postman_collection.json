@@ -19,7 +19,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"type\": \"Descuento por rol\",\r\n    \"description\": \"Descuento del 15% para todos los empleados activos\",\r\n    \"percentage\": 15,\r\n    \"rol_id\": 2\r\n}",
+									"raw": "{\r\n    \"type\": \"Descuento por rol\",\r\n    \"description\": \"Como agradecimiento por su gran trabajo se les recompensará a todos los empleados de nuestro establecimiento con un 10% de descuento en cualquiera de sus compras.\",\r\n    \"percentage\": 10,\r\n    \"rol_id\": 2\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -49,7 +49,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"type\": \"Descuento por total de la compra\",\r\n    \"description\": \"Descuento del 20% en compras de más de $999.00 MX\",\r\n    \"percentage\": 20,\r\n    \"order_total\": 1000\r\n    //\"start_date\": \"2023-11-10\",\r\n    //\"end_date\": \"2023-11-20\",\r\n    //\"image\": \"data:image/\"\r\n}",
+									"raw": "{\r\n    \"type\": \"Descuento por total de la compra\",\r\n    \"description\": \"En nuestra cafetería llegó el espíritu navideño, por lo que en todas tus compras mayores de $999.00 MX se te aplicará el 20% de descuento... ¡Feliz Navidad!\",\r\n    \"percentage\": 20,\r\n    \"order_total\": 1000,\r\n    \"start_date\": \"2023-12-01\"\r\n    //\"end_date\": \"2023-11-20\",\r\n    //\"image\": \"data:image/\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -57,12 +57,12 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:3000/SICAF/discounts/",
+									"raw": "http://localhost:3001/SICAF/discounts/",
 									"protocol": "http",
 									"host": [
 										"localhost"
 									],
-									"port": "3000",
+									"port": "3001",
 									"path": [
 										"SICAF",
 										"discounts",
@@ -79,7 +79,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"type\": \"Descuento por cantidad de productos\",\r\n    \"description\": \"2 x 1 en brownies\",\r\n    \"percentage\": 50,\r\n    \"products_number\": 2,\r\n    \"products_id\": [3, 4, 5]\r\n    //\"start_date\": \"2023-11-10\",\r\n    //\"end_date\": \"2023-11-20\",\r\n    //\"image\": \"data:image/\"\r\n}",
+									"raw": "{\r\n    \"type\": \"Descuento por cantidad de productos\",\r\n    \"description\": \"2 x 1 en deliciosos brownies de chocolate. nuez, limón en la semana de Navidad\",\r\n    \"percentage\": 50,\r\n    \"products_number\": 2,\r\n    \"products_id\": [3, 4, 5],\r\n    \"start_date\": \"2023-12-24\",\r\n    \"end_date\": \"2023-12-30\"\r\n    //\"image\": \"data:image/\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -87,12 +87,12 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:3000/SICAF/discounts/",
+									"raw": "http://localhost:3001/SICAF/discounts/",
 									"protocol": "http",
 									"host": [
 										"localhost"
 									],
-									"port": "3000",
+									"port": "3001",
 									"path": [
 										"SICAF",
 										"discounts",
@@ -109,7 +109,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"type\": \"Descuento por producto\",\r\n    \"description\": \"Descuento del 30% en todas las galletas navideñas durante Diciembre\",\r\n    \"percentage\": 30,\r\n    \"products_id\": [6, 7],\r\n    \"start_date\": \"2023-12-01\",\r\n    \"end_date\": \"2023-12-31\"\r\n    //\"image\": \"data:image/\"\r\n}",
+									"raw": "{\r\n    \"type\": \"Descuento por producto\",\r\n    \"description\": \"A partir del primero de diciembre 10% de descuento en el pastel de doble chocolate para compartir con la familia en esta época de Navidad.\",\r\n    \"percentage\": 10,\r\n    \"products_id\": [9],\r\n    \"start_date\": \"2023-12-01\"\r\n    //\"end_date\": \"2023-12-31\"\r\n    //\"image\": \"data:image/\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -117,12 +117,12 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:3000/SICAF/discounts/",
+									"raw": "http://localhost:3001/SICAF/discounts/",
 									"protocol": "http",
 									"host": [
 										"localhost"
 									],
-									"port": "3000",
+									"port": "3001",
 									"path": [
 										"SICAF",
 										"discounts",
@@ -139,7 +139,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"type\": \"Descuento por categoria\",\r\n    \"description\": \"Descuento del 20% en todos los pasteles por el día de las madres\",\r\n    \"percentage\": 20,\r\n    \"category_id\": 3,\r\n    \"start_date\": \"2023-05-10\",\r\n    \"end_date\": \"2023-05-10\"\r\n    //\"image\": \"data:image/\"\r\n}",
+									"raw": "{\r\n    \"type\": \"Descuento por categoria\",\r\n    \"description\": \"Descuento del 20% en todos los pasteles en Año Nuevo, festeja con tu familia y un delicioso pastel.\",\r\n    \"percentage\": 20,\r\n    \"category_id\": 3,\r\n    \"start_date\": \"2023-12-31\",\r\n    \"end_date\": \"2023-12-31\"\r\n    //\"image\": \"data:image/\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -147,12 +147,12 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:3000/SICAF/discounts/",
+									"raw": "http://localhost:3001/SICAF/discounts/",
 									"protocol": "http",
 									"host": [
 										"localhost"
 									],
-									"port": "3000",
+									"port": "3001",
 									"path": [
 										"SICAF",
 										"discounts",
@@ -347,7 +347,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"client_id\": 2,\r\n    \"products\": [\r\n        {\r\n            \"id\": 3,\r\n            \"quantity\": 3\r\n        },\r\n        {\r\n            \"id\": 1,\r\n            \"quantity\": 3\r\n        }\r\n    ]\r\n}",
+							"raw": "{\r\n    \"client_id\": 2,\r\n    \"products\": [\r\n        {\r\n            \"id\": 2,\r\n            \"quantity\": 1\r\n        },\r\n        {\r\n            \"id\": 9,\r\n            \"quantity\": 1\r\n        }\r\n    ]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -853,7 +853,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"client_id\": 2,\r\n    \"discount_id\": 5, //opcional\r\n    \"products\": [\r\n        {\r\n            \"id\": 3,\r\n            \"quantity\": 3\r\n        },\r\n        {\r\n            \"id\": 1,\r\n            \"quantity\": 3\r\n        }\r\n    ]\r\n}",
+							"raw": "{\r\n    \"client_id\": 1,\r\n    \"discount_id\": 23, //opcional\r\n    \"products\": [\r\n        {\r\n            \"id\": 2,\r\n            \"quantity\": 1\r\n        },\r\n        {\r\n            \"id\": 9,\r\n            \"quantity\": 1\r\n        }\r\n    ]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -883,7 +883,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"client_id\": 2,\r\n    \"payment_method\": \"Tarjeta de debito\", //Tarjeta de credito o Tarjeta de debito\r\n    \"discount_id\": 5, //opcional\r\n    \"products\": [\r\n        {\r\n            \"id\": 3,\r\n            \"quantity\": 3\r\n        },\r\n        {\r\n            \"id\": 1,\r\n            \"quantity\": 3\r\n        }\r\n    ]\r\n}",
+							"raw": "{\r\n    \"client_id\": 2,\r\n    \"payment_method\": \"Tarjeta de debito\", //Tarjeta de credito o Tarjeta de debito\r\n    \"discount_id\": 26, //opcional\r\n    \"products\": [\r\n        {\r\n            \"id\": 1,\r\n            \"quantity\": 1\r\n        },\r\n        {\r\n            \"id\": 9,\r\n            \"quantity\": 1\r\n        }\r\n    ]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -913,7 +913,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"employee_id\": 2,\r\n    \"client_id\": 3, //opcional\r\n    \"payment_method\": \"Efectivo\", //Efectivo, Tarjeta de credito o Tarjeta de debito\r\n    \"discount_id\": 5, //opcional\r\n    \"products\": [\r\n        {\r\n            \"id\": 3,\r\n            \"quantity\": 3\r\n        },\r\n        {\r\n            \"id\": 1,\r\n            \"quantity\": 3\r\n        }\r\n    ],\r\n    \"comments\": \"Se aplicó un descuento del 3 x 2 en brownies y se envió el recibo por correo\",\r\n    \"send_receipt\": true //opcional en relación al cliente\r\n}",
+							"raw": "{\r\n    \"employee_id\": 2,\r\n    \"client_id\": 1, //opcional\r\n    \"payment_method\": \"Efectivo\", //Efectivo, Tarjeta de credito o Tarjeta de debito\r\n    \"discount_id\": 26, //opcional\r\n    \"products\": [\r\n        {\r\n            \"id\": 1,\r\n            \"quantity\": 1\r\n        },\r\n        {\r\n            \"id\": 9,\r\n            \"quantity\": 1\r\n        }\r\n    ],\r\n    //\"comments\": \"Se aplicó un descuento del 3 x 2 en brownies y se envió el recibo por correo\",\r\n    \"send_receipt\": true //opcional en relación al cliente\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -935,6 +935,131 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "get-presential-orders",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3001/SICAF/orders/presential/day/2023-12-10",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"SICAF",
+								"orders",
+								"presential",
+								"day",
+								"2023-12-10"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-user-history",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3001/SICAF/orders/1/history/month/2023-12",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"SICAF",
+								"orders",
+								"1",
+								"history",
+								"month",
+								"2023-12"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-online-orders",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3001/SICAF/orders/online/year/2023",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"SICAF",
+								"orders",
+								"online",
+								"year",
+								"2023"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-user-online-history",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3001/SICAF/orders/1/online/history/default/*",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"SICAF",
+								"orders",
+								"1",
+								"online",
+								"history",
+								"default",
+								"*"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "change-order-status",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 42,\r\n    \"status\": \"Cancelada\", //Pendiente, En preparacion, Completada, Cancelada\r\n    \"comments\": \"Se canceló la compra\" //Opcional\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/SICAF/orders/status",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"SICAF",
+								"orders",
+								"status"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -948,7 +1073,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\": \"20213tn140@utez.edu.mx\",\r\n    \"password\": \"Ma123\"\r\n}",
+							"raw": "{\r\n    \"email\": \"admin@gmail\",\r\n    \"password\": \"Ma123\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -978,7 +1103,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\": \"sofiasantosriopan10@gmail.com\"\r\n}",
+							"raw": "{\r\n    \"email\": \"santosmarianne03@gmail.com\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1040,16 +1165,42 @@
 			]
 		},
 		{
+			"name": "roles",
+			"item": [
+				{
+					"name": "get-roles",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3001/SICAF/roles/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"SICAF",
+								"roles",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "users",
 			"item": [
 				{
-					"name": "Create Copy",
+					"name": "save-user",
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\":\"sofiasantosriopan10@gmail.com\",\r\n    \"password\":\"C0co\",\r\n    \"role_id\": 3,\r\n    \"person\":{\r\n        \"name\": \"Sofia\",\r\n        \"lastname\": \"Santos\",\r\n        \"gender\": \"F\",\r\n        \"phone_number1\": \"7778459632\",\r\n        \"address\":{\r\n            \"street\":\"Privada Gabino Vázquez\",\r\n            \"settlement\": \"Jiquilpan\",\r\n            \"city\": \"Cuernavaca\",\r\n            \"state\": \"Morelos\",\r\n            \"postal_code\":\"62170\",\r\n            \"country\": \"Mexico\"\r\n        }\r\n    }\r\n}",
+							"raw": "{\r\n    \"email\":\"admin@gmail.com\",\r\n    \"password\":\"Admin123\",\r\n    \"role_id\": 2,\r\n    \"person\":{\r\n        \"name\": \"Linda\",\r\n        \"lastname\": \"Pérez\",\r\n        \"gender\": \"F\",\r\n        \"phone_number1\":\"7771568481\",\r\n        \"address\":{\r\n            \"street\":\"Emiliano Zapata\",\r\n            \"settlement\": \"Ahuehuetitla\",\r\n            \"city\": \"Cuernavaca\",\r\n            \"state\": \"Morelos\",\r\n            \"postal_code\":\"62294\",\r\n            \"country\": \"Mexico\"\r\n        }\r\n    }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1072,7 +1223,7 @@
 					"response": []
 				},
 				{
-					"name": "Get cart Copy",
+					"name": "get-cart",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -1106,7 +1257,7 @@
 					"response": []
 				},
 				{
-					"name": "Get one Copy",
+					"name": "get-user-by-id",
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -1127,7 +1278,7 @@
 					"response": []
 				},
 				{
-					"name": "Change status Copy",
+					"name": "change-status",
 					"request": {
 						"method": "PATCH",
 						"header": [],
@@ -1149,7 +1300,7 @@
 					"response": []
 				},
 				{
-					"name": "Get all Copy",
+					"name": "get-users",
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -1170,7 +1321,7 @@
 					"response": []
 				},
 				{
-					"name": "Get by status Copy",
+					"name": "get-users-by-status",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -1204,7 +1355,7 @@
 					"response": []
 				},
 				{
-					"name": "Update cart Copy",
+					"name": "update-cart",
 					"request": {
 						"method": "PATCH",
 						"header": [],
@@ -1233,19 +1384,26 @@
 						}
 					},
 					"response": []
-				}
-			]
-		},
-		{
-			"name": "roles",
-			"item": [
+				},
 				{
-					"name": "get-roles",
+					"name": "get-user-by-email",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
 						"method": "GET",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"jmassd@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": "http://localhost:3001/SICAF/roles/",
+							"raw": "http://localhost:3001/SICAF/users/getByEmail",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1253,8 +1411,68 @@
 							"port": "3001",
 							"path": [
 								"SICAF",
-								"roles",
-								""
+								"users",
+								"getByEmail"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update-visual-configuration",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"user_id\": 13,\r\n    \"dark_theme\": false,\r\n    \"letter_size\": \"Grande\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/SICAF/users/updateVisualConfigurations",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"SICAF",
+								"users",
+								"updateVisualConfigurations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update-user",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"jda5ssd@gmail.com\",\r\n  \"role_id\": 2,\r\n  \"person\": {\r\n    \"name\": \"Ricardo\",\r\n    \"lastname\": \"Pérez\",\r\n    \"gender\": \"M\",\r\n    \"phone_number1\": \"7771568481\",\r\n    \"address\": {\r\n      \"street\": \"Calle Principal\",\r\n      \"settlement\": \"Colonia Centro\",\r\n      \"external_number\": \"123\",\r\n      \"city\": \"Ciudad de México\",\r\n      \"state\": \"CDMX\",\r\n      \"postal_code\": \"54321\",\r\n      \"country\": \"México\"\r\n    }\r\n  }\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/SICAF/users/13",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"SICAF",
+								"users",
+								"13"
 							]
 						}
 					},

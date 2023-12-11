@@ -4,6 +4,15 @@ import { pool } from '../../../config/bdconfig';
 import { UpdateDiscountDto } from "./dto/UpdateDiscountDto";
 
 export class RoleStorageGateway implements RoleRepository {
+    async existsById(id: number): Promise<boolean> {
+        try {
+            const response = await pool.query('select exists(select 1 from roles where id = $1)', [id]);
+            return response.rows[0].exists;
+        } catch (e) {
+            throw new Error;
+        }
+    }
+
     async findAll(): Promise<Role[]> {
         const client = await pool.connect()
         try {
