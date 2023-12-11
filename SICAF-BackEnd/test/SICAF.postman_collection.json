@@ -938,23 +938,11 @@
 				},
 				{
 					"name": "get-presential-orders",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"value\": \"2023-12-01\", //\"YYYY-MM-DD\",\"YYYY-MM\",\"YYYY\",\"\"\r\n    \"filter\": \"day\" //\"day\",\"month\",\"year\",\"default\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
 						"url": {
-							"raw": "http://localhost:3001/SICAF/orders/presential",
+							"raw": "http://localhost:3001/SICAF/orders/presential/day/2023-12-10",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -963,7 +951,9 @@
 							"path": [
 								"SICAF",
 								"orders",
-								"presential"
+								"presential",
+								"day",
+								"2023-12-10"
 							]
 						}
 					},
@@ -971,23 +961,11 @@
 				},
 				{
 					"name": "get-user-history",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"client\": 1,\r\n    \"filter\": {\r\n        \"value\": \"2023-12\", //\"YYYY-MM-DD\",\"YYYY-MM\",\"YYYY\",\"\"\r\n        \"filter\": \"month\" //\"day\",\"month\",\"year\",\"default\"\r\n    }\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
 						"url": {
-							"raw": "http://localhost:3001/SICAF/orders/history",
+							"raw": "http://localhost:3001/SICAF/orders/1/history/month/2023-12",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -996,7 +974,10 @@
 							"path": [
 								"SICAF",
 								"orders",
-								"history"
+								"1",
+								"history",
+								"month",
+								"2023-12"
 							]
 						}
 					},
@@ -1004,56 +985,11 @@
 				},
 				{
 					"name": "get-online-orders",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"value\": \"\", //\"YYYY-MM-DD\",\"YYYY-MM\",\"YYYY\",\"\"\r\n    \"filter\": \"default\" //\"day\",\"month\",\"year\",\"default\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
 						"url": {
-							"raw": "http://localhost:3001/SICAF/orders/online",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3001",
-							"path": [
-								"SICAF",
-								"orders",
-								"online"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "get-user-online-history",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"client\": 2,\r\n    \"filter\": {\r\n        \"value\": \"2023\", //\"YYYY-MM-DD\",\"YYYY-MM\",\"YYYY\",\"\"\r\n        \"filter\": \"year\" //\"day\",\"month\",\"year\",\"default\"\r\n    }\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:3001/SICAF/orders/online/history",
+							"raw": "http://localhost:3001/SICAF/orders/online/year/2023",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1063,7 +999,33 @@
 								"SICAF",
 								"orders",
 								"online",
-								"history"
+								"year",
+								"2023"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-user-online-history",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3001/SICAF/orders/1/online/history/default/*",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"SICAF",
+								"orders",
+								"1",
+								"online",
+								"history",
+								"default",
+								"*"
 							]
 						}
 					},
@@ -1111,7 +1073,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\": \"20213tn140@utez.edu.mx\",\r\n    \"password\": \"Ma123\"\r\n}",
+							"raw": "{\r\n    \"email\": \"admin@gmail\",\r\n    \"password\": \"Ma123\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1238,7 +1200,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\":\"jda5ssd@gmail.com\",\r\n    \"password\":\"Mamorcito4\",\r\n    \"role_id\": 2 ,\r\n    \"person\":{\r\n        \"name\": \"asdd\",\r\n        \"lastname\": \"Aguario\",\r\n        \"gender\": \"M\",\r\n        \"phone_number1\":\"7771568481\",\r\n        \"address\":{\r\n            \"street\":\"Emiliano Zapata\",\r\n            \"settlement\": \"Ahuehuetitla\",\r\n            \"city\": \"Cuernavaca\",\r\n            \"state\": \"Morelos\",\r\n            \"postal_code\":\"62294\",\r\n            \"country\": \"Mexico\"\r\n        }\r\n    }\r\n}",
+							"raw": "{\r\n    \"email\":\"admin@gmail.com\",\r\n    \"password\":\"Admin123\",\r\n    \"role_id\": 2,\r\n    \"person\":{\r\n        \"name\": \"Linda\",\r\n        \"lastname\": \"Pérez\",\r\n        \"gender\": \"F\",\r\n        \"phone_number1\":\"7771568481\",\r\n        \"address\":{\r\n            \"street\":\"Emiliano Zapata\",\r\n            \"settlement\": \"Ahuehuetitla\",\r\n            \"city\": \"Cuernavaca\",\r\n            \"state\": \"Morelos\",\r\n            \"postal_code\":\"62294\",\r\n            \"country\": \"Mexico\"\r\n        }\r\n    }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
