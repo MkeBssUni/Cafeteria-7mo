@@ -49,6 +49,8 @@ const AppRouter = () => {
             <Route path="products" element={<ProductList />} />
             <Route path="offers" element={<OffersList />} />
             <Route path="productAdmin" element={<ProductDashborad />} />
+            <Route path="historySaleStore" element={<HistorySaleStoreScreen/>}/>
+            <Route path="historySaleOnline" element={<HistorySaleStoreScreen/>}/>
           </>
         );
       case "Cliente":

@@ -5,9 +5,8 @@ import React from 'react'
 const GetUserHistory = async (request) => {
     try {
         const response = await AxiosClient({
-            url:'orders/history',
+          url: `/orders/${request.id}/history/${request.filter}/${request.value}`,
             method: 'GET',
-            data: JSON.stringify(request)
         })
         if (!response.error) return response.data;
       } catch (error) {

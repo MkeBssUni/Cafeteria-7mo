@@ -11,27 +11,55 @@ const option = {
 const HistorySaleStoreScreen = () => {
   const [valorSeleccionado, setValorSeleccionado] = useState("");
   const [pedidosHistorial, setPedidosHistorial] = useState([]);
+
   const handleSelectChange = (event) => {
-    const nuevoValor = event.target.value;
-    setValorSeleccionado(nuevoValor);
-    getPedidos();
+    setValorSeleccionado(event.target.value);
   };
 
-  const initialValues = { value: "2023", filter: "year" };
+  const fecha = new Date();
+  // Obtener el año
+  const añoActual = fecha.getFullYear();
 
-  const getPedidos = async () => {
+  // Obtener la fecha del día en formato 2023-12-10
+  const formatoFechaDia = `${añoActual}-${(fecha.getMonth() + 1)
+    .toString()
+    .padStart(2, "0")}-${fecha.getDate().toString().padStart(2, "0")}`;
+
+  // Obtener el mes en formato 2023-12
+  const formatoFechaMes = `${añoActual}-${(fecha.getMonth() + 1)
+    .toString()
+    .padStart(2, "0")}`;
+
+  const initialValues = {
+    value: "",
+    filter: valorSeleccionado,
+  };
+
+  const getPedidos = async (newInitialValue) => {
     try {
-      const data = await GetPresentialOrders(initialValues);
-      setPedidosHistorial(data);
-      console.log(data);
+      initialValues.value = newInitialValue;
+      if(initialValues.filter != null){
+        const data = await GetPresentialOrders(initialValues);
+        setPedidosHistorial(data);
+      }
     } catch (error) {
-      console.error("Error en el servicio");
+      console.error("Error en el servicio", error);
     }
   };
 
-  useEffect(async () => {
-    await getPedidos();
-  }, []);
+  useEffect(() => {
+    const fetchData = async () => {
+      await getPedidos(
+        valorSeleccionado === "year"
+          ? añoActual
+          : valorSeleccionado === "month"
+          ? formatoFechaMes
+          : formatoFechaDia
+      );
+    };
+
+    fetchData();
+  }, [valorSeleccionado]); 
 
   const columns = React.useMemo(() => [
     {
@@ -47,7 +75,7 @@ const HistorySaleStoreScreen = () => {
       selector: (row) => row.client,
     },
     {
-      name: "Método de Pago",
+      name: "Método de  Pago",
       cell: (row) => <div>{row.payment_method}</div>,
       sortable: true,
       selector: (row) => row.payment_method,
@@ -60,9 +88,9 @@ const HistorySaleStoreScreen = () => {
     },
     {
       name: "Producto",
-      cell: (row) => <div>$ {row.products.name}</div>,
+      cell: (row) => <div>{row.products[0].name}</div>,
       sortable: true,
-      selector: (row) => row.products.name,
+      selector: (row) => row.products[0].name,
     },
     {
       name: "Cantidad",
