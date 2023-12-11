@@ -2,7 +2,7 @@ import { pool } from "../../../config/bdconfig";
 import { OrderTypes } from "../../../kernel/enums";
 import { Order } from "../entities/order";
 import { OrderRepository } from "../use-cases/ports/order.repository";
-import { FilterDto, GetHistoryDto, OnlineOrderHistoryDto, OrderHistoryDto, ReceiptProductsDto, SaveOnlineOrderDto, SaveOrderDto } from "./dto";
+import { ChangeStatusDto, FilterDto, GetHistoryDto, OnlineOrderHistoryDto, OrderDetailsDto, OrderHistoryDto, ReceiptProductsDto, SaveOnlineOrderDto, SaveOrderDto } from "./dto";
 
 export class OrderStorageGateway implements OrderRepository {
     private filter(payload: FilterDto): string {
@@ -78,6 +78,24 @@ export class OrderStorageGateway implements OrderRepository {
         }
     }
 
+    async findById(id: number): Promise<Order> {
+        try {
+            const response = await pool.query("select * from orders where id = $1", [id]);
+            return response.rows[0] as Order;
+        } catch (e) {
+            throw Error;
+        }
+    }
+
+    async findOrderDetailsById(id: number): Promise<OrderDetailsDto[]> {
+        try {
+            const response = await pool.query("select * from order_details where order_id = $1", [id]);
+            return response.rows as OrderDetailsDto[];
+        } catch (e) {
+            throw Error;
+        }
+    }
+
     async saveOrder(payload: SaveOrderDto): Promise<Order> {
         try {
             const { type, employee_id, client_id, products_sold, subtotal, payment_method, discount_id, total, status, send_receipt, comments, products } = payload;
@@ -108,6 +126,16 @@ export class OrderStorageGateway implements OrderRepository {
             return order;
         } catch (e) {
             await pool.query('rollback');
+            throw Error;
+        }
+    }
+
+    async changeOrderStatus(payload: ChangeStatusDto): Promise<Order> {
+        try {
+            const { id, status, comments } = payload;
+            const response = await pool.query("update orders set status = $1, comments = $3 where id = $2 returning *", [status, id, comments]);
+            return response.rows[0] as Order;
+        } catch (e) {
             throw Error;
         }
     }
