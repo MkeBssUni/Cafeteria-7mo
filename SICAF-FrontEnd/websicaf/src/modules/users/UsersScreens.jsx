@@ -36,7 +36,7 @@ const UsersScreens = () => {
         setUsuarios(data); // Update this line to setUsuarios(data.data)
       }
     } catch (error) {
-      console.error("No esta funcionando");
+      console.error("Error en el servicio");
     }
   };
 

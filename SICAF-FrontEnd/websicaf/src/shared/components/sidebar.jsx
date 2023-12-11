@@ -53,7 +53,7 @@ const SidebarSicaf = ({ isOpen, onClose }) => {
 
   const menuItemsGerente = [
     { id: "productAdmin", label: "Productos", icon: <LocalCafeOutlined /> },
-    { id: "link2", label: "Ofertas", icon: <EmojiFoodBeverageOutlined /> },
+    { id: "offersAdmin", label: "Ofertas", icon: <EmojiFoodBeverageOutlined /> },
     { id: "historySaleStore", label: "Historial de ventas en Tienda", icon: <StorefrontIcon/> },
     { id: "historySaleOnline", label: "Historial de ventas Online", icon: <ShoppingBagIcon/> },
     { id: "users", label: "Usuarios", icon: <SupervisedUserCircleOutlined /> },
@@ -62,7 +62,6 @@ const SidebarSicaf = ({ isOpen, onClose }) => {
   const menuItemsEmpleado = [
     { id: "productAdmin", label: "Productos", icon: <LocalCafeOutlined /> },
     { id: "link2", label: "Ofertas", icon: <EmojiFoodBeverageOutlined /> },
-    { id: "link3", label: "Ventas", icon: <CakeOutlined /> },
     { id: "historySaleStore", label: "Historial de ventas en Tienda", icon: <StorefrontIcon/> },
     { id: "historySaleOnline", label: "Historial de ventas Online", icon: <ShoppingBagIcon/> },
   ];

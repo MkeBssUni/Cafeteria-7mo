@@ -58,7 +58,7 @@ const UserForm = () => {
     }),
     onSubmit: async (values) => {
       return await Alert.fire({
-        title: "¿Estas seguro de guardar el producto?",
+        title: "¿Estas seguro de guardar el usuario?",
         text: confirmMsj,
         icon: "warning",
         confirmButtonColor: "#009574",

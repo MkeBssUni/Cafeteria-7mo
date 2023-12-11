@@ -14,6 +14,11 @@ import OffersList from "../../modules/offers/OffersList";
 import ErrorNotFound from './Error/ErrorNotFound';
 import NewPassword from "../../modules/auth/generalViews/NewPassword";
 import OffersDashborard from "./../../modules/offers/adminViews/OffersDashboard"
+import HistorySaleOnline from './../../modules/orders/ordersAdmin/HistorySaleOnline';
+import HistorySaleStoreScreen from './../../modules/orders/ordersAdmin/HistorySaleStoreScreen';
+import HistoryClientStore from "../../modules/orders/ordersClient/HistoryClientStore";
+import HistoryClientOnlineScreen from './../../modules/orders/ordersClient/HistoryClientOnlineScreen';
+import OrdersScreens from './../../modules/orders/ordersClient/OrdersScreens';
 
 const AppRouter = () => {
   const { user } = useContext(AuthContext);
@@ -34,6 +39,8 @@ const AppRouter = () => {
             <Route path="useredt/:datosCifrado" element={<UserEdt />} />
             <Route path="productAdmin" element={<ProductDashborad />} />
             <Route path="offersAdmin" element={<OffersDashborard />} />
+            <Route path="historySaleStore" element={<HistorySaleStoreScreen/>}/>
+            <Route path="historySaleOnline" element={<HistorySaleStoreScreen/>}/>
           </>
         );
       case "Empleado":
@@ -49,6 +56,9 @@ const AppRouter = () => {
           <>
             <Route path="products" element={<ProductList />} />
             <Route path="offers" element={<OffersList />} />
+            <Route path="historyClient" element={<HistoryClientStore/>}/>
+            <Route path="historyClientOnline" element={<HistoryClientOnlineScreen/>}/>
+            <Route path="orders" element={<OrdersScreens/>}/>
           </>
         );
       default:
