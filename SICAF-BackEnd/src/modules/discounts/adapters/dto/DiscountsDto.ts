@@ -1,9 +1,13 @@
-import { Discount } from "../../entities/discount"
+import { DiscountByCategoryDto } from "./DiscountByCategoryDto"
+import { DiscountByProductDto } from "./DiscountByProductDto"
+import { DiscountByProductQuantityDto } from "./DiscountByProductQuantityDto"
+import { DiscountByRolDto } from "./DiscountByRolDto"
+import { DiscountByTotalDto } from "./DiscountByTotalDto"
 
 export type DiscountsDto = {
-    discountsByRol: Discount[],
-    discountsByOrderTotal: Discount[],
-    discountsByProductsNumber: Discount[],
-    discountsByProduct: Discount[],
-    discountsByCategory: Discount[]
+    discountsByRol: DiscountByRolDto[],
+    discountsByOrderTotal: DiscountByTotalDto[],
+    discountsByProductsNumber: DiscountByProductQuantityDto[],
+    discountsByProduct: DiscountByProductDto[],
+    discountsByCategory: DiscountByCategoryDto[]
 }

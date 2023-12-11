@@ -9,6 +9,7 @@ const UsersStorage = new UsersStorageGateway();
 const RoleStorage = new RoleStorageGateway();
 
 const existsCategoryById= CategoriesStorage.existsCategoryById;
+const findCategoryById = CategoriesStorage.getCategoryById;
 const existsProductById = ProductStorage.existsProductById;
 const findUserById = UsersStorage.findUserById;
 const findProductById = ProductStorage.findById;
@@ -16,14 +17,19 @@ const findProductsIdByCategory = ProductStorage.getProductsIdByCategory;
 const addDiscountToProduct = ProductStorage.addDiscount;
 const findRoleById = RoleStorage.findById;
 const updateRoleDiscount = RoleStorage.updateDiscount;
+const findRoleByDiscount = RoleStorage.findByDiscount;
+const findProductsByDiscount = ProductStorage.findByDiscount;
 
 export {
     existsCategoryById,
+    findCategoryById,
     existsProductById,
     findUserById,
     findProductById,
     findProductsIdByCategory,
     addDiscountToProduct,
     findRoleById,
-    updateRoleDiscount
+    updateRoleDiscount,
+    findRoleByDiscount,
+    findProductsByDiscount
 }
