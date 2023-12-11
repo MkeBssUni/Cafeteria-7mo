@@ -37,8 +37,8 @@ function CupCakesList({ discounts }) {
                                                 <Row>
                                                     <Col xs={12} md={3}>
                                                         <div className="imagewithoffer">
-                                                            {discounts[cardIndex].image && <Image className='image_product_offers my-2 ms-3 shadow' src={discounts[cardIndex].image ? discounts[cardIndex].imag : Image2} roundedCircle />}
-                                                            {discounts[cardIndex].image && <div className="notification-icon shadow">-{discounts[cardIndex].percentage}%</div>}
+                                                            <Image className='image_product_offers my-2 ms-3 shadow' src={discounts[cardIndex].image ? discounts[cardIndex].imag : Image2} roundedCircle />
+                                                            {discounts[cardIndex].percentage && <div className="notification-icon shadow">-{discounts[cardIndex].percentage}%</div>}
                                                         </div>
                                                     </Col>
                                                     <Col xs={12} md={8} className='mx-2 ms-3 my-3'>

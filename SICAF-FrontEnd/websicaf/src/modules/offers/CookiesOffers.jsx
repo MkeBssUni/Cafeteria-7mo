@@ -39,16 +39,16 @@ function CookiesOffers({ discounts }) {
                       key={discounts[cardIndex].id}
                     >
                       <div
-                        className="product col-12 col-sm-6 col-md-12 col-lg-12 mb-4">
+                        className="product col-12 col-sm-6 col-md-12 col-lg-12 mb-4 my-4">
                         {/* Utiliza products[cardIndex] para acceder a los datos */}
                         <Row>
                           <Col xs={12} md={3}>
                             <div className="imagewithoffer">
-                              {discounts[cardIndex].image && <Image className='image_product_offers my-2 ms-3 shadow' src={discounts[cardIndex].image ? discounts[cardIndex].imag : Image2} roundedCircle />}
-                              {discounts[cardIndex].image && <div className="notification-icon shadow">-{discounts[cardIndex].percentage}%</div>}
+                              <Image className='image_product_offers my-2 ms-3 shadow' src={discounts[cardIndex].image ? discounts[cardIndex].imag : Image2} roundedCircle />
+                              {discounts[cardIndex].percentage && <div className="notification-icon shadow">-{discounts[cardIndex].percentage}%</div>}
                             </div>
                           </Col>
-                          <Col xs={12} md={8} className='mx-2'>
+                          <Col xs={12} md={8} className='mx-2 ms-3 my-3'>
                             <p className='info_products_offers mt-2 ms-3' style={{ display: 'inline-block' }}>{discounts[cardIndex].description}</p>
                           </Col>
                         </Row>
