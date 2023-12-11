@@ -299,4 +299,13 @@ export class ProductsStorageGateway implements ProductsRepository{
         }
     }
 
+    async findByDiscount(discount: number): Promise<Product[]> {
+        try {
+            const response = await pool.query("select * from products where discount_id = $1", [discount]);
+            return response.rows as Product[];
+        } catch (e) {
+            throw Error
+        }
+    }
+
 }

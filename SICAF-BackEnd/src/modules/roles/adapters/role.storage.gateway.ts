@@ -37,6 +37,18 @@ export class RoleStorageGateway implements RoleRepository {
         }
     }
 
+    async findByDiscount(discount: number): Promise<Role> {
+        const client = await pool.connect()
+        try {
+            const result = await client.query('select * from roles where discount_id = $1', [discount]);
+            return result.rows[0] as Role;
+        } catch (e) {
+            throw new Error;
+        } finally {
+            client.release();
+        }
+    }
+
     async updateDiscount(payload: UpdateDiscountDto): Promise<Role> {
         const client = await pool.connect()
         try {

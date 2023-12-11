@@ -24,4 +24,5 @@ export interface ProductsRepository {
     searchByName: (name: string) => Promise<GetProductWithCategoryDto[]>
     addDiscount: (payload: addDiscountDto) => Promise<boolean>
     updateStock: (payload: UpdateStockDto) => Promise<boolean>
+    findByDiscount: (discount: number) => Promise<Product[]>
 }
