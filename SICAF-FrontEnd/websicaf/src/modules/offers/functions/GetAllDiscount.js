@@ -6,8 +6,9 @@ const GetAllDiscount = async () => {
       url: "discounts/",
       method: "GET",
     });
-    if (!response.error) return response;
+    if (!response.error) return response.data;
   } catch (error) {
     console.log(error);
   }
 };
+ export default GetAllDiscount;

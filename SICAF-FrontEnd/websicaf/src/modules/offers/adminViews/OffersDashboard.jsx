@@ -1,35 +1,78 @@
 import React, { useEffect, useState } from 'react'
-import { Container, Row, Col, Image, Form, InputGroup, Button, Tooltip, Card } from 'react-bootstrap';
+import { Container, Row, Col, Image, Form, InputGroup, Button, Tooltip, Card, OverlayTrigger } from 'react-bootstrap';
 import FeatherIcon from "feather-icons-react";
 
 import RegisterDiscount from './RegisterDiscount';
+import EnableOrDisableDiscount from '../functions/EnableOrDisableDiscount'
+import GetAllDiscount from '../functions/GetAllDiscount';
+
+import NotRegisters from "../../../shared/components/Error/NotRegisters";
+import logo from '../../../assets/logo-sicaf.png'
+
 import Alert, { confirmTitle, changeStatusFalse, changeStatusTrue, } from "../../../shared/plugins/Alert";
 import fondo from '../../../assets/fondo.jpg';
 
 const OffersDashborard = () => {
     const [modalShow, setModalShow] = useState(false);
-    const [products, setProducts] = useState([]);
-    const [overlay, setOverlay] = useState(true);
-    const [categories, setCategories] = useState([]);
+    const [discounts, setDiscounts] = useState([]);
     const [category, setCategory] = useState("Todos");
     const [selectedProductId, setSelectedProductId] = useState(null);
     const [searchTerm, setSearchTerm] = useState('');
     const [originalList, setOriginalList] = useState([])
+    const [disc, setDisc] = useState({})
+    const [arraydisCounts, setarraydisCounts] = useState([]);
+
 
     const getDiscountByType = async () => {
         switch (category) {
             case "Todos":
+                var gets = await GetAllDiscount();
+                var byRol = gets.discountsByRol || [];
+                var byCategory = gets.discountsByCategory || [];
+                var byTotal = gets.discountsByOrderTotal || [];
+                var byCantByProducts = gets.discountsByProductsNumber || [];
+                var byProduct = gets.discountsByProduct || [];
+                var descuentos = [...byRol, ...byCategory, ...byTotal, ...byCantByProducts, ...byProduct];
+                setDiscounts(descuentos)
+                setOriginalList(descuentos)
                 break;
             case "Descueto por rol":
+                GetAllDiscount().then((products) => setDisc(products));
+                setDiscounts(disc.discountsByRol)
+                break;
             case "Descuento por categoria":
+                GetAllDiscount().then((products) => setDisc(products));
+                setDiscounts(disc.discountsByCategory)
+                break;
             case "Descuento por total de compra":
+                GetAllDiscount().then((products) => setDisc(products));
+                setDiscounts(disc.discountsByOrderTotal)
+                break
             case "Descuento por cantidad de productos":
+                GetAllDiscount().then((products) => setDisc(products));
+                setDiscounts(disc.discountsByProductsNumber)
+                break
             case "Descuento por producto":
-                console.log('por tipo');
+                GetAllDiscount().then((products) => setDisc(products));
+                disc.discountsByProduct.forEach((discount) => arraydisCounts.push(discount))
+                setDiscounts(disc.discountsByProduct, 'by prod')
+                break;
+            case "busqueda":
+                const filteredDiscounts = originalList.filter(discount =>
+                    discount.description.toLowerCase().includes(searchTerm.toLowerCase())
+                );
+                setDiscounts(filteredDiscounts);
                 break;
             default:
-                console.log("todos los descuentos");
-
+                gets = await GetAllDiscount();
+                byRol = gets.discountsByRol || [];
+                byCategory = gets.discountsByCategory || [];
+                byTotal = gets.discountsByOrderTotal || [];
+                byCantByProducts = gets.discountsByProductsNumber || [];
+                byProduct = gets.discountsByProduct || [];
+                descuentos = [...byRol, ...byCategory, ...byTotal, ...byCantByProducts, ...byProduct];
+                setDiscounts(descuentos)
+                setOriginalList(descuentos)
         }
     }
 
@@ -46,26 +89,31 @@ const OffersDashborard = () => {
             backdrop: true,
             showCancelButton: true,
             showLoaderOnConfirm: true,
-            /* preConfirm: async () => {
-              const response = await enableOrDisableProduct(id);
-              if (!response.error) {
-                getProducts().then((products) => setProducts(products));
-              }
-            }, */
+            preConfirm: async () => {
+                const response = await EnableOrDisableDiscount(id);
+                if (!response.error) {
+                    const disc = await GetAllDiscount();
+                    const arraydisCounts = [];
+                    Object.values(disc).forEach((discountArray) => {
+                        arraydisCounts.push(...discountArray);
+                    });
+                    setDiscounts(arraydisCounts);
+                }
+            },
         });
     };
 
     const renderTooltip = (props) => (
         <Tooltip id="button-top" {...props}>
             {props.status
-                ? "El producto es visible para los usuarios"
-                : "El producto no es visible para los usuarios"}
+                ? "El Descuento es visible para los usuarios"
+                : "El Descuento no es visible para los usuarios"}
         </Tooltip>
     );
 
     useEffect(() => {
-
-    }, []);
+        getDiscountByType();
+    }, [searchTerm, category]);
 
 
     return (<>
@@ -89,7 +137,7 @@ const OffersDashborard = () => {
                                 value={searchTerm}
                                 onChange={({ target }) => {
                                     setSearchTerm(target.value);
-                                    setCategory(target.value.length === 0 ? 7 : 0);
+                                    setCategory(target.value.length > 0 ? 'busqueda' : "Todos");
                                 }}
                             />
                             <Button className="input-search">
@@ -97,7 +145,9 @@ const OffersDashborard = () => {
                             </Button>
                         </InputGroup>
                     </Form.Group>
-                    <Form.Select className="input-search text-center mx-4">
+                    <Form.Select className="input-search text-center mx-4" onChange={({ target }) => {
+                        setCategory(target.value);
+                    }}>
                         <option value='Todos'>Todos los descuentos</option>
                         <option value='Descueto por rol'>Descueto por rol</option>
                         <option value='Descuento por total de compra'>Descuento por total de compra</option>
@@ -117,27 +167,79 @@ const OffersDashborard = () => {
                     >
                         Registrar <FeatherIcon icon="plus-circle" />
                     </Button>
-                </div>
-                <div className='product-list-admin'>
-                    <Row>
-                        <Col className='my-2' xs={12} sm={12} md={6} lg={4} xl={4} xxl={4}>
-                            <Card className='productCard shadow'>
-                                <Card.Body>This is some text within a card body.</Card.Body>
-                            </Card>
-                        </Col>
-                        <Col className='my-2' xs={12} sm={12} md={6} lg={4} xl={4} xxl={4}>
-                            <Card className='productCard shadow'>
-                                <Card.Body>This is some text within a card body.</Card.Body>
-                            </Card>
-                        </Col>
-                        <Col className='my-2' xs={12} sm={12} md={6} lg={4} xl={4} xxl={4}>
-                            <Card className='productCard shadow'>
-                                <Card.Body>This is some text within a card body.</Card.Body>
-                            </Card>
-                        </Col>
-                    </Row>
+                </div>{discounts.length > 0 ? (
 
-                </div>
+                    <div className='product-list-admin'><Row>
+                        {discounts.map((discount) => (
+                            <Col className='my-2' xs={12} sm={12} md={6} lg={4} xl={4} xxl={4} key={discount.id} >
+                                <Card className='productCard shadow'>
+                                    <Card.Body>
+                                        <Row>
+                                            <Col xs={12} md={3}>
+                                                <div className="imagewithoffer mt-2">
+                                                    <Image className='image_product_offers my-2 ms-3 shadow' src={discount.image ? (discount.image) : logo} roundedCircle />
+                                                    <div className="notification-icon shadow">-{discount.percentage}%</div>
+                                                </div>
+                                            </Col>
+                                            <Col xs={12} md={8} className='mx-2'>
+                                                <div>
+                                                    <p className='info_products_offers mt-2'>{discount.description}</p>
+                                                </div>
+                                                <div>
+                                                    <Row>
+                                                        <Col className="text-center">
+                                                            <Button
+                                                                className="py-0"
+                                                                variant="outline-primary"
+                                                                onClick={() => setSelectedProductId(discount.id)}
+                                                            >
+                                                                Editar<FeatherIcon icon="edit-3" size={17} />
+                                                            </Button>
+                                                        </Col>
+                                                        <Col>
+                                                            <OverlayTrigger
+                                                                placement="top"
+                                                                delay={{ show: 250, hide: 150 }}
+                                                                overlay={(props) =>
+                                                                    renderTooltip({ ...props, status: discount.status })
+                                                                }
+                                                            >
+                                                                <Button
+                                                                    className="py-0 px-1 ms-2"
+                                                                    variant={
+                                                                        discount.status
+                                                                            ? "outline-success"
+                                                                            : "outline-danger"
+                                                                    }
+                                                                    onClick={() => changeStatus(discount.id, discount.status)}
+                                                                >
+                                                                    {discount.status ? (
+                                                                        <>
+                                                                            Activo <FeatherIcon icon="check" size={17} />
+                                                                        </>
+                                                                    ) : (
+                                                                        <>
+                                                                            Inactivo <FeatherIcon icon="x" size={17} />
+                                                                        </>
+                                                                    )}
+                                                                </Button>
+                                                            </OverlayTrigger>
+                                                            {/*  <UpdateProduct changed={product}
+                                                            show={selectedProductId === product.id}
+                                                            onHide={() => setSelectedProductId(null)} /> */}
+                                                        </Col>
+                                                    </Row>
+                                                </div>
+                                            </Col>
+                                        </Row>
+                                    </Card.Body>
+                                </Card>
+                            </Col>
+                        ))}</Row>
+                    </div>
+                ) : (
+                    <NotRegisters />
+                )}
 
             </Container>
         </body>
