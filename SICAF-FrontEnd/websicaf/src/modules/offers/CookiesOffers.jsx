@@ -1,90 +1,77 @@
-import { Row, Col, Image, Carousel } from "react-bootstrap";
-import Image1 from "../../assets/Products/galletas2.jpeg";
-import Image2 from "../../assets/Products/galletas2.png";
+import { useEffect, useState } from "react";
+import { Container, Row, Col, Image, Carousel } from "react-bootstrap";
 
-function CookiesList() {
+import NoRegisters from "../../shared/components/Error/NotRegisters";
+import Image2 from "../../assets/logo-sicaf.png";
+import coffe from "../../assets/cafe (1).png"
+
+
+
+
+function CookiesOffers({ discounts }) {
+  console.log(discounts);
+  const productNull = {
+    image: "",
+    id: 0,
+    description: "Parece que no hay muchas ofertas...por ahora"
+  }
+
+  if (Array.isArray(discounts) && discounts.length) {
+    console.log('Entro aca', discounts);
+    if (discounts.length % 2 === 1) {
+      discounts.push(productNull);
+      console.log(discounts);
+    }
+  }
   return (
     <>
-      <Carousel /* fade */ pause="hover" variant='dark'  >
-      <Carousel.Item interval={8500}>
-          <Row className="d-flex justify-content-center mt-2 mb-4 ">
-            <Col xs={12} col={12} md={5} lg={4} className="text-center mx-2 my-4">
-             <div className="product col-sm-6 col-md-12 d-flex align-items-center">
-                <Row>
-                  <Col xs={12} md={3} className="mx-2">
-                    <div className="imagewithoffer">
-                      <Image
-                        className="image_product_offers my-2 ms-3 shadow"
-                        src={Image2}
-                        roundedCircle
-                      />
-                      <div className="notification-icon shadow">-50%</div>
-                    </div>
-                  </Col>
-                  <Col xs={12} md={8} className="mx-2">
-                    <div>
-                      <p
-                        className="info_products_offers mt-2"
-                        style={{ display: "inline-block" }}
-                      >
-                        Galletas mosntruo.........
-                      </p>
-                      <p
-                        style={{ display: "inline-block", marginLeft: "10px" }}
-                      >
-                        $150.00
-                      </p>
-                    </div>
-                    <div>
-                      <small className="info_products_offers">
-                        Galletas tipo brownie con nutella (12pzs)
-                      </small>
-                    </div>
-                  </Col>
+      <Carousel>
+        {discounts.length > 0 ?
+          Array.from({ length: Math.ceil(discounts.length / 2) }).map(
+            (_, index) => (
+              <Carousel.Item key={index}>
+                <Row className="d-flex justify-content-center">
+                  {[index * 2, index * 2 + 1].map((cardIndex) => (
+                    <Col
+                      xs={12}
+                      md={4}
+                      className="text-center mx-2 mt-2 mb-4"
+                      key={discounts[cardIndex].id}
+                    >
+                      <div
+                        className="product col-12 col-sm-6 col-md-12 col-lg-12 mb-4">
+                        {/* Utiliza products[cardIndex] para acceder a los datos */}
+                        <Row>
+                          <Col xs={12} md={3}>
+                            <div className="imagewithoffer">
+                              {discounts[cardIndex].image && <Image className='image_product_offers my-2 ms-3 shadow' src={discounts[cardIndex].image ? discounts[cardIndex].imag : Image2} roundedCircle />}
+                              {discounts[cardIndex].image && <div className="notification-icon shadow">-{discounts[cardIndex].percentage}%</div>}
+                            </div>
+                          </Col>
+                          <Col xs={12} md={8} className='mx-2'>
+                            <p className='info_products_offers mt-2 ms-3' style={{ display: 'inline-block' }}>{discounts[cardIndex].description}</p>
+                          </Col>
+                        </Row>
+                      </div>
+                    </Col>
+                  ))}
                 </Row>
-              </div>
-            </Col>
-            <Col  xs={12} col={12} md={5} lg={4} className="text-center mx-2 my-4">
-              <div className="product">
-                <Row>
-                  <Col xs={12} md={3} className="mx-2">
-                    <div className="imagewithoffer">
-                      <Image
-                        className="image_product_offers my-2 ms-3 shadow"
-                        src={Image1}
-                        roundedCircle
-                      />
-                      <div className="notification-icon shadow">-30%</div>
-                    </div>
-                  </Col>
-                  <Col xs={12} md={8} className="mx-2">
-                    <div>
-                      <p
-                        className="info_products_offers mt-2"
-                        style={{ display: "inline-block" }}
-                      >
-                        Surtido de galletas .........
-                      </p>
-                      <p
-                        style={{ display: "inline-block", marginLeft: "10px" }}
-                      >
-                        $150.00
-                      </p>
-                    </div>
-                    <div>
-                      <small className="info_products_offers mb-5">
-                        6 tipos de galletas sorpresa(12pzs)
-                      </small>
-                    </div>
-                  </Col>
-                </Row>
-              </div>
-            </Col>
-          </Row>
-          </Carousel.Item>
+              </Carousel.Item>
+            )
+          )
+          : (
+
+            <div>
+              <h4>Vaya...parece que no hay registros</h4>
+              <Image className='image_product_offers my-2 ms-3' src={coffe} />
+            </div>
+
+
+          )
+        }
       </Carousel>
     </>
   );
 }
 
-export default CookiesList;
+export default CookiesOffers

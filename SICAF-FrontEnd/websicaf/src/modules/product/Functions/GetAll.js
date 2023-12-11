@@ -6,8 +6,7 @@ const productNull={
   image:"",
   id: 0,
   description:""
-}
-
+} 
  const getProductsByCategoryAndstatus = async (request) => {
   try {
     const response = await AxiosClient({

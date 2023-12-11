@@ -366,3 +366,7 @@ html[letter-size='Pequeña'] {
 .notRegisters{
   width: 50% !important;
 }
+
+.notRegistersCarousel{
+  width: 20% !important;
+}
