@@ -28,7 +28,9 @@ export class OrderController {
 
     static getAllOrders = async (req: Request, res: Response) => {
         try {
-            const payload: FilterDto = {...req.body};
+            const value: string = req.params.value ? req.params.value : '';
+            const filter: string = req.params.filter;
+            const payload: FilterDto = { value, filter };
             const repository: OrderRepository = new OrderStorageGateway();
             const interactor: AllOrdersInteractor = new AllOrdersInteractor(repository);
             const orders: OrderHistoryDto[] = await interactor.execute(payload);
@@ -47,7 +49,9 @@ export class OrderController {
 
     static getAllOnlineOrders = async (req: Request, res: Response) => {
         try {
-            const payload: FilterDto = {...req.body};
+            const filter: string = req.params.filter;
+            const value: string = req.params.value;
+            const payload: FilterDto = { value, filter };
             const repository: OrderRepository = new OrderStorageGateway();
             const interactor: AllOnlineOrdersInteractor = new AllOnlineOrdersInteractor(repository);
             const orders: OnlineOrderHistoryDto[] = await interactor.execute(payload);
@@ -66,7 +70,12 @@ export class OrderController {
 
     static getOrderHistoryByClient = async (req: Request, res: Response) => {
         try {
-            const payload: GetHistoryDto = {...req.body};
+            const client: number = Number(req.params.id);
+            const filter: FilterDto = {
+                value: req.params.value,
+                filter: req.params.filter
+            }
+            const payload: GetHistoryDto = { client, filter };
             const repository: OrderRepository = new OrderStorageGateway();
             const interactor: OrderHistoryInteractor = new OrderHistoryInteractor(repository);
             const orders: OrderHistoryDto[] = await interactor.execute(payload);
@@ -85,7 +94,12 @@ export class OrderController {
 
     static getOnlineOrderHistoryByClient = async (req: Request, res: Response) => {
         try {
-            const payload: GetHistoryDto = {...req.body};
+            const client: number = Number(req.params.id);
+            const filter: FilterDto = {
+                value: req.params.value,
+                filter: req.params.filter
+            }
+            const payload: GetHistoryDto = { client, filter };
             const repository: OrderRepository = new OrderStorageGateway();
             const interactor: OnlineOrderHistoryInteractor = new OnlineOrderHistoryInteractor(repository);
             const orders: OnlineOrderHistoryDto[] = await interactor.execute(payload);
