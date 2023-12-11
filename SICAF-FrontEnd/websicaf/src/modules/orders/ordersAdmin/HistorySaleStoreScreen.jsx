@@ -21,7 +21,6 @@ const HistorySaleStoreScreen = () => {
 
   const getPedidos = async () => {
     try {
-      console.log(initialValues);
       const data = await GetPresentialOrders(initialValues);
       setPedidosHistorial(data);
       console.log(data);

@@ -7,8 +7,11 @@ const GetPresentialOrders = async(request) => {
       console.log(JSON.stringify(request))
         const response = await AxiosClient({
             url:'orders/presential',
-            method: 'GET',
-            data: JSON.stringify(request)
+            method:'GET',
+            data:JSON.stringify(request),
+            headers: {
+              'Content-Type': 'application/json',
+          },
         })
         console.log(response)
         if (!response.error) return response.data;
