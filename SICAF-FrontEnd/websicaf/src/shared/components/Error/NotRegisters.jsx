@@ -5,19 +5,18 @@ import { Container, Row, Col } from 'react-bootstrap';
 
 const NoRegisters = () => {
     return (
-        <Container>
+        <div className=' ps-5 d-flex align-items-center justify-content-center mt-5'>
             <Row>
                 <Col>
                     <h1>Vaya...parece que no hay registros</h1>
-                    <br />
                 </Col>
             </Row>
             <Row className='mt-3'>
                 <Col>
-                    <Figure.Image alt="ERROR404" src={errorImage404} className='notRegisters ' />
+                    <Figure.Image alt="ERROR404" src={errorImage404} className='notRegisters' />
                 </Col>
             </Row>
-        </Container>
+        </div>
 
     )
 }

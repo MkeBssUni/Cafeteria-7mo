@@ -19,43 +19,35 @@ const OffersDashborard = () => {
     const [selectedProductId, setSelectedProductId] = useState(null);
     const [searchTerm, setSearchTerm] = useState('');
     const [originalList, setOriginalList] = useState([])
-    const [disc, setDisc] = useState({})
-    const [arraydisCounts, setarraydisCounts] = useState([]);
 
 
     const getDiscountByType = async () => {
+        var gets = await GetAllDiscount();
+        var byRol = gets.discountsByRol || [];
+        var byCategory = gets.discountsByCategory || [];
+        var byTotal = gets.discountsByOrderTotal || [];
+        var byCantByProducts = gets.discountsByProductsNumber || [];
+        var byProduct = gets.discountsByProduct || [];
         switch (category) {
             case "Todos":
-                var gets = await GetAllDiscount();
-                var byRol = gets.discountsByRol || [];
-                var byCategory = gets.discountsByCategory || [];
-                var byTotal = gets.discountsByOrderTotal || [];
-                var byCantByProducts = gets.discountsByProductsNumber || [];
-                var byProduct = gets.discountsByProduct || [];
                 var descuentos = [...byRol, ...byCategory, ...byTotal, ...byCantByProducts, ...byProduct];
                 setDiscounts(descuentos)
                 setOriginalList(descuentos)
                 break;
             case "Descueto por rol":
-                GetAllDiscount().then((products) => setDisc(products));
-                setDiscounts(disc.discountsByRol)
+                setDiscounts(byRol)
                 break;
             case "Descuento por categoria":
-                GetAllDiscount().then((products) => setDisc(products));
-                setDiscounts(disc.discountsByCategory)
+                setDiscounts(byCategory)
                 break;
             case "Descuento por total de compra":
-                GetAllDiscount().then((products) => setDisc(products));
-                setDiscounts(disc.discountsByOrderTotal)
+                setDiscounts(byTotal)
                 break
             case "Descuento por cantidad de productos":
-                GetAllDiscount().then((products) => setDisc(products));
-                setDiscounts(disc.discountsByProductsNumber)
+                setDiscounts(byCantByProducts)
                 break
             case "Descuento por producto":
-                GetAllDiscount().then((products) => setDisc(products));
-                disc.discountsByProduct.forEach((discount) => arraydisCounts.push(discount))
-                setDiscounts(disc.discountsByProduct, 'by prod')
+                setDiscounts(byProduct)
                 break;
             case "busqueda":
                 const filteredDiscounts = originalList.filter(discount =>
@@ -74,6 +66,8 @@ const OffersDashborard = () => {
                 setDiscounts(descuentos)
                 setOriginalList(descuentos)
         }
+        console.log('discounts.length > 0',discounts.length > 0);
+        console.log(discounts);
     }
 
     const changeStatus = async (id, status) => {
