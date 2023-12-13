@@ -1,15 +1,14 @@
 import { useEffect, useState } from "react";
 import { Container, Row, Col, Image, Carousel } from "react-bootstrap";
 
-import NoRegisters from "../../shared/components/Error/NotRegisters";
-import Image2 from "../../assets/logo-sicaf.png";
-import coffe from "../../assets/cafe (1).png"
+import NoRegisters from "../../../shared/components/Error/NotRegisters";
+import Image2 from "../../../assets/logo-sicaf.png";
+import coffe from "../../../assets/cafe (1).png"
 
 
 
 
 function CookiesOffers({ discounts }) {
-  console.log(discounts);
   const productNull = {
     image: "",
     id: 0,
@@ -17,12 +16,12 @@ function CookiesOffers({ discounts }) {
   }
 
   if (Array.isArray(discounts) && discounts.length) {
-    console.log('Entro aca', discounts);
     if (discounts.length % 2 === 1) {
       discounts.push(productNull);
-      console.log(discounts);
     }
   }
+
+
   return (
     <>
       <Carousel>
@@ -44,11 +43,11 @@ function CookiesOffers({ discounts }) {
                         <Row>
                           <Col xs={12} md={3}>
                             <div className="imagewithoffer">
-                              <Image className='image_product_offers my-2 ms-3 shadow' src={discounts[cardIndex].image ? discounts[cardIndex].imag : Image2} roundedCircle />
+                              <Image className='image_product_offers my-3 ms-3 shadow' src={discounts[cardIndex].image ? discounts[cardIndex].imag : Image2} roundedCircle />
                               {discounts[cardIndex].percentage && <div className="notification-icon shadow">-{discounts[cardIndex].percentage}%</div>}
                             </div>
                           </Col>
-                          <Col xs={12} md={8} className='mx-2 ms-3 my-3'>
+                          <Col xs={12} md={8} className='ms-2 my-4 px-4 pt-2'>
                             <p className='info_products_offers mt-2 ms-3' style={{ display: 'inline-block' }}>{discounts[cardIndex].description}</p>
                           </Col>
                         </Row>

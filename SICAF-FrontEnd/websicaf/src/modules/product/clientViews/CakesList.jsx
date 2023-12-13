@@ -5,7 +5,8 @@ import logo from "../../../assets/logo-sicaf.png"
 import Image1 from "../../../assets/Products/pastel1.jpeg";
 import Image2 from "../../../assets/Products/pastel2.jpeg";
 
-function CupCakesList({products}) {
+function CupCakesList({ products }) {
+  const [selectedProductId, setSelectedProductId] = useState(null);
   return (
     <>
       <Carousel>
@@ -30,7 +31,7 @@ function CupCakesList({products}) {
                           <Col xs={12} md={3}>
                             <Image
                               className="image_product_offers my-2 ms-3 shadow"
-                              src={products[cardIndex].image.length>50?products[cardIndex].image:logo }
+                              src={products[cardIndex].image.length > 50 ? products[cardIndex].image : logo}
                               roundedCircle
                             />
                           </Col>
@@ -40,7 +41,7 @@ function CupCakesList({products}) {
                                 className="info_products_offers"
                                 style={{ display: "inline-block" }}
                               >
-                               {products[cardIndex].name}
+                                {products[cardIndex].name}
                               </p>
                               <p
                                 style={{
@@ -53,7 +54,7 @@ function CupCakesList({products}) {
                             </div>
                             <div>
                               <small className="info_products_offers">
-                               {products[cardIndex].description.length<60 ? products[cardIndex].description : products[cardIndex].description.substring(0,60)+'...'}
+                                {products[cardIndex].description.length < 60 ? products[cardIndex].description : products[cardIndex].description.substring(0, 60) + '...'}
                               </small>
                             </div>
                           </Col>

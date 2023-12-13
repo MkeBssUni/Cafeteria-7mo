@@ -6,14 +6,15 @@ import Alert, { confirmMsg, confirmTitle, errorMsg, errorTitle, successMsg, succ
 import Image1 from "../../../assets/Products/pastel1.jpeg";
 import CreateProduct from "../Functions/CreateProduct";
 
-function ProductDetail(props) {
+function ProductDetail({ show, onHide,product }) {
+    console.log(product,'product',show,onHide);
     const [count, setCount] = useState(0);
     return (
         <>
             <Modal
-                keyboard={false}
-                show={props.show}
-                onHide={props.onHide}
+                 keyboard={false}
+                 show={show}
+                 onHide={onHide}
                 size="lg"
                 aria-labelledby="contained-modal-title-vcenter"
                 centered>
@@ -24,13 +25,13 @@ function ProductDetail(props) {
                     <Row>
                         <Col xs={12} sm={12} md={5} lg={5} xl={5} xxl={5} >
                             <Form.Label className="mb">Nombre</Form.Label>
-                            <Form.Control placeholder={props.product.name} disabled />
+                            <Form.Control placeholder={product.name} disabled />
                             <Form.Label className="mb mt-3">Descripción</Form.Label>
-                            <Form.Control as="textarea" rows={4} placeholder={props.product.description} disabled />
+                            <Form.Control as="textarea" rows={4} placeholder={product.description} disabled />
                         </Col>
                         <Col xs={12} sm={12} md={7} lg={7} xl={7} xxl={7} >
                             <Image
-                                src={props.product.image.length > 20 ? (props.product.image) : (Image1)}
+                                src={product.image.length > 20 ? (product.image) : (Image1)}
                                 className=" image-product-modal mt-4"
                                 rounded
                             />
@@ -41,7 +42,7 @@ function ProductDetail(props) {
                             <Form.Label className="mb">Precio</Form.Label>
                             <InputGroup className="mb-3">
                                 <Button variant="primary" disabled>$</Button>
-                                <Form.Control placeholder={props.product.price} disabled />
+                                <Form.Control placeholder={product.price} disabled />
                             </InputGroup>
                         </Col>
 
@@ -50,7 +51,7 @@ function ProductDetail(props) {
                             <InputGroup className="mb-3">
                                 <Button variant="primary" onClick={() => setCount((count) => count - 1)} disabled={count <= 0}> -</Button>
                                 <Form.Control value={count} disabled />
-                                <Button variant="primary" onClick={() => setCount((count) => count + 1)} disabled={count >= props.product.stock}> + </Button>
+                                <Button variant="primary" onClick={() => setCount((count) => count + 1)} disabled={count >=product.stock}> + </Button>
                             </InputGroup>
 
                         </Col>

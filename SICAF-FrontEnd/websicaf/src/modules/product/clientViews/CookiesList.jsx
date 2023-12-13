@@ -9,7 +9,7 @@ import Image2 from "../../../assets/Products/galletas2.png";
 
 function CookiesList({ products }) {
   const [modalShow, setModalShow] = useState(false);
-
+  const [selectedProductId, setSelectedProductId] = useState(null);
   return (
     <>
       <Carousel>
@@ -25,7 +25,7 @@ function CookiesList({ products }) {
                       className="text-center mx-2 mt-2 mb-4"
                       key={products[cardIndex].id}
                     >
-                      <div className="product col-12 col-sm-6 col-md-12 col-lg-12 mb-4" onClick={() => setModalShow(true)}>
+                      <div className="product col-12 col-sm-6 col-md-12 col-lg-12 mb-4" onClick={() => { setSelectedProductId(products[cardIndex].id) }}>
                         <Row>
                           <Col xs={12} md={3}>
                             <Image
@@ -67,7 +67,9 @@ function CookiesList({ products }) {
                             </div>
                           </Col>
                         </Row>
-                        <ProductDetail show={modalShow} onHide={() => setModalShow(false)} product={products[cardIndex]} />
+                        <ProductDetail product={products[cardIndex]}
+                          show={selectedProductId === products[cardIndex].id}
+                          onHide={() => setSelectedProductId(null)} />
                       </div>
                     </Col>
                   ))}

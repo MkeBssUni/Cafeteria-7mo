@@ -11,9 +11,9 @@ import {
 import FeatherIcon from "feather-icons-react";
 
 
-import GetAllActiveDiscount from "./functions/GetAllActive";
+import GetAllActiveDiscount from "../functions/GetAllActive";
 
-import Separator from "../../assets/separator.png";
+import Separator from "../../../assets/separator.png";
 import CookiesOffers from './CookiesOffers'
 import CakesOffers from "./CakesOffers";
 
@@ -46,46 +46,12 @@ const OffersList = () => {
     setbyOrderTotal(byTotal)
     setbyProduct(byProduct)
     setByCategory(byCategory)
-    console.log(byOrderTotal,'order total');
-
-    /* switch (category) {
-      case "Todos":
-        var descuentos = [...byRol, ...byCategory, ...byTotal, ...byCantByProducts, ...byProduct];
-        setDiscounts(descuentos)
-        setOriginalList(descuentos)
-        break;
-      case "Descueto por rol":
-        setDiscounts(byRol)
-        break;
-      case "Descuento por categoria":
-        setDiscounts(byCategory)
-        break;
-      case "Descuento por total de compra":
-        setDiscounts(byTotal)
-        break
-      case "Descuento por cantidad de productos":
-        setDiscounts(byCantByProducts)
-        break
-      case "Descuento por producto":
-        setDiscounts(byProduct)
-        break;
-      case "busqueda":
-        const filteredDiscounts = originalList.filter(discount =>
-          discount.description.toLowerCase().includes(searchTerm.toLowerCase())
-        );
-        setDiscounts(filteredDiscounts);
-        break;
-      default:
-        gets = await GetAllDiscount();
-        byRol = gets.discountsByRol || [];
-        byCategory = gets.discountsByCategory || [];
-        byTotal = gets.discountsByOrderTotal || [];
-        byCantByProducts = gets.discountsByProductsNumber || [];
-        byProduct = gets.discountsByProduct || [];
-        descuentos = [...byRol, ...byCategory, ...byTotal, ...byCantByProducts, ...byProduct];
-        setDiscounts(descuentos)
-        setOriginalList(descuentos)
-    } */
+  
+    /* case "busqueda":
+      const filteredDiscounts = originalList.filter(discount =>
+        discount.description.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+      setDiscounts(filteredDiscounts); */
   }
 
   useEffect(() => {
@@ -127,9 +93,9 @@ const OffersList = () => {
         style={{ backgroundColor: "var(--color-secondary)" }}
       >
         <Container fluid className="p-3">
-          <h3 className="mb-0">Descuento por rol</h3>
+        <h3 className="mb-0">Por Cantidad de productos</h3>
           <Image className="separator mt-0 mb-0" src={Separator} />
-          <CakesOffers discounts={byRol} />
+          <CakesOffers discounts={byProductsNumber} />
         </Container>
       </section>
 
@@ -149,14 +115,6 @@ const OffersList = () => {
           <h3 className="mb-0">Descuento por producto</h3>
           <Image className="separator mt-0 mb-0" src={Separator} />
           <CakesOffers discounts={byProduct} />
-        </Container>
-      </section>
-
-      <section className="my-3 text-center">
-        <Container fluid>
-          <h3 className="mb-0">Por Cantidad de productos</h3>
-          <Image className="separator mt-0" src={Separator} />
-          <CookiesOffers discounts={byProductsNumber} />
         </Container>
       </section>
     </Container>

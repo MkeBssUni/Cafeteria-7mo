@@ -144,7 +144,7 @@ export const UpdateProduct = ({ show, onHide,changed }) => {
         centered
       >
         <Modal.Header className="productModal" closeButton>
-          <Modal.Title className="modalTitle">Registrar producto</Modal.Title>
+          <Modal.Title className="modalTitle">Modificar producto</Modal.Title>
         </Modal.Header>
         <Modal.Body className="productModal">
           <Form onSubmit={form.handleSubmit}>

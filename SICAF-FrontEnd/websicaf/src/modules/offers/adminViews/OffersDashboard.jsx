@@ -34,7 +34,7 @@ const OffersDashborard = () => {
                 setDiscounts(descuentos)
                 setOriginalList(descuentos)
                 break;
-            case "Descueto por rol":
+            case "Descuento por rol":
                 setDiscounts(byRol)
                 break;
             case "Descuento por categoria":
@@ -143,7 +143,7 @@ const OffersDashborard = () => {
                         setCategory(target.value);
                     }}>
                         <option value='Todos'>Todos los descuentos</option>
-                        <option value='Descueto por rol'>Descueto por rol</option>
+                        <option value='Descuento por rol'>Descuento por rol</option>
                         <option value='Descuento por total de compra'>Descuento por total de compra</option>
                         <option value='Descuento por categoria'>Descuento por categoria</option>
                         <option value='Descuento por cantidad de productos'>Descuento por cantidad de productos</option>
@@ -171,13 +171,13 @@ const OffersDashborard = () => {
                                         <Row>
                                             <Col xs={12} md={3}>
                                                 <div className="imagewithoffer mt-2">
-                                                    <Image className='image_product_offers my-2 ms-3 shadow' src={discount.image ? (discount.image) : logo} roundedCircle />
+                                                    <Image className='image_product_offers my-2 shadow' src={discount.image ? (discount.image) : logo} roundedCircle />
                                                     <div className="notification-icon shadow">-{discount.percentage}%</div>
                                                 </div>
                                             </Col>
-                                            <Col xs={12} md={8} className='mx-2'>
+                                            <Col xs={12} md={8} className='mx-2 my-2'>
                                                 <div>
-                                                    <p className='info_products_offers mt-2'>{discount.description}</p>
+                                                    <p className='info_products_offers mt-2 ms-4'>{discount.description}</p>
                                                 </div>
                                                 <div>
                                                     <Row>

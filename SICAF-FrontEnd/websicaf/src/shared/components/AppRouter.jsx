@@ -10,7 +10,7 @@ import UsersScreens from "../../modules/users/UsersScreens";
 import UserForm from "../../modules/users/components/UserForm";
 import UserEdt from '../../modules/users/components/UserEdt';
 import ProductList from "../../modules/product/clientViews/ProductList";
-import OffersList from "../../modules/offers/OffersList";
+import OffersList from "../../modules/offers/clientViews/OffersList";
 import ErrorNotFound from './Error/ErrorNotFound';
 import NewPassword from "../../modules/auth/generalViews/NewPassword";
 import OffersDashborard from "./../../modules/offers/adminViews/OffersDashboard"
