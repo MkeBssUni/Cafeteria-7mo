@@ -370,3 +370,7 @@ html[letter-size='Pequeña'] {
 .notRegistersCarousel{
   width: 20% !important;
 }
+
+#dropdown-item-button::after {
+  display: none !important;
+}

@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import { Container, Row, Col, Image, Form, InputGroup, Button, Tooltip, Card, OverlayTrigger } from 'react-bootstrap';
+import { Container, Row, Col, Image, Form, InputGroup, Button, Tooltip, Card, OverlayTrigger, DropdownButton, Dropdown, ButtonGroup } from 'react-bootstrap';
 import FeatherIcon from "feather-icons-react";
+
+import RegisterDiscountForRol from './NewDiscountForRol';
+import NewDiscountByCategory from './NewDiscountByCategory';
+import RegisterDiscountByOrderTotal from './NewDiscountByTotalOrder'
+import NewDiscountByNumberOfProducs from './NewDiscountbyNumberOfProducts';
+import NewDiscountByProduct from './NewDiscountByProduct';
 
 import RegisterDiscount from './RegisterDiscount';
 import EnableOrDisableDiscount from '../functions/EnableOrDisableDiscount'
@@ -10,10 +16,13 @@ import NotRegisters from "../../../shared/components/Error/NotRegisters";
 import logo from '../../../assets/logo-sicaf.png'
 
 import Alert, { confirmTitle, changeStatusFalse, changeStatusTrue, } from "../../../shared/plugins/Alert";
-import fondo from '../../../assets/fondo.jpg';
 
 const OffersDashborard = () => {
     const [modalShow, setModalShow] = useState(false);
+    const [byOrderTotal, setByordertotal] = useState(false)
+    const [numberProouct, setNumberProouct] = useState(false);
+    const [byProduct, setbyProduct] = useState(false);
+    const [byCategory, setbyCategory] = useState(false);
     const [discounts, setDiscounts] = useState([]);
     const [category, setCategory] = useState("Todos");
     const [selectedProductId, setSelectedProductId] = useState(null);
@@ -66,8 +75,6 @@ const OffersDashborard = () => {
                 setDiscounts(descuentos)
                 setOriginalList(descuentos)
         }
-        console.log('discounts.length > 0',discounts.length > 0);
-        console.log(discounts);
     }
 
     const changeStatus = async (id, status) => {
@@ -112,7 +119,12 @@ const OffersDashborard = () => {
 
     return (<>
         <body>
-            <RegisterDiscount show={modalShow} onHide={() => setModalShow(false)} />
+            {/* <RegisterDiscount show={modalShow} onHide={() => setModalShow(false)} /> */}
+            <RegisterDiscountForRol show={modalShow} onHide={() => setModalShow(false)} />
+            <RegisterDiscountByOrderTotal show={byOrderTotal} onHide={() => setByordertotal(false)} />
+            <NewDiscountByCategory show={byCategory} onHide={() => setbyCategory(false)} />
+            <NewDiscountByNumberOfProducs show={numberProouct} onHide={() => setNumberProouct(false)} />
+            <NewDiscountByProduct show={byProduct} onHide={() => setbyProduct(false)} />
             <Container fluid>
                 <div
                     className="image-top d-flex justify-content-center align-items-center border"
@@ -139,6 +151,7 @@ const OffersDashborard = () => {
                             </Button>
                         </InputGroup>
                     </Form.Group>
+
                     <Form.Select className="input-search text-center mx-4" onChange={({ target }) => {
                         setCategory(target.value);
                     }}>
@@ -149,7 +162,26 @@ const OffersDashborard = () => {
                         <option value='Descuento por cantidad de productos'>Descuento por cantidad de productos</option>
                         <option value='Descuento por producto'>Descuento por producto</option>
                     </Form.Select>
-                    <Button
+
+                    <Col
+                        xs="12"
+                        sm="12"
+                        md="1"
+                        lg="3"
+                        xlg="3">
+                        <Dropdown >
+                            <Dropdown.Toggle className='input-search'>Registrar <FeatherIcon icon="plus-circle" /></Dropdown.Toggle>
+                            <Dropdown.Menu className='input-search'>
+                                <Dropdown.Item as={Button} eventKey="1" onClick={() => setModalShow(true)}>Descuento por rol</Dropdown.Item>
+                                <Dropdown.Item as={Button} eventKey="2" onClick={() => setByordertotal(true)}>Descuento por total de compra</Dropdown.Item>
+                                <Dropdown.Item as={Button} eventKey="3" onClick={() => setNumberProouct(true)}>Descuento cantidad de producto</Dropdown.Item>
+                                <Dropdown.Item as={Button} eventKey="4" onClick={() => setbyProduct(true)}>Descuento por producto</Dropdown.Item>
+                                <Dropdown.Item as={Button} eventKey="5" onClick={() => setbyCategory(true)}>Descuento por categoria</Dropdown.Item>
+                            </Dropdown.Menu>
+                        </Dropdown>
+                    </Col>
+                    {' '}
+                    {/* <Button
                         as={Col}
                         xs="12"
                         sm="12"
@@ -160,9 +192,9 @@ const OffersDashborard = () => {
                         onClick={() => setModalShow(true)}
                     >
                         Registrar <FeatherIcon icon="plus-circle" />
-                    </Button>
-                </div>{discounts.length > 0 ? (
-
+                    </Button> */}
+                </div>
+                {discounts.length > 0 ? (
                     <div className='product-list-admin'><Row>
                         {discounts.map((discount) => (
                             <Col className='my-2' xs={12} sm={12} md={6} lg={4} xl={4} xxl={4} key={discount.id} >

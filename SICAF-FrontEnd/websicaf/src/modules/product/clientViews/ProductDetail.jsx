@@ -7,7 +7,7 @@ import Image1 from "../../../assets/Products/pastel1.jpeg";
 import CreateProduct from "../Functions/CreateProduct";
 
 function ProductDetail({ show, onHide,product }) {
-    console.log(product,'product',show,onHide);
+    console.log(product,'product',onHide,'onHide');
     const [count, setCount] = useState(0);
     return (
         <>
