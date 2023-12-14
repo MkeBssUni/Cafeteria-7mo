@@ -11,6 +11,7 @@ import Alert, { confirmMsj } from "../../../shared/plugins/alerts";
 import SaveDiscount from '../functions/SaveDiscount';
 
 const NewDiscountByCategory = ({ show, onHide }) => {
+    console.log("CATEGORY");
     const [imgs, setimgs] = useState()
 
     const handleChangeImage = (file) => {

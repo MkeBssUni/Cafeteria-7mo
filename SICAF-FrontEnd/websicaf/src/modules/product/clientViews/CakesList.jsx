@@ -1,17 +1,30 @@
 import { useEffect, useState } from "react";
 import { Container, Row, Col, Image, Carousel } from "react-bootstrap";
 
-import logo from "../../../assets/logo-sicaf.png"
+import ProductDetail from "./ProductDetail";
+import logo from "../../../assets/logo-sicaf.png";
 import Image1 from "../../../assets/Products/pastel1.jpeg";
 import Image2 from "../../../assets/Products/pastel2.jpeg";
 
 function CupCakesList({ products }) {
+
   const [selectedProductId, setSelectedProductId] = useState(null);
+  const productNull={
+    name: "Deliciosas sorpresas se estan horneando...\n Mientrras tanto esta sección esta  vacía",
+    image:"",
+    id: 0,
+    description:""
+  } 
+
+  if (Array.isArray(products) && products.length) {
+    if (products.length % 2 === 1) {
+      products.push(productNull);
+    }
+  }
   return (
     <>
       <Carousel>
-        {products.length > 0 &&
-          Array.from({ length: Math.ceil(products.length / 2) }).map(
+        {Array.from({ length: Math.ceil(products.length / 2) }).map(
             (_, index) => (
               <Carousel.Item key={index}>
                 <Row className="d-flex justify-content-center">
@@ -25,13 +38,20 @@ function CupCakesList({ products }) {
                       <div
                         className="productBlack col-12 col-sm-6 col-md-12 col-lg-12 mb-4"
                         style={{ backgroundColor: "var(--color-product-info)" }}
+                        onClick={() =>
+                          setSelectedProductId(products[cardIndex].id)
+                        }
                       >
                         {/* Utiliza products[cardIndex] para acceder a los datos */}
                         <Row>
                           <Col xs={12} md={3}>
                             <Image
                               className="image_product_offers my-2 ms-3 shadow"
-                              src={products[cardIndex].image.length > 50 ? products[cardIndex].image : logo}
+                              src={
+                                products[cardIndex].image.length > 50
+                                  ? products[cardIndex].image
+                                  : logo
+                              }
                               roundedCircle
                             />
                           </Col>
@@ -54,10 +74,23 @@ function CupCakesList({ products }) {
                             </div>
                             <div>
                               <small className="info_products_offers">
-                                {products[cardIndex].description.length < 60 ? products[cardIndex].description : products[cardIndex].description.substring(0, 60) + '...'}
+                                {products[cardIndex].description.length < 60
+                                  ? products[cardIndex].description
+                                  : products[cardIndex].description.substring(
+                                      0,
+                                      60
+                                    ) + "..."}
                               </small>
                             </div>
                           </Col>
+                          <ProductDetail
+                            product={products[cardIndex]}
+                            show={
+                              products[cardIndex].id !== 0 &&
+                              selectedProductId === products[cardIndex].id
+                            }
+                            onHide={() => setSelectedProductId(null)}
+                          />
                         </Row>
                       </div>
                     </Col>
