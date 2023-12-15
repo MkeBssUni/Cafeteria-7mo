@@ -26,7 +26,6 @@ const ShoopingCart = () => {
   }
 
   useEffect(() => {
-    // Obtener el carrito del almacenamiento local
     let ShoppingCart = JSON.parse(localStorage.getItem("user"));
     // Verificar si el carrito existe antes de establecer el estado
     if (ShoppingCart && ShoppingCart.shopping_cart) {

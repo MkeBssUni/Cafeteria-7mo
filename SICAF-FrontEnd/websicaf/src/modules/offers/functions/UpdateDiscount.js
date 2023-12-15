@@ -8,9 +8,8 @@ import Alert, {
 } from "../../../shared/plugins/alerts";
 
 const UpdateDiscount = async (request) => {
-  console.log("entra aqui", request);
   await Alert.fire({
-    title: "¿Estas seguro de guardar el descuento?",
+    title: "¿Estas seguro de modificar el descuento?",
     text: confirmMsj,
     icon: "warning",
     confirmButtonColor: "#009574",
@@ -29,10 +28,9 @@ const UpdateDiscount = async (request) => {
           method: "PUT",
           data: JSON.stringify(request),
         });
-        if (!response.error) r;
         if (response && !response.error) {
           Alert.fire({
-            title: "Registro realizado exitosamente",
+            title: "Descuento Actualizado exitosamente",
             text: successMsj,
             icon: "success",
             confirmButtonColor: "#3085d6",
@@ -44,6 +42,7 @@ const UpdateDiscount = async (request) => {
             }
           });
         } else {
+          console.log('entro en el else');
           Alert.fire({
             title: "Ups!",
             text: "Ocurrió un error",
@@ -58,6 +57,7 @@ const UpdateDiscount = async (request) => {
           });
         }
       } catch (error) {
+        console.log('entro en el catch 2');
         Alert.fire({
           title: "Ups!",
           text: "Ocurrió un error",
@@ -67,7 +67,6 @@ const UpdateDiscount = async (request) => {
         }).then((result) => {
           if (result.isConfirmed) {
             window.location.reload();
-            return response.data;
           }
         });
       }
