@@ -23,9 +23,7 @@ const ShoopingCart = () => {
     roleDefine = role ? role.replace(/^"(.*)"$/, "$1") : "";
   }
 
-  console.log(roleDefine);
   useEffect(() => {
-    // Obtener el carrito del almacenamiento local
     let ShoppingCart = JSON.parse(localStorage.getItem("user"));
     console.log(ShoppingCart);
     // Verificar si el carrito existe antes de establecer el estado

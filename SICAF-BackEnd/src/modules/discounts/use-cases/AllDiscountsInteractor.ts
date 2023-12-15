@@ -17,23 +17,25 @@ export class AllDiscountsInteractor implements UseCase<null, DiscountsDto> {
         let discountsByCategory: DiscountByCategoryDto[] = [];
 
         const discounts = await this.discountsRepository.findAll();
-
+        
         for (let discount of discounts) {
             switch(discount.type) {
                 case DiscountTypes.discountByRol:
                     const role: Role = await findRoleByDiscount(discount.id!);
-                    discountsByRol.push({
-                        id: discount.id!,
-                        type: discount.type,
-                        description: discount.description,
-                        percentage: discount.percentage,
-                        status: discount.status,
-                        created_by: discount.created_by,
-                        rol: {
-                            id: role.id!,
-                            name: role.name
-                        } 
-                    });
+                    if (role) {
+                        discountsByRol.push({
+                            id: discount.id!,
+                            type: discount.type,
+                            description: discount.description,
+                            percentage: discount.percentage,
+                            status: discount.status,
+                            created_by: discount.created_by,
+                            rol: {
+                                id: role.id!,
+                                name: role.name
+                            } 
+                        });
+                    } 
                     break;
                 case DiscountTypes.discountByOrderTotal:
                     discountsByOrderTotal.push({
