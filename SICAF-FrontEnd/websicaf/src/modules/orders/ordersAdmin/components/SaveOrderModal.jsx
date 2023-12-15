@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Modal, Button, Row, Col, Form, InputGroup } from "react-bootstrap";
 import FeatherIcon from "feather-icons-react";
 import GetUser from "../../../users/Functions/GetUser";
@@ -9,8 +9,10 @@ import { useFormik } from "formik"; // Changed from Formik, useFormik
 import * as yup from "yup";
 import Alert from "../../../../shared/plugins/Alert";
 import SaveOrder from "./../../Functions/SaveOrder";
+import { AuthContext } from "../../../auth/authContext";
 
 const SaveOrderModal = ({ isOpen, onClose }) => {
+  const { user } = useContext(AuthContext);
   const [usuarios, setUsuarios] = useState([]);
   const [descuentos, setDescuentos] = useState([]);
   const [productsGet, setProducts] = useState([]);
@@ -44,26 +46,40 @@ const SaveOrderModal = ({ isOpen, onClose }) => {
   }, []);
 
   
+  const [selectedProducts, setSelectedProducts] = useState([]);
+
+  const handleSelect = (selectedList, selectedItem) => {
+    // Update the selectedProducts array with quantity property
+    const updatedSelectedList = selectedList.map((product) => ({
+      id: product.id,
+      quantity: 1, // You can set an initial quantity as needed
+    }));
+    setSelectedProducts(updatedSelectedList);
+  };
+
+  const handleRemove = (selectedList, removedItem) => {
+    setSelectedProducts(selectedList);
+  };
+
+  const handleQuantityChange = (productId, quantity) => {
+    const updatedSelectedProducts = selectedProducts.map((product) =>
+      product.id === productId ? { ...product, quantity } : product
+    );
+    setSelectedProducts(updatedSelectedProducts);
+    console.log(updatedSelectedProducts);
+  };
+
   const form = useFormik({
     initialValues: {
-      employee_id: 1,
-      client_id: 0, //opcional
-      payment_method: "", //Efectivo, Tarjeta de credito o Tarjeta de debito
-      discount_id: 0, //opcional
-      products: [], // Fixed typo from 'products' to 'products_id'
+      employee_id: user.id,
+      client_id: 0,
+      payment_method: "",
+      discount_id: 0,
       comments: "",
-      send_receipt: true, //opcional en relación al cliente
+      send_receipt: false,
     },
-    validationSchema: yup.object().shape({
-      employee_id: yup.number().required("Campo obligatorio"), //opcional
-      payment_method: yup.number().required("Campo obligatorio"), //Efectivo, Tarjeta de credito o Tarjeta de debito //opcional
-      comments: yup
-        .string()
-        .max(4, "No se pueden agregar mas de 30 caracteres")
-        .min(5, "Extiende le mensaje es muy corto"),
-    }),
     onSubmit: async (values) => {
-      console.log(values);
+      console.log({ ...values, products: selectedProducts });
       return await Alert.fire({
         title: "¿Estas seguro de guardar el usuario?",
         text: "Seguro de realizar la operación",
@@ -78,32 +94,16 @@ const SaveOrderModal = ({ isOpen, onClose }) => {
         showLoaderOnConfirm: true,
         allowOutsideClick: () => !Alert.isLoading,
         preConfirm: async () => {
-          return await SaveOrder(values);
+          handleClose();
+          return await SaveOrder({ ...values, products: selectedProducts });
         },
       });
     },
   });
-
-  const handleSelect = (selectedList, selectedItem) => {
-    // Update the products_id array with quantity property
-    const updatedSelectedList = selectedList.map((product) => ({
-      ...product,
-      quantity: 1, // You can set an initial quantity as needed
-    }));
-    form.setFieldValue("products", updatedSelectedList);
-  };
-
-  const handleRemove = (selectedList, removedItem) => {
-    form.setFieldValue("products", selectedList);
-  };
-
-  const handleQuantityChange = (productId, quantity) => {
-    const updatedProducts = form.values.products.map((product) =>
-      product.id === productId ? { ...product, quantity } : product
-    );
-    form.setFieldValue("products", updatedProducts);
-    console.log(updatedProducts);
-  };
+   const handleClose =()=>{
+    form.resetForm();
+    onClose();
+   }
 
   return (
     <Modal
@@ -111,7 +111,7 @@ const SaveOrderModal = ({ isOpen, onClose }) => {
       backdrop="static"
       keyboard={false}
       show={isOpen}
-      onHide={onClose}
+      onHide={handleClose}
     >
       <Modal.Header closeButton>
         <Modal.Title>Registrar Venta</Modal.Title>
@@ -185,42 +185,42 @@ const SaveOrderModal = ({ isOpen, onClose }) => {
                 />
               </Form.Group>
               <Form.Group className="mb-2 mt-2">
-                <Form.Label>Productos</Form.Label>
-                <InputGroup>
-                  <Multiselect
-                    className="input-modal multiselect"
-                    options={productsGet}
-                    selectedValues={form.values.products}
-                    onSelect={handleSelect}
-                    onRemove={handleRemove}
-                    displayValue="name"
-                    style={{
-                      chips: {
-                        background: "var(--color-tertiary)",
-                      },
-                      searchBox: {
-                        border: "none",
-                        borderRadius: "0px",
-                      },
-                    }}
-                  />
-                </InputGroup>
-                {form.values.products.map((selectedProduct) => (
-                  <div key={selectedProduct.id}>
-                    <label htmlFor={`quantity-${selectedProduct.id}`}>
-                      Cantidad para {selectedProduct.name}:
-                    </label>
-                    <input
-                      type="number"
-                      id={`quantity-${selectedProduct.id}`}
-                      value={selectedProduct.quantity}
-                      onChange={(e) =>
-                        handleQuantityChange(selectedProduct.id, e.target.value)
-                      }
-                    />
-                  </div>
-                ))}
-              </Form.Group>
+            <Form.Label>Productos</Form.Label>
+            <InputGroup>
+              <Multiselect
+                className="input-modal multiselect"
+                options={productsGet}
+                selectedValues={selectedProducts}
+                onSelect={handleSelect}
+                onRemove={handleRemove}
+                displayValue="name"
+                style={{
+                  chips: {
+                    background: "var(--color-tertiary)",
+                  },
+                  searchBox: {
+                    border: "none",
+                    borderRadius: "0px",
+                  },
+                }}
+              />
+            </InputGroup>
+            {selectedProducts.map((selectedProduct) => (
+              <div key={selectedProduct.id}>
+                <label htmlFor={`quantity-${selectedProduct.id}`}>
+                  Cantidad para {selectedProduct.name}:
+                </label>
+                <input
+                  type="number"
+                  id={`quantity-${selectedProduct.id}`}
+                  value={selectedProduct.quantity}
+                  onChange={(e) =>
+                    handleQuantityChange(selectedProduct.id, e.target.value)
+                  }
+                />
+              </div>
+            ))}
+          </Form.Group>
           <Form.Group className="mb-2 mt-2">
             <Row>
               <Col className="text-end">
