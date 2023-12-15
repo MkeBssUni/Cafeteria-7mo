@@ -10,6 +10,8 @@ import eliminar from "../../assets/eliminar.png";
 import CryptoJS from 'crypto-js';
 import ChageStatus from "./Functions/ChageStatus"
 import Alert,{confirmTitle,errorTitle,confirmMsj,errorMsj} from "../../shared/plugins/alerts"
+import ButtonSale from "../orders/ordersAdmin/components/ButtonSale";
+
 
 const option = {
   rowsPerPageText: "Registros por página",
@@ -18,7 +20,7 @@ const option = {
 const UsersScreens = () => {
   const [usuarios, setUsuarios] = useState([]);
   const [filterText, setFilterText] = useState("");
-  const [setselectUser, setSetselectUser] = useState({});
+  const [thisLoading, setThisLoading] = useState({});
   const navigation = useNavigate();
 
   const filteredUsuarios = usuarios
@@ -31,12 +33,14 @@ const UsersScreens = () => {
 
   const getUsuarios = async () => {
     try {
+      setThisLoading(true);
       const data = await GetUser();
       if (!data.error) {
         setUsuarios(data); // Update this line to setUsuarios(data.data)
+        setThisLoading(false);
       }
     } catch (error) {
-      console.error("No esta funcionando");
+      console.error("Error en el servicio");
     }
   };
 
@@ -175,6 +179,7 @@ const UsersScreens = () => {
         />
       </Card>
       </div>
+     <ButtonSale/>
     </div>
     </body>
     </>

@@ -8,6 +8,7 @@ import * as yup from "yup";
 import CryptoJS from 'crypto-js';
 import GetOneUser from "../Functions/GetOneUser";
 import UpdateUser from './../Functions/UpdateUser';
+import Loading from "../../../shared/components/Loading";
 
 const UserEdt = () => {
   const [user, setuser] = useState({})
@@ -34,7 +35,6 @@ const UserEdt = () => {
   const form = useFormik({
     initialValues: {
       email: "",
-      password: "",
       role_id: 0,
       person: {
         name: "",
@@ -74,7 +74,7 @@ const UserEdt = () => {
     }),
     onSubmit: async (values) => {
       return await Alert.fire({
-        title: "¿Estas seguro de guardar el producto?",
+        title: "¿Estas seguro de guardar el usuario?",
         text: confirmMsj,
         icon: "warning",
         confirmButtonColor: "#009574",
@@ -153,22 +153,6 @@ const UserEdt = () => {
                       />
                       {form.errors.email && (
                         <span className="error-text">{form.errors.email}</span>
-                      )}
-                    </Form.Group>
-                  </Col>
-                  <Col>
-                    <Form.Group>
-                      <Form.Label>Contraseña: </Form.Label>
-                      <Form.Control
-                        className="input-user"
-                        name="password"
-                        value={form.values.password}
-                        onChange={form.handleChange}
-                      />
-                      {form.errors.password && (
-                        <span className="error-text">
-                          {form.errors.password}
-                        </span>
                       )}
                     </Form.Group>
                   </Col>
@@ -306,7 +290,7 @@ const UserEdt = () => {
                       </Col>
                       <Col>
                         <Form.Group>
-                          <Form.Label>Asentamiento:</Form.Label>
+                          <Form.Label>Colonia:</Form.Label>
                           <Form.Control
                             className="input-user"
                             name="person.address.settlement"

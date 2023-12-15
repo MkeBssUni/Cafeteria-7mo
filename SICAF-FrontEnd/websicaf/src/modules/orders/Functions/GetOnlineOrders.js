@@ -5,18 +5,19 @@ import React from 'react'
 const GetOnlineOrders = async(request) => {
     try {
         const response = await AxiosClient({
-            url:'orders/online',
+            url:`orders/online/${request.filter}/${request.value}`,
             method: 'GET',
-            data: JSON.stringify(request)
         })
+        console.log(response)
+        if (!response.error) return response.data;
       } catch (error) {
         Alert.fire({
-            title: errorTitle,
-            text: errorMsg,
-            icon:'error',
-            confirmButtonColor: '#3085d6',
-            confirmButtonText: 'Aceptar'
-        })   
+          title: "Advertencia",
+          text: 'Por favor selecciona la parte para mostrar los datos',
+          icon:'warning',
+          confirmButtonColor: '#3085d6',
+          confirmButtonText: 'Aceptar'
+      })    
       }
 }
 

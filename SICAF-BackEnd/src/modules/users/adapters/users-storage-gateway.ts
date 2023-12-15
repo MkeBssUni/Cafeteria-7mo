@@ -285,9 +285,19 @@ export class UsersStorageGateway implements UsersRepository{
         }
     }
 
-    async getEmails(): Promise<string[]> {
+    async getEmailsByRol(roles: number[]): Promise<string[]> {
         try {
-            const response = await pool.query('SELECT email FROM users where role_id = 3 and status = true;');
+            let filter = 'where';
+            if (roles.length) {
+                for (let index = 0; index < roles.length; index++) {
+                    filter += ` role_id = ${roles[index]}`
+                    if (index < roles.length - 1) {
+                        filter += ' or'
+                    }
+                }
+            }
+            filter += ' and status = true';
+            const response = await pool.query(`select email from users ${filter}`);
             return response.rows.map((user: any) => user.email);
         } catch (error) {
             throw new Error

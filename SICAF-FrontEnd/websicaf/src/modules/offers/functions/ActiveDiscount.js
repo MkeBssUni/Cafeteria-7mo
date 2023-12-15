@@ -1,12 +1,11 @@
 import AxiosClient from "../../../shared/plugins/axios"
 import Alert,{errorMsg,errorTitle,successMsg,successTitle} from "../../../shared/plugins/Alert"
-import React from 'react'
 
-const GetUserHistory = async (request) => {
+const ActiveDiscount = async () => {
     try {
         const response = await AxiosClient({
-          url: `/orders/${request.id}/history/${request.filter}/${request.value}`,
-            method: 'GET',
+            url:'discounts/active',
+            method: 'GET'
         })
         if (!response.error) return response.data;
       } catch (error) {
@@ -20,4 +19,4 @@ const GetUserHistory = async (request) => {
       }
 }
 
-export default GetUserHistory
+export default ActiveDiscount

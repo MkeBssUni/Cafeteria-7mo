@@ -4,6 +4,7 @@ import { UpdateDiscountDto } from "./UpdateDiscountDto";
 import { ChangeStatusDto } from "./ChangeStatusDto";
 import { OrderDto } from "../../../orders/adapters/dto/OrderDto";
 import { OrderProductsDto } from "../../../orders/adapters/dto/OrderProductsDto";
+import { DiscountEmailDto } from "./DiscountEmailDto";
 
 export {
     DiscountsDto,
@@ -11,5 +12,6 @@ export {
     UpdateDiscountDto,
     ChangeStatusDto,
     OrderDto,
-    OrderProductsDto
+    OrderProductsDto,
+    DiscountEmailDto
 }

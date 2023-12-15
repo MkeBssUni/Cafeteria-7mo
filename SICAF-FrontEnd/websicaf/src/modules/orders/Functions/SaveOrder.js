@@ -4,7 +4,7 @@ import Alert,{errorMsg,errorTitle,successMsg,successTitle} from "../../../shared
 const SaveOrder = async(request) => {
     try {
         const response = await AxiosClient({
-            url:'orders/saveOrder',
+            url:'/orders/saveOrder',
             method: 'POST',
             data:JSON.stringify(request)
         })

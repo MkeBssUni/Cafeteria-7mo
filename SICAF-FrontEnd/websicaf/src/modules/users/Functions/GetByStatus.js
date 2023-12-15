@@ -4,8 +4,8 @@ import Alert,{errorMsg,errorTitle,successMsg,successTitle} from "../../../shared
 const GetByStatus = async (id) => {
     try {
         const response = await AxiosClient({
-            url: `users/changeStatus/${id}`,
-            method: 'PATCH',
+            url: `users/status/`,
+            method: 'GET',
         })
         if(!response.error){
             Alert.fire({

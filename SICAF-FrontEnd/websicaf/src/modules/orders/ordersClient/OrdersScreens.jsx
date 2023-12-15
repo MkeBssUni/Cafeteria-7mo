@@ -1,14 +1,13 @@
 import React from 'react'
-import caja from '../../assets/caja.png'
-import usuario from '../../assets/usuario.png'
-import taza from '../../assets/taza.png'
-import Navbarsicaf from '../../../shared/components/Navbar'
+import caja from '../../../assets/caja.png'
+import usuario from '../../../assets/usuario.png'
+import taza from '../../../assets/taza.png'
+
 
 const OrdersScreens = () => {
     return (
         <body>
             <div className="container">
-            <Navbarsicaf/>
             <div className="row my-5">
                 <div className="col-sm-6 mb-3">
                     <div className="card border-0 mt-4" style={{ backgroundColor: "var(--color-ordes)" }}>
