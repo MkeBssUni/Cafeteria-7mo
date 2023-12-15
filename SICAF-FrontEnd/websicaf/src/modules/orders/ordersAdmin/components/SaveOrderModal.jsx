@@ -5,8 +5,7 @@ import GetUser from "../../../users/Functions/GetUser";
 import ActiveDiscount from "./../../../offers/functions/ActiveDiscount";
 import getByStatus from "../../../product/Functions/GetBystatus";
 import Multiselect from "multiselect-react-dropdown";
-import { useFormik } from "formik"; // Changed from Formik, useFormik
-import * as yup from "yup";
+import { useFormik } from "formik"; // Changed from Formik, useFormiks
 import Alert from "../../../../shared/plugins/Alert";
 import SaveOrder from "./../../Functions/SaveOrder";
 import { AuthContext } from "../../../auth/authContext";
@@ -81,7 +80,7 @@ const SaveOrderModal = ({ isOpen, onClose }) => {
     onSubmit: async (values) => {
       console.log({ ...values, products: selectedProducts });
       return await Alert.fire({
-        title: "¿Estas seguro de guardar el usuario?",
+        title: "¿Estas seguro de guardar el pedido??",
         text: "Seguro de realizar la operación",
         icon: "warning",
         confirmButtonColor: "#009574",
@@ -94,8 +93,9 @@ const SaveOrderModal = ({ isOpen, onClose }) => {
         showLoaderOnConfirm: true,
         allowOutsideClick: () => !Alert.isLoading,
         preConfirm: async () => {
+          await SaveOrder({ ...values, products: selectedProducts });
           handleClose();
-          return await SaveOrder({ ...values, products: selectedProducts });
+          return 
         },
       });
     },

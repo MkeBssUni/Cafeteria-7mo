@@ -41,17 +41,18 @@ const AppRouter = () => {
             <Route path="productAdmin" element={<ProductDashborad />} />
             <Route path="offersAdmin" element={<OffersDashborard />} />
             <Route path="historySaleStore" element={<HistorySaleStoreScreen/>}/>
-            <Route path="historySaleOnline" element={<HistorySaleStoreScreen/>}/>
+            <Route path="historySaleOnline" element={<HistorySaleOnline/>}/>
           </>
         );
       case "Empleado":
         return (
           <>
-            <Route path="products" element={<ProductList />} />
-            <Route path="offers" element={<OffersList />} />
+            <Route path="offersAdmin" element={<OffersList />} />
             <Route path="productAdmin" element={<ProductDashborad />} />
             <Route path="historySaleStore" element={<HistorySaleStoreScreen/>}/>
-            <Route path="historySaleOnline" element={<HistorySaleStoreScreen/>}/>
+            <Route path="historySaleOnline" element={<HistorySaleOnline/>}/>
+            <Route path="products" element={<ProductList />} />
+            <Route path="historyClientOnline" element={<HistoryClientOnlineScreen/>}/>
           </>
         );
       case "Cliente":

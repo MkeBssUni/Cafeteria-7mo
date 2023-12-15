@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Badge, Card, Figure } from "react-bootstrap";
+import { Badge, Button, Card, Figure } from "react-bootstrap";
 import FondoH from "../../../assets/FondoH.jpg";
 import DataTable from "react-data-table-component";
 import GetOnlineOrders from './../Functions/GetOnlineOrders';
 import ButtonSale from "./components/ButtonSale";
+import SaveOrderModal from "./components/SaveOrderModal";
+import ChangeStatusOrder from "./components/ChangeStatusOrder";
 
 const option = {
   rowsPerPageText: "Registros por página",
@@ -11,6 +13,8 @@ const option = {
 };
 const HistorySaleOnline = () => {
   const [valorSeleccionado, setValorSeleccionado] = useState("");
+  const [isOpen, setisOpen] = useState(false);
+  const [infoOrders, setinfoOrders] = useState({});
   const [pedidos, setpedidos] = useState([]);
 
   const handleSelectChange = (event) => {
@@ -46,6 +50,9 @@ const HistorySaleOnline = () => {
     }
   };
 
+
+  
+
   useEffect(() => {
     const fetchData = async () => {
       await getPedidos(
@@ -61,12 +68,6 @@ const HistorySaleOnline = () => {
   }, [valorSeleccionado]); 
 
   const columns = React.useMemo(() => [
-    {
-      name: "Empleado que atendio",
-      cell: (row) => <div>{row.employee}</div>,
-      sortable: true,
-      selector: (row) => row.employee,
-    },
     {
       name: "Cliente",
       cell: (row) => <div>{row.client}</div>,
@@ -102,12 +103,24 @@ const HistorySaleOnline = () => {
       cell: (row) => <div>$ {row.total}</div>,
       sortable: true,
       selector: (row) => row.total,
+    },{
+      name: "Acciones",
+      cell: (row) => (
+        <>
+          <Button type="button" class="btn btn-link" onClick={() => {
+                setisOpen(true);
+                setinfoOrders(row);}}> 
+            Cambiar estado
+          </Button>
+        </>
+      ),
     },
   ]);
 
   return (
     <body>
       <div className="card" style={{ position: "relative", border: "none" }}>
+        <ChangeStatusOrder orderInfo={infoOrders} isOpen={isOpen} onClose={()=> setisOpen(false)} />
         <Figure.Image className="fondo-user" alt="fondo-user" src={FondoH} />
         <div
           className="input-group mb-3"
