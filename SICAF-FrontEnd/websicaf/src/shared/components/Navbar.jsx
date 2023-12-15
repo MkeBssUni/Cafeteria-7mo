@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import {
   Figure,
   Dropdown,
@@ -15,7 +15,7 @@ import logo from "../../assets/logo-sicaf-crema.png";
 import SidebarSicaf from "./sidebar";
 import "../css/color.css";
 import VisualConfigurations from "../../modules/visualConfig/Functions/VisualConfigurations";
-
+import Cup from '../../assets/cafe (1).png'
 const Navbarsicaf = () => {
   const navigate = useNavigate();
   const { user, dispatch } = useContext(AuthContext);
@@ -26,6 +26,8 @@ const Navbarsicaf = () => {
   const [changeIcon, setChangeIcon] = useState(false);
   const [typeLetter, setTypeLetter] = useState("");
   const userRole = localStorage.getItem("userRole");
+  const [cart, setCart] = useState()
+
   let roleDefine = "";
   if (userRole != null) {
     const role = userRole || ""; // Asegúrate de que role no sea nulo
@@ -59,11 +61,11 @@ const Navbarsicaf = () => {
 
   const handleSwitchChange = async (event) => {
     const isChecked = event.target.checked;
-    
+
     if (isChecked) {
       setChangeIcon(true);
       const theme = !(localStorage.getItem("darkMode") === "true"); // Negar el valor
-      localStorage.setItem("darkMode",theme);
+      localStorage.setItem("darkMode", theme);
       await VisualConfigurations({
         user_id: user.id,
         dark_theme: theme,
@@ -76,14 +78,23 @@ const Navbarsicaf = () => {
 
   const handleLetterSizeChange = async (size) => {
     setTypeLetter(size)
-    localStorage.setItem("letter_size",size)
+    localStorage.setItem("letter_size", size)
     await VisualConfigurations({
       user_id: user.id,
       dark_theme: user.dark_theme,
-      letter_size:size,
+      letter_size: size,
     });
   };
-  
+
+  useEffect(() => {
+    // Obtener el carrito del almacenamiento local
+    var ShoppingCart = JSON.parse(localStorage.getItem('user'));
+
+    // Verificar si el carrito existe antes de establecer el estado
+    if (ShoppingCart && ShoppingCart.shopping_cart) {
+      setCart(ShoppingCart.shopping_cart);
+    }
+  }, []);
 
   return (
     <>
@@ -170,6 +181,36 @@ const Navbarsicaf = () => {
               </div>
             )}
             <Dropdown className="d-inline mx-2">
+  {roleDefine === "Empleado" && (
+    <Dropdown.Toggle
+      className="botone"
+      variant="info"
+      id="dropdown-variants-info dropdown-autoclose-false"
+    >
+      <FeatherIcon
+        icon="shopping-cart"
+        style={{ strokeWidth: 1.5, marginRight: "0.5rem" }}
+      />
+    </Dropdown.Toggle>
+  )}
+
+  <Dropdown.Menu align={"end"}>
+    {cart && cart.cart && cart.cart.product && cart.cart.product.length === 0 ? (
+      <Dropdown.Item disabled className="text-center">
+        <h5>Tu carrito de compras está vacío</h5>
+        <Figure.Image className="logo-nav mx-auto" alt="LOGOSICAFCREMA" src={Cup} />
+      </Dropdown.Item>
+    ) : (
+      <Dropdown.Item disabled className="text-center">
+        <h5>Sí hay productos en tu carrito</h5>
+        <Figure.Image className="logo-nav mx-auto" alt="LOGOSICAFCREMA" src={Cup} />
+      </Dropdown.Item>
+    )}
+  </Dropdown.Menu>
+</Dropdown>
+
+
+            <Dropdown className="d-inline mx-2">
               <Dropdown.Toggle
                 className="botone"
                 variant="info"
@@ -194,7 +235,7 @@ const Navbarsicaf = () => {
                     icon="sun"
                     style={{ strokeWidth: 1, marginRight: "0.5rem" }}
                   />
-                  Aspecto: {user.dark_theme ? "Oscuro":"Claro"}
+                  Aspecto: {user.dark_theme ? "Oscuro" : "Claro"}
                 </Dropdown.Item>
                 <Dropdown.Item onClick={handleToggleLetterSizaForm}>
                   <FeatherIcon

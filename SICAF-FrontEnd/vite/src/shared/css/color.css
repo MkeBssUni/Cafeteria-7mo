@@ -1,0 +1,56 @@
+
+.logo-nav {
+  width: 70px;
+  height: 77px;
+  flex-shrink: 0;
+}
+
+.bakground-things{
+  background-color: var(--color-primary)!important;
+  color: #fff!important;
+}
+
+.sidebar-size{
+  width: 30% !important;
+  max-width: 300px !important;
+}
+
+.tabla-personalizada {
+  max-width: 95%; 
+  width: 100%;
+  margin: 0 auto; 
+  background-color: var(--color-secondary);
+}
+
+.tabla-personalizada td {
+  text-align: center;
+}
+
+.overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color:var(--color-search); 
+  border-radius: 30px; 
+  padding: 10px 20px;
+  width: 45%;
+}
+
+.text-box {
+  color: var(--color-title); 
+  text-align: center; 
+}
+
+.custom-input {
+  border: none;
+  border-bottom: 2px solid brown;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.centered-text {
+  text-align: center;
+}
+
+

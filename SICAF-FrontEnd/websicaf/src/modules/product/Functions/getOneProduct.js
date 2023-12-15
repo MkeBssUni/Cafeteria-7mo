@@ -6,7 +6,6 @@ const getOneProduct = async (id) => {
         url: `/products/${id}` ,
         method:"GET",
         });
-        console.log(response.data);
       if (!response.error) return response.data;
     } catch (error) {
       console.log(error);

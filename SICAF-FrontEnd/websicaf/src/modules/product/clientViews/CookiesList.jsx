@@ -8,7 +8,20 @@ import Image1 from "../../../assets/Products/galletas2.jpeg";
 import Image2 from "../../../assets/Products/galletas2.png";
 
 function CookiesList({ products }) {
-  const [modalShow, setModalShow] = useState(false);
+  const [selectedProductId, setSelectedProductId] = useState(null);
+
+  const productNull = {
+    name: "Deliciosas sorpresas se estan horneando...\n Mientrras tanto esta sección esta  vacía",
+    image: "",
+    id: 0,
+    description: "",
+  };
+
+  if (Array.isArray(products) && products.length) {
+    if (products.length % 2 === 1) {
+      products.push(productNull);
+    }
+  }
 
   return (
     <>
@@ -25,7 +38,12 @@ function CookiesList({ products }) {
                       className="text-center mx-2 mt-2 mb-4"
                       key={products[cardIndex].id}
                     >
-                      <div className="product col-12 col-sm-6 col-md-12 col-lg-12 mb-4" onClick={() => setModalShow(true)}>
+                      <div
+                        className="product col-12 col-sm-6 col-md-12 col-lg-12 mb-4"
+                        onClick={() =>
+                          setSelectedProductId(products[cardIndex].id)
+                        }
+                      >
                         <Row>
                           <Col xs={12} md={3}>
                             <Image
@@ -60,19 +78,25 @@ function CookiesList({ products }) {
                                 {products[cardIndex].description.length < 40
                                   ? products[cardIndex].description
                                   : products[cardIndex].description.substring(
-                                    0,
-                                    40
-                                  ) + "..."}
+                                      0,
+                                      40
+                                    ) + "..."}
                               </small>
                             </div>
                           </Col>
                         </Row>
-                        <ProductDetail show={modalShow} onHide={() => setModalShow(false)} product={products[cardIndex]} />
+                        <ProductDetail
+                          product={products[cardIndex]}
+                          show={
+                            products[cardIndex].id !== 0 &&
+                            selectedProductId === products[cardIndex].id
+                          }
+                          onHide={() => setSelectedProductId(null)}
+                        />
                       </div>
                     </Col>
                   ))}
                 </Row>
-
               </Carousel.Item>
             )
           )}

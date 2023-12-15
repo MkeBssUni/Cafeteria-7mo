@@ -74,7 +74,7 @@ export const ProductRegister = ({ show, onHide }) => {
               const response = await CreateProduct(productData);
               if (response && !response.error) {
                 Alert.fire({
-                  title: "Registro realizada exitosamente",
+                  title: "Registro realizado exitosamente",
                   text: successMsj,
                   icon: "success",
                   confirmButtonColor: "#3085d6",

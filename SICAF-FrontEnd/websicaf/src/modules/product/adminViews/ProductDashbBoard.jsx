@@ -5,6 +5,7 @@ import FeatherIcon from "feather-icons-react";
 import ProductRegister from '../adminViews/RegisterProductModal'
 import UpdateProduct from './UpdateProductModal';
 
+import NoRegisters from '../../../shared/components/Error/NotRegisters';
 import ImageDefault from '../../../assets/logo-sicaf.png'
 import getProducts from '../Functions/GetProduct';
 import Alert, { confirmTitle, changeStatusFalse, changeStatusTrue, } from "../../../shared/plugins/Alert";
@@ -21,7 +22,7 @@ function ProductDashborad() {
   const [category, setCategory] = useState(7);
   const [selectedProductId, setSelectedProductId] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
-  const[originalList, setOriginalList]=useState([])
+  const [originalList, setOriginalList] = useState([])
 
   const getProductsByType = async () => {
     switch (category) {
@@ -63,6 +64,7 @@ function ProductDashborad() {
         const response = await enableOrDisableProduct(id);
         if (!response.error) {
           getProducts().then((products) => setProducts(products));
+          getProducts().then((products) => setOriginalList(products));
         }
       },
     });
@@ -79,7 +81,7 @@ function ProductDashborad() {
   useEffect(() => {
     getCategories().then((categories) => setCategories(categories));
     getProductsByType()
-  }, [category, searchTerm]);
+  }, [category, searchTerm, originalList]);
 
   return (
     <>
@@ -110,6 +112,7 @@ function ProductDashborad() {
               </Button>
             </InputGroup>
           </Form.Group>
+          
           <Form.Select
             value={category}
             onChange={(e) => {
@@ -139,7 +142,7 @@ function ProductDashborad() {
           </Button>
         </div>
 
-        <div className="product-list-admin">
+        {products.length > 0 ? (<div className="product-list-admin">
           <Row className="">
             {products.map((product) => (
               <Col
@@ -174,9 +177,8 @@ function ProductDashborad() {
                         ? product.description.substring(0, 22) + "..."
                         : product.description}
                     </p>
-                    <p className="info_products_offers_admin ">
-                      Descuento: No aplica
-                    </p>
+                    {product.discount_id ? (<p className="info_products_offers_admin ">En descuento</p>) : (<p className="info_products_offers_admin error-text">Sin descuento</p>)}
+
                     <p className="info_products_offers_admin ">stock: {product.stock}</p>
                     <Row>
                       <Col className="text-center">
@@ -227,7 +229,8 @@ function ProductDashborad() {
               </Col>
             ))}
           </Row>
-        </div>
+        </div>) : (<NoRegisters />)}
+
       </Container>
     </>
   );

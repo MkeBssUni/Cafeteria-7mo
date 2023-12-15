@@ -58,7 +58,7 @@ export const UpdateProduct = ({ show, onHide,changed }) => {
       }),
       onSubmit: async (values) => {
         return await Alert.fire({
-          title: "¿Estas seguro de guardar el producto?",
+          title: "¿Estas seguro de actualizar el producto?",
           text: confirmMsj,
           icon: "warning",
           confirmButtonColor: "#009574",
@@ -76,7 +76,7 @@ export const UpdateProduct = ({ show, onHide,changed }) => {
               const response = await updateProduct(productData);
               if (response && !response.error) {
                 Alert.fire({
-                  title: "Registro realizada exitosamente",
+                  title: "Actualización realizada exitosamente",
                   text: successMsj,
                   icon: "success",
                   confirmButtonColor: "#3085d6",
@@ -138,13 +138,13 @@ export const UpdateProduct = ({ show, onHide,changed }) => {
         
         keyboard={false}
         show={show}
-        onHide={onHide}
+        onHide={handleClose}
         size="lg"
         aria-labelledby="contained-modal-title-vcenter"
         centered
       >
         <Modal.Header className="productModal" closeButton>
-          <Modal.Title className="modalTitle">Registrar producto</Modal.Title>
+          <Modal.Title className="modalTitle">Modificar producto</Modal.Title>
         </Modal.Header>
         <Modal.Body className="productModal">
           <Form onSubmit={form.handleSubmit}>
