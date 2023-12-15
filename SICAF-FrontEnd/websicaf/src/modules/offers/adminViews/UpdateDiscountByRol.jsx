@@ -12,15 +12,12 @@ import {
 import FeatherIcon from "feather-icons-react";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import Multiselect from "multiselect-react-dropdown";
 
 import Alert, { confirmMsj } from "../../../shared/plugins/alerts";
-import SaveDiscount from "../functions/SaveDiscount";
-import getByStatus from "../../product/Functions/GetBystatus";
+import UpdateDiscount from "../functions/UpdateDiscount";
 
-const NewDiscountByProduct = ({ show, onHide }) => {
+const UpdateDiscountForRol = ({ show, onHide, product }) => {
   const [imgs, setimgs] = useState();
-  const [products, setProducts] = useState([]);
 
   const handleChangeImage = (file) => {
     const data = new FileReader();
@@ -38,11 +35,12 @@ const NewDiscountByProduct = ({ show, onHide }) => {
 
   const form = useFormik({
     initialValues: {
-      type: "Descuento por producto",
-      description: "",
-      percentage: 0,
-      image: "",
-      products_id: [],
+      id: product.id,
+      type: "Descuento por rol",
+      description: product.description,
+      percentage: product.percentage,
+      image: product.image,
+      rol_id: product.rol_id,
     },
     validationSchema: yup.object().shape({
       description: yup
@@ -54,28 +52,13 @@ const NewDiscountByProduct = ({ show, onHide }) => {
         .min(1, "Mínimo 1 caracter")
         .required("Campo obligatorio"),
       image: yup.string().nullable().min(1, "Mínimo 1 caracter img"),
-      products_id: yup
-        .array()
-        .of(yup.number().min(1, "Mínimo 1 caracter prods"))
-        .required("Campo obligatorio"),
+      rol_id: yup.number().required("Campo obligatorio"),
     }),
     onSubmit: async (values) => {
-      console.log(values);
-      await SaveDiscount(values);
-      console.log(values, "values");
+      await UpdateDiscount(values);
+      handleClose();
     },
   });
-
-  const handleSelect = (selectedList, selectedItem) => {
-    const selectedIds = selectedList.map((item) => item.id);
-    console.log(selectedIds, "lista de IDS");
-    form.setFieldValue("products_id", selectedIds);
-  };
-
-  useEffect(() => {
-    getByStatus(true).then((products) => setProducts(products));
-  }, []);
-
   return (
     <>
       <Form
@@ -94,7 +77,7 @@ const NewDiscountByProduct = ({ show, onHide }) => {
         >
           <Modal.Header className="productModal" closeButton>
             <Modal.Title className="modalTitle">
-              Registrar descuento por producto
+              Registrar descuento por rol
             </Modal.Title>
           </Modal.Header>
           <Modal.Body className="productModal">
@@ -134,44 +117,26 @@ const NewDiscountByProduct = ({ show, onHide }) => {
                   )}
                 </Form.Group>
                 <Form.Group>
-                  <Form.Label>Productos</Form.Label>
-                  <InputGroup>
-                    <Multiselect
-                      className="input-modal multiselect"
-                      options={products}
-                      onSelect={(selectedList, selectedItem) => {
-                        const updatedList = [...selectedList];
-                        handleSelect(updatedList);
-                      }}
-                      onRemove={(selectedList, removedItem) => {
-                        const updatedList = selectedList.filter(
-                          (item) => item.id !== removedItem.id
-                        );
-                        handleSelect(updatedList);
-                      }}
-                      displayValue="name"
-                      style={{
-                        chips: {
-                          background: "var(--color-tertiary)",
-                          color: "var(--color-text)",
-                        },
-                        searchBox: {
-                          border: "none",
-                          borderRadius: "0px",
-                        },
-                      }}
-                    />
-                  </InputGroup>
-                  {form.errors.products_id && (
-                    <span className="error-text">
-                      {form.errors.products_id}
-                    </span>
+                  <Form.Label>Rol al que se le aplicara</Form.Label>
+                  <Form.Select
+                    name="rol_id"
+                    value={form.values.rol_id}
+                    aria-label="Rol al que se le aplicara el descuento"
+                    className="input-modal"
+                    onChange={form.handleChange}
+                  >
+                    <option value={1}>Gerente</option>
+                    <option value={2}>Empleado</option>
+                    <option value={3}>Cliente</option>
+                  </Form.Select>
+                  {form.errors.rol_id && (
+                    <span className="error-text">{form.errors.rol_id}</span>
                   )}
                 </Form.Group>
               </Col>
               <Col>
                 <Form.Group className="position-relative">
-                  <Form.Label className="mb">Foto del producto</Form.Label>
+                  <Form.Label className="mb">Foto</Form.Label>
                   <Form.Control
                     type="file"
                     className="input-modal"
@@ -184,7 +149,7 @@ const NewDiscountByProduct = ({ show, onHide }) => {
                   )}
                 </Form.Group>
                 <Image
-                  src={imgs}
+                  src={form.values.image}
                   width="200px"
                   height="200px"
                   className="mt-2 image-product-modal"
@@ -192,45 +157,6 @@ const NewDiscountByProduct = ({ show, onHide }) => {
                 />
               </Col>
             </Row>
-            {/* <Row>
-              <Col>
-                <Form.Group>
-                  <Form.Label>Productos</Form.Label>
-                  <InputGroup>
-                    <Multiselect
-                      className="input-modal multiselect"
-                      options={products}
-                      onSelect={(selectedList, selectedItem) => {
-                        const updatedList = [...selectedList];
-                        handleSelect(updatedList);
-                      }}
-                      onRemove={(selectedList, removedItem) => {
-                        const updatedList = selectedList.filter(
-                          (item) => item.id !== removedItem.id
-                        );
-                        handleSelect(updatedList);
-                      }}
-                      displayValue="name"
-                      style={{
-                        chips: {
-                          background: "var(--color-tertiary)",
-                          color: "var(--color-text)",
-                        },
-                        searchBox: {
-                          border: "none",
-                          borderRadius: "0px",
-                        },
-                      }}
-                    />
-                  </InputGroup>
-                  {form.errors.products_id && (
-                    <span className="error-text">
-                      {form.errors.products_id}
-                    </span>
-                  )}
-                </Form.Group>
-              </Col>
-            </Row> */}
           </Modal.Body>
           <Modal.Footer className="productModal">
             <Form.Group>
@@ -242,12 +168,12 @@ const NewDiscountByProduct = ({ show, onHide }) => {
               >
                 <FeatherIcon icon="x" /> &nbsp;Cerrar
               </Button>
+              {JSON.stringify(form.errors)}
               <button
                 type="submit"
                 form="discountCategoryForm"
                 disabled={!form.isValid}
                 className={"btn btn-outline-success"}
-                onClick={form.handleSubmit}
               >
                 <FeatherIcon icon="check" /> &nbsp;Guardar
               </button>
@@ -259,4 +185,4 @@ const NewDiscountByProduct = ({ show, onHide }) => {
   );
 };
 
-export default NewDiscountByProduct;
+export default UpdateDiscountForRol;

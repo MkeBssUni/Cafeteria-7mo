@@ -54,7 +54,7 @@ const NewDiscountByCategory = ({ show, onHide }) => {
         .number()
         .min(1, "Mínimo 1 caracter")
         .required("Campo obligatorio"),
-        image: yup.mixed().required("Campo obligatorio"),
+      image: yup.mixed().required("Campo obligatorio"),
       start_date: yup
         .date()
         .min(
@@ -70,7 +70,7 @@ const NewDiscountByCategory = ({ show, onHide }) => {
     }),
     onSubmit: async (values) => {
       await SaveDiscount(values);
-      handleClose()
+      handleClose();
     },
   });
 
@@ -113,30 +113,6 @@ const NewDiscountByCategory = ({ show, onHide }) => {
                     </span>
                   )}
                 </Form.Group>
-              </Col>
-              <Col>
-                <Form.Group className="position-relative">
-                  <Form.Label className="mb">Foto del producto</Form.Label>
-                  <Form.Control
-                    type="file"
-                    className="input-modal"
-                    name="image"
-                    accept="image/png,image/jpeg"
-                    onChange={handleChangeImage}
-                  />
-                  {form.errors.description && (<span className="error-text">{form.errors.image}</span>)}
-                </Form.Group>
-                <Image
-                  src={form.values.image}
-                  width='200px'
-                  height='200px'
-                  className="mt-2 image-product-modal"
-                  rounded
-                />
-              </Col>
-            </Row>
-            <Row>
-              <Col>
                 <Form.Group>
                   <Form.Label>Porcentaje</Form.Label>
                   <InputGroup>
@@ -155,8 +131,6 @@ const NewDiscountByCategory = ({ show, onHide }) => {
                     <span className="error-text">{form.errors.percentage}</span>
                   )}
                 </Form.Group>
-              </Col>
-              <Col>
                 <Form.Group>
                   <Form.Label>Categoria</Form.Label>
                   <Form.Select
@@ -180,11 +154,33 @@ const NewDiscountByCategory = ({ show, onHide }) => {
                   )}
                 </Form.Group>
               </Col>
+              <Col>
+                <Form.Group className="position-relative">
+                  <Form.Label className="mb">Foto del producto</Form.Label>
+                  <Form.Control
+                    type="file"
+                    className="input-modal"
+                    name="image"
+                    accept="image/png,image/jpeg"
+                    onChange={handleChangeImage}
+                  />
+                  {form.errors.description && (
+                    <span className="error-text">{form.errors.image}</span>
+                  )}
+                </Form.Group>
+                <Image
+                  src={form.values.image}
+                  width="200px"
+                  height="200px"
+                  className="mt-2 image-product-modal"
+                  rounded
+                />
+              </Col>
             </Row>
             <Row>
               <Col>
+                <Form.Label>Fecha de inicio </Form.Label>
                 <Form.Group>
-                  <Form.Label>Fecha de inicio </Form.Label>
                   <DatePicker
                     selected={form.values.start_date}
                     className="input-modal py-2 px-2 multiselect"
@@ -214,8 +210,8 @@ const NewDiscountByCategory = ({ show, onHide }) => {
                 </Form.Group>
               </Col>
               <Col>
+                <Form.Label>Fecha de fin </Form.Label>
                 <Form.Group>
-                  <Form.Label>Fecha de fin </Form.Label>
                   <DatePicker
                     selected={form.values.end_date}
                     className="input-modal py-2 px-2 multiselect"
