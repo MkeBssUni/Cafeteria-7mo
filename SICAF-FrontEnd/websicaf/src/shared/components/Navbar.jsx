@@ -16,6 +16,7 @@ import SidebarSicaf from "./sidebar";
 import "../css/color.css";
 import VisualConfigurations from "../../modules/visualConfig/Functions/VisualConfigurations";
 import Cup from '../../assets/cafe (1).png'
+import ShoopingCart from "./ShoppingCar";
 const Navbarsicaf = () => {
   const navigate = useNavigate();
   const { user, dispatch } = useContext(AuthContext);
@@ -180,8 +181,9 @@ const Navbarsicaf = () => {
                 </Form>
               </div>
             )}
-            <Dropdown className="d-inline mx-2">
-  {roleDefine === "Empleado" && (
+            <ShoopingCart/>
+            {/* <Dropdown className="d-inline mx-2">
+  {roleDefine === "Cliente" && (
     <Dropdown.Toggle
       className="botone"
       variant="info"
@@ -207,7 +209,7 @@ const Navbarsicaf = () => {
       </Dropdown.Item>
     )}
   </Dropdown.Menu>
-</Dropdown>
+</Dropdown> */}
 
 
             <Dropdown className="d-inline mx-2">

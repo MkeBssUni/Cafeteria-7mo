@@ -32,7 +32,7 @@ const LoginScreens = () => {
             type: "LOGIN",
             payload: response.data,
           };
-          console.log(user.isLogged);
+          console.log(user);
           dispatch(action);
           navigation("/welcome", { replace: true });
         } else {
