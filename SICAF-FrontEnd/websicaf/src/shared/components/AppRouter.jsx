@@ -1,46 +1,103 @@
-import React from "react";
+import React, { useContext } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import LoginScreens from "../../modules/auth/LoginScreens";
-import RecoryPassword from "../../modules/auth/RecoryPassword";
-import OrdersScreens from "../../modules/orders/OrdersScreens";
+import LoginScreens from "../../modules/auth/generalViews/LoginScreens";
+import RecoryPassword from "../../modules/auth/generalViews/RecoryPassword";
+import Navbarsicaf from "./Navbar";
+import Welcome from "./Welcome";
+import { AuthContext } from "../../modules/auth/authContext";
+import ProductDashborad from "../../modules/product/adminViews/ProductDashbBoard";
 import UsersScreens from "../../modules/users/UsersScreens";
 import UserForm from "../../modules/users/components/UserForm";
-import Navbarsicaf from "./Navbar";
-import UserEdt from "../../modules/users/components/UserEdt";
-import HistoryScreens from "../../modules/History/HistoryScreens";
-import Welcome from "./Welcome";
-import ProductList from '../../modules/product/clientViews/ProductList';
-import OffersList from '../../modules/offers/OffersList'
-import  ProductDashborad from '../../modules/product/adminViews/ProductDashbBoard'
+import UserEdt from '../../modules/users/components/UserEdt';
+import ProductList from "../../modules/product/clientViews/ProductList";
+import OffersList from "../../modules/offers/clientViews/OffersList";
+import ErrorNotFound from './Error/ErrorNotFound';
+import NewPassword from "../../modules/auth/generalViews/NewPassword";
+import OffersDashborard from "./../../modules/offers/adminViews/OffersDashboard"
+import HistorySaleOnline from './../../modules/orders/ordersAdmin/HistorySaleOnline';
+import HistorySaleStoreScreen from './../../modules/orders/ordersAdmin/HistorySaleStoreScreen';
+import HistoryClientStore from "../../modules/orders/ordersClient/HistoryClientStore";
+import HistoryClientOnlineScreen from './../../modules/orders/ordersClient/HistoryClientOnlineScreen';
+import OrdersScreens from './../../modules/orders/ordersClient/OrdersScreens';
+import Loading from './Loading';
 
 const AppRouter = () => {
+  const { user } = useContext(AuthContext);
+  const userRole = localStorage.getItem("userRole");
+  let roleDefine = "";
+    if (userRole != null) {
+      const role = userRole || ""; // Asegúrate de que role no sea nulo
+      roleDefine = role.replace(/^"(.*)"$/, "$1");
+    }
+
+  const renderUserRoleRouter = () => {
+    switch (roleDefine) {
+      case "Administrador":
+        return (
+          <>
+            <Route path="users" element={<UsersScreens />} />
+            <Route path="userform" element={<UserForm />} />
+            <Route path="useredt/:datosCifrado" element={<UserEdt />} />
+            <Route path="productAdmin" element={<ProductDashborad />} />
+            <Route path="offersAdmin" element={<OffersDashborard />} />
+            <Route path="historySaleStore" element={<HistorySaleStoreScreen/>}/>
+            <Route path="historySaleOnline" element={<HistorySaleStoreScreen/>}/>
+          </>
+        );
+      case "Empleado":
+        return (
+          <>
+            <Route path="products" element={<ProductList />} />
+            <Route path="offers" element={<OffersList />} />
+            <Route path="productAdmin" element={<ProductDashborad />} />
+            <Route path="historySaleStore" element={<HistorySaleStoreScreen/>}/>
+            <Route path="historySaleOnline" element={<HistorySaleStoreScreen/>}/>
+          </>
+        );
+      case "Cliente":
+        return (
+          <>
+            <Route path="products" element={<ProductList />} />
+            <Route path="offers" element={<OffersList />} />
+            <Route path="historyClient" element={<HistoryClientStore/>}/>
+            <Route path="historyClientOnline" element={<HistoryClientOnlineScreen/>}/>
+            <Route path="orders" element={<OrdersScreens/>}/>
+          </>
+        );
+      default:
+        <>
+        <Route path="notFound" element={<ErrorNotFound/>}/>
+        </>
+    }
+  };
   return (
     <Router>
       <Routes>
+        <Route path="/login" element={<LoginScreens />} />
+        <Route path="/recoveryPassword" element={<RecoryPassword />} />
+        <Route path="/newPassword" element={<NewPassword />} />
+        {/* <Route path="/load" element={<Loading/>} />
+         */}
         <Route
           path="/*"
           element={
-            <>
-              <Navbarsicaf />
-              <br/>
-              <Routes>
-                <Route path="/welcome" element={<Welcome/>} />
-                <Route path="/orders" element={<OrdersScreens/>}/>
-                <Route path="/users" element={<UsersScreens/>}/>
-                <Route path="/userform" element={<UserForm/>}/>
-                <Route path="/useredt" element={<UserEdt/>}/>
-                <Route path="/history" element={<HistoryScreens/>}/>
-                <Route path="/products" element={<ProductList/>}/>
-                <Route path="/offers" element={<OffersList/>}/>
-                <Route path="/productAdmin" element={<ProductDashborad/>}/>
-              </Routes>
-            </>
+            user.isLogged ? (
+              <>
+                <Navbarsicaf />
+                <Routes>
+                  <Route path="/welcome" element={<Welcome />} />
+                  {renderUserRoleRouter(userRole)}
+                  <Route path="*" element={<ErrorNotFound />} />
+                </Routes>
+              </>
+            ) : (
+              <>
+                <LoginScreens />
+              </>
+            )
           }
         />
-        <Route path="/login" element={<LoginScreens />} />
-        <Route path="/recoveryPassword" element={<RecoryPassword />} />
       </Routes>
-
     </Router>
   );
 };

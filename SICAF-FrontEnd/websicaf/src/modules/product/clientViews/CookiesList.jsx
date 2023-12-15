@@ -8,7 +8,20 @@ import Image1 from "../../../assets/Products/galletas2.jpeg";
 import Image2 from "../../../assets/Products/galletas2.png";
 
 function CookiesList({ products }) {
-  const [modalShow, setModalShow] = useState(false);
+  const [selectedProductId, setSelectedProductId] = useState({});
+
+  const productNull = {
+    name: "Deliciosas sorpresas se están horneando...\n Mientras tanto, esta sección está vacía",
+    image: "",
+    id: 0,
+    description: "",
+  };
+
+  if (Array.isArray(products) && products.length) {
+    if (products.length % 2 === 1) {
+      products.push(productNull);
+    }
+  }
 
   return (
     <>
@@ -25,8 +38,13 @@ function CookiesList({ products }) {
                       className="text-center mx-2 mt-2 mb-4"
                       key={products[cardIndex].id}
                     >
-                      <div className="product col-12 col-sm-6 col-md-12 col-lg-12 mb-4" onClick={() => { setModalShow(true); console.log("Modal abierto"); }}>
-                        {/* Utiliza products[cardIndex] para acceder a los datos */}
+                      <div
+                        className="product col-12 col-sm-6 col-md-12 col-lg-12 mb-4"
+                        onClick={() => {
+                          setSelectedProductId(products[cardIndex]);
+                          console.log('entra ca', products[cardIndex]);
+                        }}
+                      >
                         <Row>
                           <Col xs={12} md={3}>
                             <Image
@@ -58,26 +76,32 @@ function CookiesList({ products }) {
                             </div>
                             <div>
                               <small className="info_products_offers">
-                                {products[cardIndex].description.length < 60
+                                {products[cardIndex].description.length < 40
                                   ? products[cardIndex].description
                                   : products[cardIndex].description.substring(
                                     0,
-                                    60
+                                    40
                                   ) + "..."}
                               </small>
                             </div>
                           </Col>
                         </Row>
-                        <ProductDetail show={modalShow} onClose={() => setModalShow(false)} product={products[cardIndex]} />
                       </div>
                     </Col>
                   ))}
                 </Row>
-
               </Carousel.Item>
             )
           )}
-      </Carousel>
+      </Carousel >
+
+      <ProductDetail
+          product={selectedProductId}
+          show={selectedProductId && selectedProductId.id > 0}
+          onHide={() => {
+            setSelectedProductId(null); // O cualquier otro valor que no sea 0
+          }}
+        />
     </>
   );
 }
