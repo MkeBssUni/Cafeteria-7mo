@@ -6,9 +6,9 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 
 import Alert, { confirmMsj } from "../../../shared/plugins/alerts";
-import SaveDiscount from '../functions/SaveDiscount';
+import UpdateDiscount from '../functions/UpdateDiscount'
 
-const NewDiscountByTotalOrder = ({ show, onHide }) => {
+const UpdateDiscountByTotalOrder = ({ show, onHide,product }) => {
     const [imgs, setimgs] = useState()
 
     const handleChangeImage = (file) => {
@@ -28,11 +28,12 @@ const NewDiscountByTotalOrder = ({ show, onHide }) => {
     const form =
         useFormik({
             initialValues: {
+                id:product.id,
                 type: 'Descuento por total de la compra',
-                description: "",
-                percentage: 0,
-                image: imgs,
-                order_total: 0
+                description: product.description,
+                percentage: product.percentage,
+                image: product.image,
+                order_total: product.order_total
             },
             validationSchema: yup.object().shape({
                 description: yup.string().min(20, "Mínimo 20 caracteres").required("Campo obligatorio"),
@@ -42,7 +43,7 @@ const NewDiscountByTotalOrder = ({ show, onHide }) => {
             }),
             onSubmit: async (values) => {
                 console.log('entra aca');
-                await SaveDiscount(values)
+                await UpdateDiscount(values)
             }
         });
 
@@ -120,39 +121,6 @@ const NewDiscountByTotalOrder = ({ show, onHide }) => {
                             />
                         </Col>
                     </Row>
-                    {/* <Row>
-                        <Col>
-                            <Form.Group>
-                                <Form.Label>Porcentaje</Form.Label>
-                                <InputGroup>
-                                    <Form.Control
-                                        type="number"
-                                        name="percentage"
-                                        className="input-modal"
-                                        value={form.values.percentage}
-                                        onChange={form.handleChange}
-                                    />
-                                    <Button variant="primary" disabled>%</Button>
-                                </InputGroup>
-                                {form.errors.percentage && (<span className="error-text">{form.errors.percentage}</span>)}
-                            </Form.Group>
-                        </Col>
-                        <Col>
-                            <Form.Group>
-                                <Form.Label>Total de compra</Form.Label>
-                                <InputGroup>
-                                    <Form.Control
-                                        type="number"
-                                        name="order_total"
-                                        className="input-modal"
-                                        value={form.values.order_total}
-                                        onChange={form.handleChange}
-                                    />
-                                </InputGroup>
-                                {form.errors.order_total && (<span className="error-text">{form.errors.order_total}</span>)}
-                            </Form.Group>
-                        </Col>
-                    </Row> */}
                 </Modal.Body>
                 <Modal.Footer className="productModal">
                     <Form.Group>
@@ -182,4 +150,4 @@ const NewDiscountByTotalOrder = ({ show, onHide }) => {
 }
 
 
-export default NewDiscountByTotalOrder;
+export default UpdateDiscountByTotalOrder;

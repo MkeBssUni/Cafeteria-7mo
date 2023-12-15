@@ -12,15 +12,14 @@ import {
 import FeatherIcon from "feather-icons-react";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import Multiselect from "multiselect-react-dropdown";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 import Alert, { confirmMsj } from "../../../shared/plugins/alerts";
-import SaveDiscount from "../functions/SaveDiscount";
-import getByStatus from "../../product/Functions/GetBystatus";
+import UpdateDiscount from "../functions/UpdateDiscount";
 
-const NewDiscountByProduct = ({ show, onHide }) => {
+const UpdateDiscountByCategory = ({ show, onHide, product }) => {
   const [imgs, setimgs] = useState();
-  const [products, setProducts] = useState([]);
 
   const handleChangeImage = (file) => {
     const data = new FileReader();
@@ -38,11 +37,14 @@ const NewDiscountByProduct = ({ show, onHide }) => {
 
   const form = useFormik({
     initialValues: {
-      type: "Descuento por producto",
+      id: product.id,
+      type: "Descuento por categoria",
       description: "",
-      percentage: 0,
-      image: "",
-      products_id: [],
+      percentage: product.percentage,
+      image: product.image,
+      category_id: product.category_id,
+      start_date: product.start_date,
+      end_date: product.end_date,
     },
     validationSchema: yup.object().shape({
       description: yup
@@ -53,28 +55,25 @@ const NewDiscountByProduct = ({ show, onHide }) => {
         .number()
         .min(1, "Mínimo 1 caracter")
         .required("Campo obligatorio"),
-      image: yup.string().nullable().min(1, "Mínimo 1 caracter img"),
-      products_id: yup
-        .array()
-        .of(yup.number().min(1, "Mínimo 1 caracter prods"))
-        .required("Campo obligatorio"),
+      image: yup.mixed().required("Campo obligatorio"),
+      start_date: yup
+        .date()
+        .min(
+          new Date(),
+          "La fecha de inicio no puede ser anterior al día actual"
+        )
+        .nullable(),
+      end_date: yup
+        .date()
+        .min(new Date(), "La fecha de fin no puede ser anterior al día actual")
+        .nullable(),
+      category_id: yup.number().nullable().min(1, "Mínimo 1 caracter"),
     }),
     onSubmit: async (values) => {
-      console.log(values);
-      await SaveDiscount(values);
-      console.log(values, "values");
+      await UpdateDiscount(values);
+      handleClose();
     },
   });
-
-  const handleSelect = (selectedList, selectedItem) => {
-    const selectedIds = selectedList.map((item) => item.id);
-    console.log(selectedIds, "lista de IDS");
-    form.setFieldValue("products_id", selectedIds);
-  };
-
-  useEffect(() => {
-    getByStatus(true).then((products) => setProducts(products));
-  }, []);
 
   return (
     <>
@@ -94,7 +93,7 @@ const NewDiscountByProduct = ({ show, onHide }) => {
         >
           <Modal.Header className="productModal" closeButton>
             <Modal.Title className="modalTitle">
-              Registrar descuento por producto
+              Registrar descuento por categoria
             </Modal.Title>
           </Modal.Header>
           <Modal.Body className="productModal">
@@ -134,37 +133,24 @@ const NewDiscountByProduct = ({ show, onHide }) => {
                   )}
                 </Form.Group>
                 <Form.Group>
-                  <Form.Label>Productos</Form.Label>
-                  <InputGroup>
-                    <Multiselect
-                      className="input-modal multiselect"
-                      options={products}
-                      onSelect={(selectedList, selectedItem) => {
-                        const updatedList = [...selectedList];
-                        handleSelect(updatedList);
-                      }}
-                      onRemove={(selectedList, removedItem) => {
-                        const updatedList = selectedList.filter(
-                          (item) => item.id !== removedItem.id
-                        );
-                        handleSelect(updatedList);
-                      }}
-                      displayValue="name"
-                      style={{
-                        chips: {
-                          background: "var(--color-tertiary)",
-                          color: "var(--color-text)",
-                        },
-                        searchBox: {
-                          border: "none",
-                          borderRadius: "0px",
-                        },
-                      }}
-                    />
-                  </InputGroup>
-                  {form.errors.products_id && (
+                  <Form.Label>Categoria</Form.Label>
+                  <Form.Select
+                    name="category_id"
+                    value={form.values.category_id}
+                    aria-label="Categoria a la que se le aplicara el descuento"
+                    className="input-modal"
+                    onChange={form.handleChange}
+                  >
+                    <option value={1}>Galletas</option>
+                    <option value={2}>Pasteles</option>
+                    <option value={3}>Panes</option>
+                    <option value={4}>Cupcakes</option>
+                    <option value={5}>Bebidas Calientes</option>
+                    <option value={6}>Bebidas frias</option>
+                  </Form.Select>
+                  {form.errors.category_id && (
                     <span className="error-text">
-                      {form.errors.products_id}
+                      {form.errors.category_id}
                     </span>
                   )}
                 </Form.Group>
@@ -184,7 +170,7 @@ const NewDiscountByProduct = ({ show, onHide }) => {
                   )}
                 </Form.Group>
                 <Image
-                  src={imgs}
+                  src={form.values.image}
                   width="200px"
                   height="200px"
                   className="mt-2 image-product-modal"
@@ -192,45 +178,70 @@ const NewDiscountByProduct = ({ show, onHide }) => {
                 />
               </Col>
             </Row>
-            {/* <Row>
+            <Row>
               <Col>
+                <Form.Label>Fecha de inicio </Form.Label>
                 <Form.Group>
-                  <Form.Label>Productos</Form.Label>
-                  <InputGroup>
-                    <Multiselect
-                      className="input-modal multiselect"
-                      options={products}
-                      onSelect={(selectedList, selectedItem) => {
-                        const updatedList = [...selectedList];
-                        handleSelect(updatedList);
-                      }}
-                      onRemove={(selectedList, removedItem) => {
-                        const updatedList = selectedList.filter(
-                          (item) => item.id !== removedItem.id
-                        );
-                        handleSelect(updatedList);
-                      }}
-                      displayValue="name"
-                      style={{
-                        chips: {
-                          background: "var(--color-tertiary)",
-                          color: "var(--color-text)",
+                  <DatePicker
+                    selected={form.values.start_date}
+                    className="input-modal py-2 px-2 multiselect"
+                    onChange={(date) => form.setFieldValue("start_date", date)}
+                    popperClassName="input-modal"
+                    popperPlacement="top-end"
+                    popperModifiers={[
+                      {
+                        name: "offset",
+                        options: {
+                          offset: [5, 10],
                         },
-                        searchBox: {
-                          border: "none",
-                          borderRadius: "0px",
+                      },
+                      {
+                        name: "preventOverflow",
+                        options: {
+                          rootBoundary: "viewport",
+                          tether: false,
+                          altAxis: true,
                         },
-                      }}
-                    />
-                  </InputGroup>
-                  {form.errors.products_id && (
-                    <span className="error-text">
-                      {form.errors.products_id}
-                    </span>
+                      },
+                    ]}
+                  />
+                  {form.errors.percentage && (
+                    <span className="error-text">{form.errors.start_date}</span>
                   )}
                 </Form.Group>
               </Col>
-            </Row> */}
+              <Col>
+                <Form.Label>Fecha de fin </Form.Label>
+                <Form.Group>
+                  <DatePicker
+                    selected={form.values.end_date}
+                    className="input-modal py-2 px-2 multiselect"
+                    onChange={(date) => form.setFieldValue("end_date", date)}
+                    popperClassName="some-custom-class"
+                    popperPlacement="top-end"
+                    popperModifiers={[
+                      {
+                        name: "offset",
+                        options: {
+                          offset: [5, 10],
+                        },
+                      },
+                      {
+                        name: "preventOverflow",
+                        options: {
+                          rootBoundary: "viewport",
+                          tether: false,
+                          altAxis: true,
+                        },
+                      },
+                    ]}
+                  />
+                  {form.errors.percentage && (
+                    <span className="error-text">{form.errors.end_date}</span>
+                  )}
+                </Form.Group>
+              </Col>
+            </Row>
           </Modal.Body>
           <Modal.Footer className="productModal">
             <Form.Group>
@@ -242,12 +253,12 @@ const NewDiscountByProduct = ({ show, onHide }) => {
               >
                 <FeatherIcon icon="x" /> &nbsp;Cerrar
               </Button>
+              {JSON.stringify(form.errors)}
               <button
                 type="submit"
                 form="discountCategoryForm"
                 disabled={!form.isValid}
                 className={"btn btn-outline-success"}
-                onClick={form.handleSubmit}
               >
                 <FeatherIcon icon="check" /> &nbsp;Guardar
               </button>
@@ -259,4 +270,4 @@ const NewDiscountByProduct = ({ show, onHide }) => {
   );
 };
 
-export default NewDiscountByProduct;
+export default UpdateDiscountByCategory;

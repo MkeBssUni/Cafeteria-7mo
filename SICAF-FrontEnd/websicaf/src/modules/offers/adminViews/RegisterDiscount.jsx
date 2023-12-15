@@ -485,7 +485,7 @@ const RegisterDiscount = ({ show, onHide }) => {
                                             options={products}
                                             selectedValues={form.values.products_id}
                                             onSelect={(selectedList, selectedItem) => {
-                                                form.setFieldValue('products_id', selectedList);
+                                                 selectedList
                                             }}
                                             onRemove={(selectedList, removedItem) => {
                                                 form.setFieldValue('products_id', selectedList);
