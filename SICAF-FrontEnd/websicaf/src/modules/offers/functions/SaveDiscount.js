@@ -8,12 +8,14 @@ import Alert, {
 } from "../../../shared/plugins/alerts";
 
 const SaveDiscount = async (request) => {
+  console.log(request,'request');
   try {
     const response = await AxiosClient({
       url: "discounts/",
       method: "POST",
       data: JSON.stringify(request),
     });
+    console.log(response,'resopnse');
     if (response && !response.error) {
       Alert.fire({
         title: "Registro realizado exitosamente",

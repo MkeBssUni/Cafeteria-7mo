@@ -14,7 +14,8 @@ const RegisterDiscountForRol = ({ show, onHide }) => {
     const handleChangeImage = (file) => {
         const data = new FileReader()
         data.addEventListener('load', () => {
-            setimgs(data.result)
+            setimgs(data.result);
+            form.setFieldValue("image", data.result);
         })
         data.readAsDataURL(file.target.files[0]);
     }
@@ -30,22 +31,27 @@ const RegisterDiscountForRol = ({ show, onHide }) => {
                 type: 'Descuento por rol',
                 description: "",
                 percentage: 0,
-                /*   image: imgs, */
+                image: imgs,
                 rol_id: 1,
             },
             validationSchema: yup.object().shape({
                 description: yup.string().min(20, "Mínimo 20 caracteres").required("Campo obligatorio"),
                 percentage: yup.number().min(1, "Mínimo 1 caracter").required("Campo obligatorio"),
-                /* image: yup.string().nullable().min(1, 'Mínimo 1 caracter img'), */
+                image: yup.string().nullable().min(1, 'Mínimo 1 caracter img'),
                 rol_id: yup.number().required("Campo obligatorio"),
             }),
             onSubmit: async (values) => {
-                console.log('entra aca');
+                console.log('entra aca', values);
                 await SaveDiscount(values)
+                handleClose()
             }
         });
     return (<>
-        <Form onSubmit={form.handleSubmit}>
+        <Form
+            onSubmit={form.handleSubmit}
+            name="discountCategoryForm"
+            id="discountCategoryForm"
+        >
             <Modal
                 backdrop="static"
                 keyboard={false}
@@ -67,9 +73,9 @@ const RegisterDiscountForRol = ({ show, onHide }) => {
                                 {form.errors.description && (<span className="error-text">{form.errors.description}</span>)}
                             </Form.Group>
                         </Col>
-                        {/*  <Col>
+                        <Col>
                             <Form.Group className="position-relative">
-                                <Form.Label className="mb">Foto del producto</Form.Label>
+                                <Form.Label className="mb">Foto</Form.Label>
                                 <Form.Control
                                     type="file"
                                     className="input-modal"
@@ -80,13 +86,13 @@ const RegisterDiscountForRol = ({ show, onHide }) => {
                                 {form.errors.description && (<span className="error-text">{form.errors.image}</span>)}
                             </Form.Group>
                             <Image
-                                src={imgs}
+                                src={form.values.image}
                                 width='200px'
                                 height='200px'
                                 className="mt-2 image-product-modal"
                                 rounded
                             />
-                        </Col> */}
+                        </Col>
                     </Row>
                     <Row>
                         <Col>
@@ -122,18 +128,21 @@ const RegisterDiscountForRol = ({ show, onHide }) => {
                     <Form.Group>
                         <Button
                             className="me-2"
+                            type="button"
                             variant="outline-danger"
                             onClick={handleClose}
                         >
                             <FeatherIcon icon="x" /> &nbsp;Cerrar
                         </Button>
-                        <Button
+                        {JSON.stringify(form.errors)}
+                        <button
+                            type="submit"
+                            form="discountCategoryForm"
                             disabled={!form.isValid}
-                            variant="outline-success"
-                            onClick={form.onSubmit}
+                            className={"btn btn-outline-success"}
                         >
                             <FeatherIcon icon="check" /> &nbsp;Guardar
-                        </Button>
+                        </button>
                     </Form.Group>
                 </Modal.Footer>
             </Modal>

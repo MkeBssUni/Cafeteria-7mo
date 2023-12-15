@@ -8,10 +8,10 @@ import Image1 from "../../../assets/Products/galletas2.jpeg";
 import Image2 from "../../../assets/Products/galletas2.png";
 
 function CookiesList({ products }) {
-  const [selectedProductId, setSelectedProductId] = useState(null);
+  const [selectedProductId, setSelectedProductId] = useState({});
 
   const productNull = {
-    name: "Deliciosas sorpresas se estan horneando...\n Mientrras tanto esta sección esta  vacía",
+    name: "Deliciosas sorpresas se están horneando...\n Mientras tanto, esta sección está vacía",
     image: "",
     id: 0,
     description: "",
@@ -40,9 +40,10 @@ function CookiesList({ products }) {
                     >
                       <div
                         className="product col-12 col-sm-6 col-md-12 col-lg-12 mb-4"
-                        onClick={() =>
-                          setSelectedProductId(products[cardIndex].id)
-                        }
+                        onClick={() => {
+                          setSelectedProductId(products[cardIndex]);
+                          console.log('entra ca', products[cardIndex]);
+                        }}
                       >
                         <Row>
                           <Col xs={12} md={3}>
@@ -78,21 +79,13 @@ function CookiesList({ products }) {
                                 {products[cardIndex].description.length < 40
                                   ? products[cardIndex].description
                                   : products[cardIndex].description.substring(
-                                      0,
-                                      40
-                                    ) + "..."}
+                                    0,
+                                    40
+                                  ) + "..."}
                               </small>
                             </div>
                           </Col>
                         </Row>
-                        <ProductDetail
-                          product={products[cardIndex]}
-                          show={
-                            products[cardIndex].id !== 0 &&
-                            selectedProductId === products[cardIndex].id
-                          }
-                          onHide={() => setSelectedProductId(null)}
-                        />
                       </div>
                     </Col>
                   ))}
@@ -100,7 +93,15 @@ function CookiesList({ products }) {
               </Carousel.Item>
             )
           )}
-      </Carousel>
+      </Carousel >
+
+      <ProductDetail
+          product={selectedProductId}
+          show={selectedProductId && selectedProductId.id > 0}
+          onHide={() => {
+            setSelectedProductId(null); // O cualquier otro valor que no sea 0
+          }}
+        />
     </>
   );
 }

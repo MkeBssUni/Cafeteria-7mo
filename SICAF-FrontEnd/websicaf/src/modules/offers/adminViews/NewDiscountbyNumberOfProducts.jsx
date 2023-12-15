@@ -4,17 +4,21 @@ import { Modal, Row, Col, Image, Form, InputGroup, Button } from 'react-bootstra
 import FeatherIcon from "feather-icons-react";
 import { useFormik } from "formik";
 import * as yup from "yup";
+import Multiselect from 'multiselect-react-dropdown';
 
 import Alert, { confirmMsj } from "../../../shared/plugins/alerts";
 import SaveDiscount from '../functions/SaveDiscount';
+import getByStatus from '../../product/Functions/GetBystatus';
 
 const NewDiscountByNumberOfProducs = ({ show, onHide }) => {
     const [imgs, setimgs] = useState()
+    const [products, setProducts] = useState([])
 
     const handleChangeImage = (file) => {
         const data = new FileReader()
         data.addEventListener('load', () => {
             setimgs(data.result)
+            form.setFieldValue("image", data.result);
         })
         data.readAsDataURL(file.target.files[0]);
     }
@@ -27,26 +31,41 @@ const NewDiscountByNumberOfProducs = ({ show, onHide }) => {
     const form =
         useFormik({
             initialValues: {
-                type: 'Descuento por total de la compra',
+                type: 'Descuento por cantidad de productos',
                 description: "",
                 percentage: 0,
-                /*   image: imgs, */
-                order_total: 0
+                image: "",
+                products_number: 0,
+                products_id: [],
             },
             validationSchema: yup.object().shape({
                 description: yup.string().min(20, "Mínimo 20 caracteres").required("Campo obligatorio"),
                 percentage: yup.number().min(1, "Mínimo 1 caracter").required("Campo obligatorio"),
-                /* image: yup.string().nullable().min(1, 'Mínimo 1 caracter img'), */
-                order_total: yup.number().required("Campo obligatorio")
+                image: yup.string().nullable().min(1, 'Mínimo 1 caracter img'),
+                products_number: yup.number().required("Campo obligatorio"),
+                products_id: yup.array().of(yup.number().min(1, 'Mínimo 1 caracter prods')).required("Campo obligatorio"),
             }),
             onSubmit: async (values) => {
-                console.log('entra aca');
+                console.log(values);
                 await SaveDiscount(values)
+                console.log(values, "values");
             }
         });
 
+    const handleSelect = (selectedList, selectedItem) => {
+        const selectedIds = selectedList.map(item => item.id);
+        console.log(selectedIds, "lista de IDS");
+        form.setFieldValue("products_id", selectedIds);
+    };
+
+    useEffect(() => {
+        getByStatus(true).then((products) => setProducts(products))
+    }, []);
+
     return (<>
-        <Form onSubmit={form.handleSubmit}>
+        <Form onSubmit={form.handleSubmit}
+            name="discountCategoryForm"
+            id="discountCategoryForm">
             <Modal
                 backdrop="static"
                 keyboard={false}
@@ -68,7 +87,7 @@ const NewDiscountByNumberOfProducs = ({ show, onHide }) => {
                                 {form.errors.description && (<span className="error-text">{form.errors.description}</span>)}
                             </Form.Group>
                         </Col>
-                        {/*  <Col>
+                        <Col>
                             <Form.Group className="position-relative">
                                 <Form.Label className="mb">Foto del producto</Form.Label>
                                 <Form.Control
@@ -87,7 +106,7 @@ const NewDiscountByNumberOfProducs = ({ show, onHide }) => {
                                 className="mt-2 image-product-modal"
                                 rounded
                             />
-                        </Col> */}
+                        </Col>
                     </Row>
                     <Row>
                         <Col>
@@ -108,38 +127,76 @@ const NewDiscountByNumberOfProducs = ({ show, onHide }) => {
                         </Col>
                         <Col>
                             <Form.Group>
-                                <Form.Label>Total de compra</Form.Label>
+                                <Form.Label>Cantidad de productos</Form.Label>
                                 <InputGroup>
-                                    <Form.Control
-                                        type="number"
-                                        name="order_total"
-                                        className="input-modal"
-                                        value={form.values.order_total}
-                                        onChange={form.handleChange}
-                                    />
-                                    <Button variant="primary" disabled>%</Button>
+                                    <Button variant="primary" onClick={() => form.setFieldValue('products_number', form.values.products_number - 1)} disabled={form.values.products_number <= 0}> - </Button>
+                                    <Form.Control required type="number" name="stock" className="input-modal" value={form.values.products_number < 0 ? 0 : form.values.products_number} onChange={form.handleChange} />
+                                    <Button variant="primary" onClick={() => form.setFieldValue('products_number', form.values.products_number + 1)}> + </Button>
                                 </InputGroup>
-                                {form.errors.percentage && (<span className="error-text">{form.errors.order_total}</span>)}
+                                {form.errors.products_number && (
+                                    <span className="error-text">{form.errors.products_number}</span>
+                                )}
                             </Form.Group>
                         </Col>
                     </Row>
+                    <Row>
+                        <Col>
+                            <Form.Group>
+                                <Form.Label>Productos</Form.Label>
+                                <InputGroup>
+                                    <Multiselect
+                                        className="input-modal multiselect"
+                                        options={products}
+                                        onSelect={(selectedList, selectedItem) => {
+                                            const updatedList = [...selectedList];
+                                            handleSelect(updatedList);
+                                        }}
+                                        onRemove={(selectedList, removedItem) => {
+                                            const updatedList = selectedList.filter(item => item.id !== removedItem.id);
+                                            handleSelect(updatedList);
+                                        }}
+                                        displayValue="name"
+                                        style={{
+                                            chips: {
+                                                background: 'var(--color-tertiary)',
+                                                color: 'var(--color-text)'
+                                            },
+                                            searchBox: {
+                                                border: 'none',
+                                                borderRadius: '0px'
+                                            }
+                                        }}
+                                    />
+                                </InputGroup>
+                                {form.errors.products_id && (
+                                    <span className="error-text">{form.errors.products_id}</span>
+                                )}
+                            </Form.Group>
+                        </Col>
+                    </Row>
+                    {JSON.stringify(form.values)}
                 </Modal.Body>
                 <Modal.Footer className="productModal">
                     <Form.Group>
                         <Button
                             className="me-2"
+                            type="button"
                             variant="outline-danger"
                             onClick={handleClose}
                         >
                             <FeatherIcon icon="x" /> &nbsp;Cerrar
                         </Button>
-                        <Button
+                        {JSON.stringify(form.errors)}
+                        <button
+                            type="submit"
+                            form="discountCategoryForm"
                             disabled={!form.isValid}
-                            variant="outline-success"
-                            onClick={form.onSubmit}
+                            className={"btn btn-outline-success"}
+                            onClick={form.handleSubmit}
                         >
                             <FeatherIcon icon="check" /> &nbsp;Guardar
-                        </Button>
+                        </button>
+
                     </Form.Group>
                 </Modal.Footer>
             </Modal>

@@ -21,9 +21,11 @@ import Alert, {
 import Image1 from "../../../assets/Products/pastel1.jpeg";
 import CreateProduct from "../Functions/CreateProduct";
 
-function ProductDetail({ show, onHide, product }) {
+function ProductDetail({ product, show, onHide, onClose }) {
   const [count, setCount] = useState(0);
-
+  if (!show) {
+    return null;
+  }
   return (
     <>
       <Modal

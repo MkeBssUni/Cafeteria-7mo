@@ -14,7 +14,8 @@ const NewDiscountByTotalOrder = ({ show, onHide }) => {
     const handleChangeImage = (file) => {
         const data = new FileReader()
         data.addEventListener('load', () => {
-            setimgs(data.result)
+            setimgs(data.result);
+            form.setFieldValue("image", data.result);
         })
         data.readAsDataURL(file.target.files[0]);
     }
@@ -30,14 +31,14 @@ const NewDiscountByTotalOrder = ({ show, onHide }) => {
                 type: 'Descuento por total de la compra',
                 description: "",
                 percentage: 0,
-                /*   image: imgs, */
+                image: imgs,
                 order_total: 0
             },
             validationSchema: yup.object().shape({
                 description: yup.string().min(20, "Mínimo 20 caracteres").required("Campo obligatorio"),
                 percentage: yup.number().min(1, "Mínimo 1 caracter").required("Campo obligatorio"),
-                /* image: yup.string().nullable().min(1, 'Mínimo 1 caracter img'), */
-                order_total: yup.number().required("Campo obligatorio")
+                image: yup.string().min(1, 'Mínimo 1 caracter img').required("Campo obligatorio"),
+                order_total: yup.number().required("Campo obligatorio").min(1, 'Mínimo 1 caracter img')
             }),
             onSubmit: async (values) => {
                 console.log('entra aca');
@@ -46,7 +47,9 @@ const NewDiscountByTotalOrder = ({ show, onHide }) => {
         });
 
     return (<>
-        <Form onSubmit={form.handleSubmit}>
+        <Form onSubmit={form.handleSubmit}
+            name="discountCategoryForm"
+            id="discountCategoryForm">
             <Modal
                 backdrop="static"
                 keyboard={false}
@@ -68,7 +71,7 @@ const NewDiscountByTotalOrder = ({ show, onHide }) => {
                                 {form.errors.description && (<span className="error-text">{form.errors.description}</span>)}
                             </Form.Group>
                         </Col>
-                        {/*  <Col>
+                        <Col>
                             <Form.Group className="position-relative">
                                 <Form.Label className="mb">Foto del producto</Form.Label>
                                 <Form.Control
@@ -78,7 +81,7 @@ const NewDiscountByTotalOrder = ({ show, onHide }) => {
                                     accept="image/png,image/jpeg"
                                     onChange={handleChangeImage}
                                 />
-                                {form.errors.description && (<span className="error-text">{form.errors.image}</span>)}
+                                {form.errors.image && (<span className="error-text">{form.errors.image}</span>)}
                             </Form.Group>
                             <Image
                                 src={imgs}
@@ -87,7 +90,7 @@ const NewDiscountByTotalOrder = ({ show, onHide }) => {
                                 className="mt-2 image-product-modal"
                                 rounded
                             />
-                        </Col> */}
+                        </Col>
                     </Row>
                     <Row>
                         <Col>
@@ -117,29 +120,34 @@ const NewDiscountByTotalOrder = ({ show, onHide }) => {
                                         value={form.values.order_total}
                                         onChange={form.handleChange}
                                     />
-                                    <Button variant="primary" disabled>%</Button>
                                 </InputGroup>
-                                {form.errors.percentage && (<span className="error-text">{form.errors.order_total}</span>)}
+                                {form.errors.order_total && (<span className="error-text">{form.errors.order_total}</span>)}
                             </Form.Group>
                         </Col>
                     </Row>
+                    {JSON.stringify(form.values)}
                 </Modal.Body>
                 <Modal.Footer className="productModal">
                     <Form.Group>
                         <Button
                             className="me-2"
+                            type="button"
                             variant="outline-danger"
                             onClick={handleClose}
                         >
                             <FeatherIcon icon="x" /> &nbsp;Cerrar
                         </Button>
-                        <Button
+                        {JSON.stringify(form.errors)}
+                        <button
+                            type="submit"
+                            form="discountCategoryForm"
                             disabled={!form.isValid}
-                            variant="outline-success"
-                            onClick={form.onSubmit}
+                            className={"btn btn-outline-success"}
+                            onClick={form.handleSubmit}
                         >
                             <FeatherIcon icon="check" /> &nbsp;Guardar
-                        </Button>
+                        </button>
+
                     </Form.Group>
                 </Modal.Footer>
             </Modal>
