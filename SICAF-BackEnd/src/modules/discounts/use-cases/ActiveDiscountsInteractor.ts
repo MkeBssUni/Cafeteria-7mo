@@ -4,7 +4,6 @@ import { Product } from "../../products/entities/product";
 import { Role } from "../../roles/entities/role";
 import { DiscountByCategoryDto, DiscountByProductDto, DiscountByProductQuantityDto, DiscountByRolDto, DiscountByTotalDto, DiscountsDto } from "../adapters/dto";
 import { findCategoryById, findProductsByDiscount, findRoleByDiscount } from "../boundary";
-import { Discount } from "../entities/discount";
 import { DiscountRepository } from "./ports/discount.repository";
 
 export class ActiveDiscountsInteractor implements UseCase<null, DiscountsDto> {
@@ -23,18 +22,20 @@ export class ActiveDiscountsInteractor implements UseCase<null, DiscountsDto> {
             switch(discount.type) {
                 case DiscountTypes.discountByRol:
                     const role: Role = await findRoleByDiscount(discount.id!);
-                    discountsByRol.push({
-                        id: discount.id!,
-                        type: discount.type,
-                        description: discount.description,
-                        percentage: discount.percentage,
-                        status: discount.status,
-                        created_by: discount.created_by,
-                        rol: {
-                            id: role.id!,
-                            name: role.name
-                        } 
-                    });
+                    if (role) {
+                        discountsByRol.push({
+                            id: discount.id!,
+                            type: discount.type,
+                            description: discount.description,
+                            percentage: discount.percentage,
+                            status: discount.status,
+                            created_by: discount.created_by,
+                            rol: {
+                                id: role.id!,
+                                name: role.name
+                            } 
+                        });
+                    }
                     break;
                 case DiscountTypes.discountByOrderTotal:
                     discountsByOrderTotal.push({
