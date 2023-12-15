@@ -253,7 +253,6 @@ const UpdateDiscountByCategory = ({ show, onHide, product }) => {
               >
                 <FeatherIcon icon="x" /> &nbsp;Cerrar
               </Button>
-              {JSON.stringify(form.errors)}
               <button
                 type="submit"
                 form="discountCategoryForm"

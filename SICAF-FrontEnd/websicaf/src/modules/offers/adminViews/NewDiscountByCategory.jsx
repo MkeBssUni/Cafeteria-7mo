@@ -252,12 +252,12 @@ const NewDiscountByCategory = ({ show, onHide }) => {
               >
                 <FeatherIcon icon="x" /> &nbsp;Cerrar
               </Button>
-              {JSON.stringify(form.errors)}
               <button
                 type="submit"
                 form="discountCategoryForm"
                 disabled={!form.isValid}
                 className={"btn btn-outline-success"}
+                onClick={form.handleSubmit}
               >
                 <FeatherIcon icon="check" /> &nbsp;Guardar
               </button>

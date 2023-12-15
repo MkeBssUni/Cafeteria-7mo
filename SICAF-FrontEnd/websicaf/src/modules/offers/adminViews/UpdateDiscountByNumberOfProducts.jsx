@@ -18,7 +18,8 @@ import Alert, { confirmMsj } from "../../../shared/plugins/alerts";
 import UpdateDiscount from "../functions/UpdateDiscount";
 import getByStatus from "../../product/Functions/GetBystatus";
 
-const UpdateDiscountByNumberOfProducs = ({ show, onHide,product }) => {
+const UpdateDiscountByNumberOfProducs = ({ show, onHide, product }) => {
+  console.log(product, "product");
   const [imgs, setimgs] = useState();
   const [products, setProducts] = useState([]);
 
@@ -38,7 +39,7 @@ const UpdateDiscountByNumberOfProducs = ({ show, onHide,product }) => {
 
   const form = useFormik({
     initialValues: {
-      id:product.id,
+      id: product.id,
       type: "Descuento por cantidad de productos",
       description: product.description,
       percentage: product.percentage,

@@ -17,7 +17,7 @@ export class AllDiscountsInteractor implements UseCase<null, DiscountsDto> {
         let discountsByCategory: DiscountByCategoryDto[] = [];
 
         const discounts = await this.discountsRepository.findAll();
-
+        
         for (let discount of discounts) {
             switch(discount.type) {
                 case DiscountTypes.discountByRol:

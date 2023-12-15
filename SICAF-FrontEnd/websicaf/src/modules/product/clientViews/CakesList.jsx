@@ -10,7 +10,7 @@ function CupCakesList({ products }) {
 
   const [selectedProductId, setSelectedProductId] = useState({});
   const productNull = {
-    name: "Deliciosas sorpresas se estan horneando...\n Mientrras tanto esta sección esta  vacía",
+    name: "Deliciosas sorpresas se estan horneando...\n Mientras tanto esta sección esta  vacía",
     image: "",
     id: 0,
     description: ""
@@ -64,24 +64,24 @@ function CupCakesList({ products }) {
                             >
                               {products[cardIndex].name}
                             </p>
-                            <p
+                            {products[cardIndex].price && <p
                               style={{
                                 display: "inline-block",
                                 marginLeft: "10px",
                               }}
                             >
-                              {products[cardIndex].price}
-                            </p>
+                              ${products[cardIndex].price}
+                            </p>}
                           </div>
                           <div>
-                            <small className="info_products_offers">
+                            {products[cardIndex].description && <small className="info_products_offers">
                               {products[cardIndex].description.length < 60
                                 ? products[cardIndex].description
                                 : products[cardIndex].description.substring(
                                   0,
                                   60
                                 ) + "..."}
-                            </small>
+                            </small>}
                           </div>
                         </Col>
                       </Row>
