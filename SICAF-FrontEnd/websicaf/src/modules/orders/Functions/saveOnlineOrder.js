@@ -18,6 +18,7 @@ const saveOnlineOrder = async (request) => {
             })
         }
       } catch (error) {
+        console.log(error);
         Alert.fire({
             title: errorTitle,
             text: errorMsg,

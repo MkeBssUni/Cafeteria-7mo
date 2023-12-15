@@ -65,12 +65,6 @@ const HistoryClientOnlineScreen = () => {
 
   const columns = React.useMemo(() => [
     {
-      name: "Empleado que atendio",
-      cell: (row) => <div>{row.employee}</div>,
-      sortable: true,
-      selector: (row) => row.employee,
-    },
-    {
       name: "Método de  Pago",
       cell: (row) => <div>{row.payment_method}</div>,
       sortable: true,

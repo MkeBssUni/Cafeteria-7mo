@@ -9,20 +9,60 @@ import FeatherIcon from "feather-icons-react/build/FeatherIcon";
 const SaveOnlineOrders = ({ isOpen, onClose, carritoCompras }) => {
   const { user } = useContext(AuthContext);
   console.log("carrito acá", carritoCompras);
-  
+
+  // const form = useFormik({
+  //   initialValues: {
+  //     client_id: user.id,
+  //     payment_method: "", // Tarjeta de credito o Tarjeta de debito
+  //   },
+  //   onSubmit: async (values) => {
+  //     const transformedProducts = carritoCompras.cart.product.map((item) => ({
+  //       id: item.product_id,
+  //       quantity: item.quantity,
+  //     }));
+
+  //     console.log({ ...values, products: transformedProducts });
+
+  //     return await Alert.fire({
+  //       title: "¿Estas seguro de guardar el usuario?",
+  //       text: "Seguro de realizar la operación",
+  //       icon: "warning",
+  //       confirmButtonColor: "#009574",
+  //       confirmButtonText: "Aceptar",
+  //       cancelButtonColor: "#DD6B55",
+  //       cancelButtonText: "Cancelar",
+  //       reverseButtons: true,
+  //       backdrop: true,
+  //       showCancelButton: true,
+  //       showLoaderOnConfirm: true,
+  //       allowOutsideClick: () => !Alert.isLoading,
+  //       preConfirm: async () => {
+  //         handleClose();
+  //         return await saveOnlineOrder({
+  //           ...values,
+  //           products: transformedProducts,
+  //         });
+  //       },
+  //     });
+  //   },
+  // });
+
   const form = useFormik({
     initialValues: {
       client_id: user.id,
       payment_method: "", // Tarjeta de credito o Tarjeta de debito
     },
     onSubmit: async (values) => {
-      const transformedProducts = carritoCompras.cart.product.map((item) => ({
-        id: item.product_id,
-        quantity: item.quantity,
-      }));
-  
+      // Check if carritoCompras.cart.product is defined before mapping
+      const transformedProducts = carritoCompras
+        ? carritoCompras.map((item) => ({
+            id: item.product_id,
+            quantity: item.quantity,
+          }))
+        : [];
+
       console.log({ ...values, products: transformedProducts });
-  
+
       return await Alert.fire({
         title: "¿Estas seguro de guardar el usuario?",
         text: "Seguro de realizar la operación",
@@ -81,8 +121,7 @@ const SaveOnlineOrders = ({ isOpen, onClose, carritoCompras }) => {
           </Form.Group>
           <Form.Group className="mb-2 mt-2">
             <Row>
-              <Col>
-              </Col>
+              <Col></Col>
             </Row>
           </Form.Group>
           <Form.Group className="mb-2 mt-2">
