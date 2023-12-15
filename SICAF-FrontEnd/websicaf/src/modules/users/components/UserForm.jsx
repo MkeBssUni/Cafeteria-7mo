@@ -12,7 +12,12 @@ const UserForm = () => {
   const navigation = useNavigate();
   const handleOpen = () => {
     navigation("/users", { replace: true });
+    window.location.reload();
   };
+
+  //validaciones
+  const phoneRegExp =
+    /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
 
   const form = useFormik({
     initialValues: {
@@ -35,24 +40,21 @@ const UserForm = () => {
       },
     },
     validationSchema: yup.object().shape({
-      email: yup
-        .string()
-        .required("Campo Obligatorio")
-        .matches(/^(?!.*@[^,]*,)/, "Correo Electrónico no Válido"),
-      password: yup.string().required("Campo Obligatorio"),
+      email: yup.string().email('Correo no Válido').matches(/^(?!.*@[^,]*,)/, "Correo Electrónico no Válido"),
+      password: yup.string().required("Campo Obligatorio").max(8,"Maxímo 8 caracteres").min(4,"Se recomienda que la contraseña lleve una letra mayúscula y un número"),
       role_id: yup.number().required("Campo Obligatorio"),
       person: yup.object().shape({
-        name: yup.string().required("Campo Obligatorio"),
-        lastname: yup.string().required("Campo Obligatorio"),
+        name: yup.string().matches(/^[^\d]+$/, 'No se permiten números').required("Campo Obligatorio"),
+        lastname: yup.string().matches(/^[^\d]+$/, 'No se permiten números').required("Campo Obligatorio"),
         gender: yup.string().required("Campo Obligatorio"),
-        phone_number1: yup.string().required("Campo Obligatorio"),
+        phone_number1: yup.string().matches(phoneRegExp, "Teléfono no Válido").max(10, "Limíte 10 caracteres"),
         address: yup.object().shape({
           street: yup.string().required("Campo Obligatorio"),
           settlement: yup.string().required("Campo Obligatorio"),
-          city: yup.string().required("Campo Obligatorio"),
-          state: yup.string().required("Campo Obligatorio"),
-          postal_code: yup.string().required("Campo Obligatorio"),
-          country: yup.string().required("Campo Obligatorio"),
+          city: yup.string().matches(/^[^\d]+$/, 'No se permiten números').required("Campo Obligatorio"),
+          state: yup.string().matches(/^[^\d]+$/, 'No se permiten números').required("Campo Obligatorio"),
+          postal_code: yup.string().matches(/^[0-9]+$/, 'Solo se permiten números').required("Campo Obligatorio").max(5,"No es válido se recomienda que solo se aceptan 5 caracteres"),
+          country: yup.string().matches(/^[^\d]+$/, 'No se permiten números').required("Campo Obligatorio"),
         }),
       }),
     }),
@@ -71,6 +73,7 @@ const UserForm = () => {
         showLoaderOnConfirm: true,
         allowOutsideClick: () => !Alert.isLoading,
         preConfirm: async () => {
+          handleOpen();
           return await CreateUser(values);
         },
       });
@@ -117,6 +120,7 @@ const UserForm = () => {
                       <Form.Label>Contraseña: </Form.Label>
                       <Form.Control
                         className="input-user"
+                        type="password"
                         name="password"
                         value={form.values.password}
                         onChange={form.handleChange}
@@ -194,16 +198,20 @@ const UserForm = () => {
 
                   <Col>
                     <Form.Group>
-                      <Form.Label>Genero: </Form.Label>
+                    <Form.Label>Genero: </Form.Label>
                       <Form.Control
+                        as="select"
                         className="input-user"
                         name="person.gender"
                         value={form.values.person && form.values.person.gender}
                         onChange={form.handleChange}
-                      />
-                      {form.errors.person && form.errors.person.lastname && (
+                      >
+                        <option value='F'>Femenino</option>
+                        <option value='M'>Masculino</option>
+                      </Form.Control>
+                        {form.errors.person && form.errors.person.lastname && (
                         <span className="error-text">
-                          {form.errors.person.lastname}
+                          {form.errors.person.gender}
                         </span>
                       )}
                     </Form.Group>
@@ -221,9 +229,9 @@ const UserForm = () => {
                         }
                         onChange={form.handleChange}
                       />
-                      {form.errors.person && form.errors.person.lastname && (
+                      {form.errors.person && form.errors.person.phone_number1 && (
                         <span className="error-text">
-                          {form.errors.person.lastname}
+                          {form.errors.person.phone_number1}
                         </span>
                       )}
                     </Form.Group>
@@ -257,7 +265,7 @@ const UserForm = () => {
                       </Col>
                       <Col>
                         <Form.Group>
-                          <Form.Label>Asentamiento:</Form.Label>
+                          <Form.Label>Colonia:</Form.Label>
                           <Form.Control
                             className="input-user"
                             name="person.address.settlement"
@@ -338,9 +346,9 @@ const UserForm = () => {
                           />
                           {form.errors.person &&
                             form.errors.person.address &&
-                            form.values.person.address.postal_code && (
+                            form.errors.person.address.postal_code && (
                               <span className="error-text">
-                                {form.values.person.address.postal_code}
+                                {form.errors.person.address.postal_code}
                               </span>
                             )}
                         </Form.Group>
@@ -362,7 +370,7 @@ const UserForm = () => {
                             form.errors.person.address &&
                             form.errors.person.address.country && (
                               <span className="error-text">
-                                {form.values.person.address.country}
+                                {form.errors.person.address.country}
                               </span>
                             )}
                         </Form.Group>
@@ -381,7 +389,7 @@ const UserForm = () => {
               >
                 Cancelar
               </button>
-              <button className="btn  btn-outline-success">Registrar</button>
+              <button className="btn btn-outline-success" >Registrar</button>
             </div>
           </Row>
         </Form>

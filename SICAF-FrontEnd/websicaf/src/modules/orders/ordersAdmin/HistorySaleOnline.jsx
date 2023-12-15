@@ -3,6 +3,7 @@ import { Badge, Card, Figure } from "react-bootstrap";
 import FondoH from "../../../assets/FondoH.jpg";
 import DataTable from "react-data-table-component";
 import GetOnlineOrders from './../Functions/GetOnlineOrders';
+import ButtonSale from "./components/ButtonSale";
 
 const option = {
   rowsPerPageText: "Registros por página",
@@ -150,6 +151,7 @@ const HistorySaleOnline = () => {
             }}
           />
         </Card>
+        <ButtonSale/>
       </div>
     </body>
   );

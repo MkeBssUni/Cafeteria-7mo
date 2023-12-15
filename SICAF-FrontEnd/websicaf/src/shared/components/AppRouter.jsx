@@ -19,6 +19,7 @@ import HistorySaleStoreScreen from './../../modules/orders/ordersAdmin/HistorySa
 import HistoryClientStore from "../../modules/orders/ordersClient/HistoryClientStore";
 import HistoryClientOnlineScreen from './../../modules/orders/ordersClient/HistoryClientOnlineScreen';
 import OrdersScreens from './../../modules/orders/ordersClient/OrdersScreens';
+import Loading from './Loading';
 
 const AppRouter = () => {
   const { user } = useContext(AuthContext);
@@ -75,6 +76,8 @@ const AppRouter = () => {
         <Route path="/login" element={<LoginScreens />} />
         <Route path="/recoveryPassword" element={<RecoryPassword />} />
         <Route path="/newPassword" element={<NewPassword />} />
+        {/* <Route path="/load" element={<Loading/>} />
+         */}
         <Route
           path="/*"
           element={

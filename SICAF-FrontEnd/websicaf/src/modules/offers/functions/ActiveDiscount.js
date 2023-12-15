@@ -1,21 +1,13 @@
 import AxiosClient from "../../../shared/plugins/axios"
 import Alert,{errorMsg,errorTitle,successMsg,successTitle} from "../../../shared/plugins/Alert"
 
-const GetByStatus = async (id) => {
+const ActiveDiscount = async () => {
     try {
         const response = await AxiosClient({
-            url: `users/status/`,
-            method: 'GET',
+            url:'discounts/active',
+            method: 'GET'
         })
-        if(!response.error){
-            Alert.fire({
-                title: successTitle,
-                text:successMsg,
-                icon:'success',
-                confirmButtonColor: '#3085d6',
-                confirmButtonText: 'Aceptar'
-            })
-        }
+        if (!response.error) return response.data;
       } catch (error) {
         Alert.fire({
             title: errorTitle,
@@ -27,4 +19,4 @@ const GetByStatus = async (id) => {
       }
 }
 
-export default GetByStatus
+export default ActiveDiscount

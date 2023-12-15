@@ -3,7 +3,6 @@ import { Modal, Button, Row, Col, Form, Image, InputGroup } from "react-bootstra
 import { useFormik } from "formik";
 import * as yup from "yup";
 import FeatherIcon from "feather-icons-react/build/FeatherIcon";
-
 import CreateProduct from '../Functions/CreateProduct'
 import getCategories from "../../categories/functions/GetAllCategories";
 import Alert, { confirmMsj, errorMsj, errorTitle, successMsj } from "../../../shared/plugins/alerts";
