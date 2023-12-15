@@ -35,6 +35,6 @@ export {
     findRoleById,
     updateRoleDiscount,
     findRoleByDiscount,
-    findProductsByDiscount
+    findProductsByDiscount,
     findUserEmails
 }
