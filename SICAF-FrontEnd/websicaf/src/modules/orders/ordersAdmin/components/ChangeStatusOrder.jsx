@@ -70,7 +70,7 @@ const ChangeStatusOrder = ({ orderInfo, isOpen, onClose }) => {
                 value={form.values.status}
                 onChange={form.handleChange}
               >
-                <option value="">Escoje una opción</option>
+                <option>Escoje una opción</option>
                 <option value="Pendiente">Pendiente</option>
                 <option value="En preparacion">En preparacion</option>
                 <option value="Completada">Completada</option>
