@@ -4,5 +4,4 @@ export type ProductInCartDto = {
     price: number,
     quantity: number,
     pre_totalProduct: number,
-    image: string,
 }
