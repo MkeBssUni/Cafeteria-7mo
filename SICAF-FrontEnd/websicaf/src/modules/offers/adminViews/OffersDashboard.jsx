@@ -119,14 +119,7 @@ const OffersDashborard = () => {
 
     return (<>
         <body>
-            {/* <RegisterDiscount show={modalShow} onHide={() => setModalShow(false)} /> */}
-            <RegisterDiscountForRol show={modalShow} onHide={() => setModalShow(false)} />
-            <RegisterDiscountByOrderTotal show={byOrderTotal} onHide={() => setByordertotal(false)} />
-            <NewDiscountByCategory show={byCategory} onHide={() => setbyCategory(false)} />
-            <NewDiscountByNumberOfProducs show={numberProouct} onHide={() => setNumberProouct(false)} />
-            <NewDiscountByProduct show={byProduct} onHide={() => setbyProduct(false)} />
-            <Container fluid>
-                <div
+            <div
                     className="image-top d-flex justify-content-center align-items-center border"
                     style={{
                         width: "100%",
@@ -180,20 +173,15 @@ const OffersDashborard = () => {
                             </Dropdown.Menu>
                         </Dropdown>
                     </Col>
-                    {' '}
-                    {/* <Button
-                        as={Col}
-                        xs="12"
-                        sm="12"
-                        md="1"
-                        lg="3"
-                        xlg="3"
-                        className="input-search text-center mx-3"
-                        onClick={() => setModalShow(true)}
-                    >
-                        Registrar <FeatherIcon icon="plus-circle" />
-                    </Button> */}
                 </div>
+            {/* <RegisterDiscount show={modalShow} onHide={() => setModalShow(false)} /> */}
+            <RegisterDiscountForRol show={modalShow} onHide={() => setModalShow(false)} />
+            <RegisterDiscountByOrderTotal show={byOrderTotal} onHide={() => setByordertotal(false)} />
+            <NewDiscountByCategory show={byCategory} onHide={() => setbyCategory(false)} />
+            <NewDiscountByNumberOfProducs show={numberProouct} onHide={() => setNumberProouct(false)} />
+            <NewDiscountByProduct show={byProduct} onHide={() => setbyProduct(false)} />
+            <Container fluid>
+                
                 {discounts.length > 0 ? (
                     <div className='product-list-admin'><Row>
                         {discounts.map((discount) => (

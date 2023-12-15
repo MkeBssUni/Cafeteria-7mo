@@ -15,10 +15,10 @@ import * as yup from "yup";
 import Multiselect from "multiselect-react-dropdown";
 
 import Alert, { confirmMsj } from "../../../shared/plugins/alerts";
-import SaveDiscount from "../functions/SaveDiscount";
+import UpdateDiscount from "../functions/UpdateDiscount";
 import getByStatus from "../../product/Functions/GetBystatus";
 
-const NewDiscountByProduct = ({ show, onHide }) => {
+const UpdateDiscountByProduct = ({ show, onHide }) => {
   const [imgs, setimgs] = useState();
   const [products, setProducts] = useState([]);
 
@@ -61,7 +61,7 @@ const NewDiscountByProduct = ({ show, onHide }) => {
     }),
     onSubmit: async (values) => {
       console.log(values);
-      await SaveDiscount(values);
+      await UpdateDiscount(values);
       console.log(values, "values");
     },
   });
@@ -192,45 +192,6 @@ const NewDiscountByProduct = ({ show, onHide }) => {
                 />
               </Col>
             </Row>
-            {/* <Row>
-              <Col>
-                <Form.Group>
-                  <Form.Label>Productos</Form.Label>
-                  <InputGroup>
-                    <Multiselect
-                      className="input-modal multiselect"
-                      options={products}
-                      onSelect={(selectedList, selectedItem) => {
-                        const updatedList = [...selectedList];
-                        handleSelect(updatedList);
-                      }}
-                      onRemove={(selectedList, removedItem) => {
-                        const updatedList = selectedList.filter(
-                          (item) => item.id !== removedItem.id
-                        );
-                        handleSelect(updatedList);
-                      }}
-                      displayValue="name"
-                      style={{
-                        chips: {
-                          background: "var(--color-tertiary)",
-                          color: "var(--color-text)",
-                        },
-                        searchBox: {
-                          border: "none",
-                          borderRadius: "0px",
-                        },
-                      }}
-                    />
-                  </InputGroup>
-                  {form.errors.products_id && (
-                    <span className="error-text">
-                      {form.errors.products_id}
-                    </span>
-                  )}
-                </Form.Group>
-              </Col>
-            </Row> */}
           </Modal.Body>
           <Modal.Footer className="productModal">
             <Form.Group>
@@ -259,4 +220,4 @@ const NewDiscountByProduct = ({ show, onHide }) => {
   );
 };
 
-export default NewDiscountByProduct;
+export default UpdateDiscountByProduct;
