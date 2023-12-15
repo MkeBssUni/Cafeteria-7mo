@@ -131,8 +131,7 @@ const UsersScreens = () => {
         ),
       sortable: true,
       selector: (row) => row.status,
-    },
-    {
+    },{
       name: "Acciones",
       cell: (row) => (
         <>

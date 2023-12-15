@@ -23,7 +23,7 @@ export class AuthController {
             const token = generateToken({
                 id: user.id,
                 email: user.email,
-                role: user.role
+                role: user.role            
             });
             return res.header('Authorization', `Bearer ${token}`).status(body.code).json({
                 ...body,

@@ -61,9 +61,11 @@ const SidebarSicaf = ({ isOpen, onClose }) => {
 
   const menuItemsEmpleado = [
     { id: "productAdmin", label: "Productos", icon: <LocalCafeOutlined /> },
-    { id: "link2", label: "Ofertas", icon: <EmojiFoodBeverageOutlined /> },
+    { id: "offersAdmin", label: "Ofertas", icon: <EmojiFoodBeverageOutlined /> },
     { id: "historySaleStore", label: "Historial de ventas en Tienda", icon: <StorefrontIcon/> },
     { id: "historySaleOnline", label: "Historial de ventas Online", icon: <ShoppingBagIcon/> },
+    { id: "products", label: "Comprar", icon: <ShoppingBagIcon/> },
+    { id: "historyClientOnline", label: "Historial de ventas Online personal", icon: <ShoppingBagIcon/> },
   ];
 
   return (
