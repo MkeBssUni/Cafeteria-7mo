@@ -9,6 +9,7 @@ import {
   InputGroup,
 } from "react-bootstrap";
 
+import logo from "../../../assets/logo-sicaf.png";
 import FeatherIcon from "feather-icons-react";
 import Alert, {
   confirmMsg,
@@ -88,7 +89,7 @@ function ProductDetail({ product, show, onHide, onClose }) {
             </Col>
             <Col xs={12} sm={12} md={7} lg={7} xl={7} xxl={7}>
               <Image
-                src={product.image.length > 20 ? product.image : Image1}
+                src={product.image.length > 20 ? product.image : logo}
                 className=" image-product-modal mt-4"
                 rounded
               />

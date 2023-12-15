@@ -10,6 +10,7 @@ import {
 } from "react-bootstrap";
 import FeatherIcon from "feather-icons-react";
 
+import logo from "../../../assets/logo-sicaf.png";
 import getProductsByCategoryAndstatus from "../Functions/GetAll";
 import Separator from "../../../assets/separator.png";
 import CookiesList from "./CookiesList";
