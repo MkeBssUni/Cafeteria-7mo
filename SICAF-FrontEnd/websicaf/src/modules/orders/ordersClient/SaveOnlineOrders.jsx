@@ -1,13 +1,14 @@
 import React, { useEffect, useState, useContext } from "react";
 import { Modal, Button, Row, Col, Form, InputGroup } from "react-bootstrap";
-import Alert from "../../../../shared/plugins/Alert";
-import { AuthContext } from "../../../auth/authContext";
+import Alert from "../../../shared/plugins/Alert";
+import { AuthContext } from "../../auth/authContext";
 import { useFormik } from "formik";
 import saveOnlineOrder from "./../Functions/saveOnlineOrder";
+import FeatherIcon from "feather-icons-react/build/FeatherIcon";
 
 const SaveOnlineOrders = ({ isOpen, onClose, carritoCompras }) => {
   const { user } = useContext(AuthContext);
-
+  console.log("carrito acá", carritoCompras);
   const form = useFormik({
     initialValues: {
       client_id: user.id,
@@ -16,7 +17,7 @@ const SaveOnlineOrders = ({ isOpen, onClose, carritoCompras }) => {
       products: [],
     },
     onSubmit: async (values) => {
-      console.log({ ...values, products: selectedProducts });
+      console.log({ ...values, products: carritoCompras.cart.product });
       return await Alert.fire({
         title: "¿Estas seguro de guardar el usuario?",
         text: "Seguro de realizar la operación",
@@ -55,7 +56,7 @@ const SaveOnlineOrders = ({ isOpen, onClose, carritoCompras }) => {
       onHide={handleClose}
     >
       <Modal.Header closeButton>
-        <Modal.Title>Registrar Venta</Modal.Title>
+        <Modal.Title>Confirmar compra</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form onSubmit={form.handleSubmit}>
@@ -72,6 +73,12 @@ const SaveOnlineOrders = ({ isOpen, onClose, carritoCompras }) => {
               <option value="Tarjeta de credito">Tarjeta de credito</option>
               <option value="Tarjeta de debito">Tarjeta de debito</option>
             </Form.Control>
+          </Form.Group>
+          <Form.Group className="mb-2 mt-2">
+            <Row>
+              <Col>
+              </Col>
+            </Row>
           </Form.Group>
           <Form.Group className="mb-2 mt-2">
             <Row>

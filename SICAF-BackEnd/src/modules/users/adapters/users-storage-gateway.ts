@@ -245,7 +245,6 @@ export class UsersStorageGateway implements UsersRepository{
                     price: product.price,
                     quantity: jsonCart[index].quantity,
                     pre_totalProduct: product.price * jsonCart[index].quantity,
-                    image: product.image,
                 })
             }
 
