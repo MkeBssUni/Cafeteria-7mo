@@ -9,15 +9,20 @@ import FeatherIcon from "feather-icons-react/build/FeatherIcon";
 const SaveOnlineOrders = ({ isOpen, onClose, carritoCompras }) => {
   const { user } = useContext(AuthContext);
   console.log("carrito acá", carritoCompras);
+  
   const form = useFormik({
     initialValues: {
       client_id: user.id,
-      payment_method: "", //Tarjeta de credito o Tarjeta de debito
-      discount_id: 26, //opcional
-      products: [],
+      payment_method: "", // Tarjeta de credito o Tarjeta de debito
     },
     onSubmit: async (values) => {
-      console.log({ ...values, products: carritoCompras.cart.product });
+      const transformedProducts = carritoCompras.cart.product.map((item) => ({
+        id: item.product_id,
+        quantity: item.quantity,
+      }));
+  
+      console.log({ ...values, products: transformedProducts });
+  
       return await Alert.fire({
         title: "¿Estas seguro de guardar el usuario?",
         text: "Seguro de realizar la operación",
@@ -35,7 +40,7 @@ const SaveOnlineOrders = ({ isOpen, onClose, carritoCompras }) => {
           handleClose();
           return await saveOnlineOrder({
             ...values,
-            products: carritoCompras.cart.product,
+            products: transformedProducts,
           });
         },
       });
