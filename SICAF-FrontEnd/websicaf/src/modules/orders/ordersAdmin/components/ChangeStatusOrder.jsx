@@ -72,7 +72,7 @@ const ChangeStatusOrder = ({ orderInfo, isOpen, onClose }) => {
               >
                 <option value="">Escoje una opción</option>
                 <option value="Pendiente">Pendiente</option>
-                <option value="En preparación">En preparación</option>
+                <option value="En preparacion">En preparacion</option>
                 <option value="Completada">Completada</option>
                 <option value="Cancelada">Cancelada</option>
               </Form.Control>
