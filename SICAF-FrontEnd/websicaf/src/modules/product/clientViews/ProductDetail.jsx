@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Modal,
   Button,
@@ -19,10 +19,42 @@ import Alert, {
   successTitle,
 } from "../../../shared/plugins/Alert";
 import Image1 from "../../../assets/Products/pastel1.jpeg";
-import CreateProduct from "../Functions/CreateProduct";
 
 function ProductDetail({ product, show, onHide, onClose }) {
   const [count, setCount] = useState(0);
+  const [cart, setCart] = useState([]);
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
+
+  useEffect(() => {
+    /* const user = JSON.parse(localStorage.getItem("user"));
+    setUser(user); */
+    console.log("asdadasdasdasdasdd", user)
+  }, []);
+  
+
+  const updateCart = (product_id,product_name,product_price,product_quantity) => {
+  
+      let userCart = user;
+      setCart(userCart.shopping_cart.cart.product);
+      console.log("cart detail", cart);
+
+      const newItem = {
+        product_id: product_id,
+        name: product_name,
+        price: product_price,
+        quantity: product_quantity,
+        price: product_price,
+        pre_totalProduct: product_price * product_quantity,
+      };
+
+      const newCart = [...cart, newItem];
+
+      userCart.shopping_cart.cart.product = newCart;
+      console.log("newCart", newCart);
+      console.log("nuevo user", userCart);
+    
+  };
+
   if (!show) {
     return null;
   }
@@ -102,6 +134,9 @@ function ProductDetail({ product, show, onHide, onClose }) {
             className="buttonsModal"
             variant="outline-primary"
             disabled={count <= 0}
+            onClick={() => {
+              updateCart(product.id, product.name, product.price, count);
+            }}
           >
             Agregar al carrito <FeatherIcon icon="shopping-cart" />
           </Button>
